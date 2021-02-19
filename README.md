@@ -1,4 +1,14 @@
+# Overview
+
 This was created so that I can port over the RR-Image-Browser from being built with Electron to instead be a hosted ReactJS app.  This allows anyone to access it and there will be no need for software installation.  This also allows me to collect better analytics and not worry about having everyone on the latest version since I can deploy out to the website live.
+
+Production URL: https://rn-extratools.com/
+
+
+I will update the image browser to version 0.1.9 and then I will more than likely hault all development on it so that I can get it working on here.
+
+
+
 
 # Getting Started with Create React App
 
