@@ -8,7 +8,8 @@ Production URL: https://rn-extratools.com/
 I will update the image browser to version 0.1.9 and then I will more than likely hault all development on it so that I can get it working on here.
 
 
-
+Bootstrap documentation: https://create-react-app.dev/docs/adding-bootstrap/
+Bootstrap variables documentation (.sass): https://getbootstrap.com/docs/4.1/getting-started/theming/#css-variables
 
 # Getting Started with Create React App
 
