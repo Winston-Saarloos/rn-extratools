@@ -1,17 +1,10 @@
-import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
+import ImageBrowser from './components/ImageBrowser';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          New home for RR-Image-Browser and other tools...
-        </p>
-        <p>
-          Discord: Rocko#8625
-        </p>
-      </header>
+        <ImageBrowser />
     </div>
   );
 }
