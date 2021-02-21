@@ -1,0 +1,31 @@
+#photoGrid {
+    height: auto;
+}
+
+.grid { 
+    display: flex;
+    flex-wrap: wrap;
+    height: auto;
+    width: 100%;
+}
+
+  .grid-item {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex: auto;
+    float: left;
+    /*height: auto;
+    max-width: 500px; */
+    width: 300px;
+    min-width: 300px;
+    min-height: 167px;
+    max-width: 500px;
+    margin: 4px 4px 4px 4px; /* Some gutter */
+    border: solid 2px rgb(54, 54, 54);
+    background-color:rgb(51, 51, 51);
+  }
+
+.grid-item:hover {
+    border-color:rgb(255, 255, 255);
+}
