@@ -1,11 +1,22 @@
-import './ImageBrowserHeader.css';
+import { useState } from 'react'
+import './ImageBrowserHeader.css'
 
-function ImageBrowserHeader() {
-    let url = "";
+export default function ImageBrowserHeader() {
+    let url = "https://github.com/Winston-Saarloos/rn-extratools";
+
+    const [username, setUsername] = useState('')
 
     function EmptyFunction() {
         console.log('This was an empty function.');
     }
+
+  function loadUser() {
+    if (username !== '') {
+      console.log('Username entered: ' + username);
+    } else {
+      console.log('No username supplied.')
+    }
+  }
 
     return (
       <div className="ImageBrowserHeader">
@@ -19,12 +30,10 @@ function ImageBrowserHeader() {
             <div className="input-group-prepend">
               <span className="input-group-text" id="basic-addon1">@</span>
             </div>
-            <input type="text" className="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
+            <input type="text" className="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" onChange={event => setUsername(event.target.value)} />
           </div>
-          <button className="btn btn-success my-2 my-sm-0" id="btnLoad" onClick={EmptyFunction}>Load Images</button>
+          <button className="btn btn-success my-2 my-sm-0" id="btnLoad" onClick={loadUser} >Load Images</button>
         </nav>
       </div>
     );
   }
-  
-  export default ImageBrowserHeader;
