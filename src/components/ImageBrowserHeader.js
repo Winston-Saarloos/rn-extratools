@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './ImageBrowserHeader.css'
 
-export default function ImageBrowserHeader() {
+export default function ImageBrowserHeader({ onUpdate }) {
     let url = "https://github.com/Winston-Saarloos/rn-extratools";
 
     const [username, setUsername] = useState('')
@@ -9,14 +9,6 @@ export default function ImageBrowserHeader() {
     function EmptyFunction() {
         console.log('This was an empty function.');
     }
-
-  function loadUser() {
-    if (username !== '') {
-      console.log('Username entered: ' + username);
-    } else {
-      console.log('No username supplied.')
-    }
-  }
 
     return (
       <div className="ImageBrowserHeader">
@@ -32,7 +24,7 @@ export default function ImageBrowserHeader() {
             </div>
             <input type="text" className="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" onChange={event => setUsername(event.target.value)} />
           </div>
-          <button className="btn btn-success my-2 my-sm-0" id="btnLoad" onClick={loadUser} >Load Images</button>
+          <button className="btn btn-success my-2 my-sm-0" id="btnLoad" onClick={() => onUpdate(username)} >Load Images</button>
         </nav>
       </div>
     );
