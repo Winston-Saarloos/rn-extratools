@@ -1,12 +1,15 @@
 import './ImageBrowserMain.css';
 import PropTypes from 'prop-types';
-
+import React, { useState, useEffect, useRef } from "react";
+import classnames from 'classnames';
+import styles from './ImageBrowserMain.css';
 
 function EmptyFunction() {
   console.log('This was an empty function.');
 }
 
 export default function ImageBrowserMain( { userId,images } ) {
+
   return (
     <div className="ImageBrowserMain">
       <div id="photoGrid">
