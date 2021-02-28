@@ -15,6 +15,15 @@ netlify deploy --prod (deploys live)
 Bootstrap documentation: https://create-react-app.dev/docs/adding-bootstrap/
 Bootstrap variables documentation (.sass): https://getbootstrap.com/docs/4.1/getting-started/theming/#css-variables
 
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Technology Stack
+ - ReactJS
+ -- https://reactjs.org/
+ - Redux (?)
+ -- https://redux.js.org/
+ - React Router
+ -- https://reactrouter.com/web/guides/quick-start
+ - Material UI
+ -- https://material-ui.com/getting-started/installation/
+ 
+ ### Dev Tools
+  - Visual Studio Code
