@@ -1,10 +1,10 @@
 import './App.css';
-import ImageBrowser from './components/ImageBrowser';
+// import ImageBrowser from './components/ImageBrowser';
 
 function App() {
   return (
     <div className="App">
-        <ImageBrowser />
+        {/* <ImageBrowser /> */}
     </div>
   );
 }

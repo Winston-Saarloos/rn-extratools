@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './ImageBrowserHeader.css'
 
-export default function ImageBrowserHeader({ onUpdate }) {
+export default function ImageBrowserHeader({ imageCount, onUpdate }) {
     let url = "https://github.com/Winston-Saarloos/rn-extratools";
 
     const [username, setUsername] = useState('')
@@ -13,8 +13,8 @@ export default function ImageBrowserHeader({ onUpdate }) {
     return (
       <div className="ImageBrowserHeader">
         <nav className="navbar navbar-expand navbar-dark bg-dark">
-            <a className="navbar-brand" id="lblVersionNumber" href={url}>Version W.I.P</a>
-            <div id="lblImageResultNumber">Image Results: 0</div>
+            <a className="navbar-brand" id="lblVersionNumber" href={url}>Version 0.0.1</a>
+            <div id="lblImageResultNumber">Image Results: {imageCount}</div>
           <button type="button" className="btn btn-secondary" onClick={EmptyFunction} id="btnFeedLibrary" value="0">User Photo Feed</button>
           <button type="button" className="btn btn-secondary oldestNewest" onClick={EmptyFunction} id="btnOldestToNewest" value="0">Newest to Oldest</button>
 

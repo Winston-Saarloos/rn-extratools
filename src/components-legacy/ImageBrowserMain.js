@@ -1,5 +1,5 @@
 import './ImageBrowserMain.css';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 //import React, { useState, useEffect, useRef } from "react";
 //import classnames from 'classnames';
 //import styles from './ImageBrowserMain.css';
@@ -8,7 +8,7 @@ function EmptyFunction() {
   console.log('This was an empty function.');
 }
 
-export default function ImageBrowserMain( { userId,images } ) {
+export default function ImageBrowserMain( { images } ) {
 
   return (
     <div className="ImageBrowserMain">
@@ -24,14 +24,4 @@ export default function ImageBrowserMain( { userId,images } ) {
       </div>
     </div>
   );
-}
-
-// Default Property Values
-ImageBrowserMain.defaultProps = {
-  userId: 0,
-}
-
-// Property Definitions
-ImageBrowserMain.propTypes = {
-  userId: PropTypes.number.isRequired,
 }

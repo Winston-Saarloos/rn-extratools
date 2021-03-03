@@ -6,7 +6,7 @@ import ImageBrowserMain from './ImageBrowserMain';
 
 function ImageBrowser() {
   const [images, loadImages] = useState([]);
-
+  var imageCount = 0;
   // Updates the image grid
   async function updateImageGrid(username) {
     //var userId = await getUserId(username);
@@ -26,15 +26,15 @@ function ImageBrowser() {
     console.log(imageLibraryUrl);
     const responseUserImages = await fetch(imageLibraryUrl);
     const jsonUserImagesData = await responseUserImages.json();
-
+    imageCount = jsonUserImagesData.length;
     console.log(jsonUserImagesData);
     loadImages(jsonUserImagesData);
   }
 
   return (
     <div className="ImageBrowser">
-      <ImageBrowserHeader onUpdate={updateImageGrid} />
-      <ImageBrowserMain userId={0} images={images} />
+      <ImageBrowserHeader imageCount={imageCount} onUpdate={updateImageGrid} />
+      <ImageBrowserMain images={images} />
     </div>
   );
 }
