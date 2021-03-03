@@ -1,10 +1,17 @@
 import './App.css';
-// import ImageBrowser from './components/ImageBrowser';
+import Header from './Pages/Header';
+import Home from './Pages/Home';
+import ImageBrowser from './Pages/ImageBrowser/ImageBrowser';
+import {Route, BrowserRouter as Router} from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
-        {/* <ImageBrowser /> */}
+      <Header />
+      <Router>
+        <Route path="/" exact component={Home} />
+        <Route path="/imagebrowser" component={ImageBrowser} />
+      </Router>
     </div>
   );
 }
