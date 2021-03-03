@@ -18,8 +18,8 @@ Bootstrap variables documentation (.sass): https://getbootstrap.com/docs/4.1/get
 ## Technology Stack
  - ReactJS
  -- https://reactjs.org/
- - Redux (?)
- -- https://redux.js.org/
+ ~~- Redux (?)
+ -- https://redux.js.org/~~
  - React Router
  -- https://reactrouter.com/web/guides/quick-start
  - Material UI
