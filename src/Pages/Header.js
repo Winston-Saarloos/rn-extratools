@@ -1,5 +1,5 @@
-import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import React from "react";
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
 
 export default function Header() {
   const displayDesktop = () => {
@@ -8,13 +8,16 @@ export default function Header() {
 
   const Logo = (
     <Typography variant="h6" component="h1">
-        RN-ExtraTools
+      RN-ExtraTools
     </Typography>
   );
-  
+
   return (
     <header>
-      <AppBar>{displayDesktop()}</AppBar>
+      <AppBar>
+        {displayDesktop()}
+
+      </AppBar>
     </header>
   );
 }
