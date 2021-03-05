@@ -1,39 +1,32 @@
 // Components
-import React, { useState } from "react";
-import { Switch, Paper } from "@material-ui/core";
-import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import React from "react";
 import {Route, BrowserRouter as Router} from 'react-router-dom';
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 // Pages
-import Header from './Pages/Header';
+//import Header from './Pages/Header';
 import Home from './Pages/Home';
-import ImageBrowser from './Pages/ImageBrowser/ImageBrowser';
+import ImageBrowser from './Pages/ImageBrowser/ImageBrowserMain';
 
 // Styling
 import './App.css';
 
+const theme = createMuiTheme({
+  palette: {
+    type: "dark",
+  },
+});
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
-
-  const theme = createMuiTheme({
-    palette: {
-      type: darkMode ? "dark" : "light",
-    },
-  });
   return (
     <ThemeProvider theme={theme}>
-      <Paper style={{ height: "100vh" }}>
-        <div className="App">
-          <Header />
-          <Router>
-            <Route path="/" exact component={Home} />
-            <Route path="/imagebrowser" component={ImageBrowser} />
-          </Router>
-        </div>
-        <Switch checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
-      </Paper>
-    </ThemeProvider>
+      <div className="App">
+        <Router>
+          <Route path="/" exact component={Home} />
+          <Route path="/imagebrowser" component={ImageBrowser} />
+        </Router>
+      </div>
+      </ThemeProvider>
   );
 }
 
