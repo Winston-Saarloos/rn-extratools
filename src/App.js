@@ -13,7 +13,7 @@ import './App.css';
 
 const theme = createMuiTheme({
   palette: {
-    type: "dark",
+    type: "light",
   },
 });
 
@@ -26,7 +26,7 @@ function App() {
           <Route path="/imagebrowser" component={ImageBrowser} />
         </Router>
       </div>
-      </ThemeProvider>
+    </ThemeProvider>
   );
 }
 

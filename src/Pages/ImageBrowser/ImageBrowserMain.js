@@ -1,5 +1,6 @@
 import React from 'react'
 import Header from './../Header';
+import ImageBrowserHeader from './ImageBrowserHeader';
 //import { Paper } from "@material-ui/core";
 //import { useState } from 'react';
 //import axios from 'axios';
@@ -11,16 +12,20 @@ import GridView from './GridView';
 function ImageBrowserMain() {
 
   return (
-    <div style={{ marginTop: 60 }} className="ImageBrowserMain">
-      <Grid container direction="column" justify="flex-start" alignItems="center" spacing={3} style={{ background: "grey" }}>
+    <div style={{ marginTop: 80 }} className="ImageBrowserMain">
+      <Grid container direction="column">
         <Grid item>
           <Header title={'RR Image Browser'} />
         </Grid>
-        <Grid item>
-          [Filter Component]
-        </Grid>
         <Grid item xs={12}>
-          <GridView />
+          <Grid container direction="column" xs={12} alignItems="flex-start" spacing={3}>
+            <Grid item xs={12}>
+              <ImageBrowserHeader />
+            </Grid>
+            <Grid item>
+              <GridView />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </div>
