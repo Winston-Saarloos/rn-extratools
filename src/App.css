@@ -1,6 +1,9 @@
 /* .App {
   text-align: center;
 } */
+:root {
+  flex-grow: 1
+}
 
 /* .App-header {
   background-color: #121212;

@@ -6,6 +6,10 @@ import GridListTile from '@material-ui/core/GridListTile';
 //import { useState } from 'react';
 //import axios from 'axios';
 
+// Styling
+import './GridView.css';
+
+
 function GridView() {
 
 
