@@ -7,7 +7,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
+//import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
 //import { useState } from 'react';
 //import axios from 'axios';
 //import Grid from '@material-ui/core/Grid';
@@ -21,9 +24,20 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  formControl: {
+  imageLocation: {
     margin: theme.spacing(1),
     minWidth: 200,
+    width: "100%",
+  },
+  nameTextBox: {
+    width: "100%",
+    minWidth: 200,
+    margin: theme.spacing(1),
+  },
+  loadImagesButton: {
+    width: "100%",
+    minWidth: 200,
+    margin: theme.spacing(1),
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -33,26 +47,39 @@ const useStyles = makeStyles((theme) => ({
 function ImageBrowserHeader() {
     const classes = useStyles();
     const [age, setAge] = React.useState('');
-    const handleChange = (event) => {
-      setAge(event.target.value);
-    };
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
 
-    return (
-        <div className="ImageBrowserHeader">
-            <Paper>
-                <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Image Location</InputLabel>
-                    <Select labelId="demo-simple-select-outlined-label" id="cboFeedType" value={age} onChange={handleChange} label="Image Location">
-                        <MenuItem value={1}>Global Feed</MenuItem>
-                        <MenuItem value={2}>User Photo Feed</MenuItem>
-                        <MenuItem value={3}>User Photo Library</MenuItem>
-                    </Select>
-                </FormControl>
-                <TextField id="txtRecRoomUsername" label="RR @ Name" variant="outlined" />
-                <Button id="btnLoadImages" variant="contained" color="primary" startIcon={<LoadIcon />}>Load Images</Button>
-            </Paper>
-        </div>
-    );
+  return (
+    <div className="ImageBrowserHeader">
+      <Grid container spacing={0} direction="row">
+        <Grid item xs={12} md={2} lg={5} xl={5} className="orangeB"></Grid>
+        <Grid item xs={12} md={3} lg={2} xl={2} className="orangeB">
+          <Box display="flex" justifyContent="center" p={1} >
+            <FormControl variant="outlined" className={classes.imageLocation}>
+              <InputLabel id="demo-simple-select-outlined-label">Image Location</InputLabel>
+              <Select labelId="demo-simple-select-outlined-label" id="cboFeedType" value={age} onChange={handleChange} label="Image Location">
+                <MenuItem value={1}>Global Feed</MenuItem>
+                <MenuItem value={2}>User Photo Feed</MenuItem>
+                <MenuItem value={3}>User Photo Library</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </Grid>
+        <Grid item xs={12} md={4} lg={3} xl={3} className="orangeB">
+          <Box display="flex" justifyContent="center" p={1} >
+            <TextField id="txtRecRoomUsername" className={classes.nameTextBox} label="RR @ Name" variant="outlined" />
+          </Box>
+        </Grid>
+        <Grid item xs={12} md={3} lg={2} xl={2} className="orangeB">
+          <Box display="flex" justifyContent="center" p={2}>
+            <Button id="btnLoadImages" variant="contained" className={classes.loadImagesButton} size="large" color="primary" startIcon={<LoadIcon />}>Load Images</Button>
+          </Box>
+        </Grid>
+      </Grid>
+    </div>
+  );
 }
 
 export default ImageBrowserHeader;
