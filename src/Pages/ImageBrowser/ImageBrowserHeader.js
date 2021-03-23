@@ -42,6 +42,11 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+  displayOrder: {
+    margin: theme.spacing(1),
+    minWidth: 200,
+    width: "100%",
+  },
 }));
 
 function ImageBrowserHeader() {
@@ -54,8 +59,8 @@ function ImageBrowserHeader() {
   return (
     <div className="ImageBrowserHeader">
       <Grid container spacing={0} direction="row">
-        <Grid item xs={12} md={2} lg={5} xl={5} className="orangeB"></Grid>
-        <Grid item xs={12} md={3} lg={2} xl={2} className="orangeB">
+        <Grid item xs={12} md={0} lg={0} xl={0} className="orangeB"></Grid>
+        <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
           <Box display="flex" justifyContent="center" p={1} >
             <FormControl variant="outlined" className={classes.imageLocation}>
               <InputLabel id="demo-simple-select-outlined-label">Image Location</InputLabel>
@@ -67,12 +72,27 @@ function ImageBrowserHeader() {
             </FormControl>
           </Box>
         </Grid>
-        <Grid item xs={12} md={4} lg={3} xl={3} className="orangeB">
+        <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
+          <Box display="flex" justifyContent="center" p={1} >
+            <FormControl variant="outlined" className={classes.displayOrder}>
+              <InputLabel id="demo-simple-select-outlined-label">Image Location</InputLabel>
+              <Select labelId="demo-simple-select-outlined-label" id="cboFeedType" value={age} onChange={handleChange} label="Image Location">
+                <MenuItem value={1}>Oldest To Newest</MenuItem>
+                <MenuItem value={2}>Newest To Oldest</MenuItem>
+                <MenuItem value={3}>Cheers Ascending</MenuItem>
+                <MenuItem value={4}>Cheers Descending</MenuItem>
+                <MenuItem value={5}>Comment Count Ascending</MenuItem>
+                <MenuItem value={6}>Comment Count Descending</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </Grid>
+        <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
           <Box display="flex" justifyContent="center" p={1} >
             <TextField id="txtRecRoomUsername" className={classes.nameTextBox} label="RR @ Name" variant="outlined" />
           </Box>
         </Grid>
-        <Grid item xs={12} md={3} lg={2} xl={2} className="orangeB">
+        <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
           <Box display="flex" justifyContent="center" p={2}>
             <Button id="btnLoadImages" variant="contained" className={classes.loadImagesButton} size="large" color="primary" startIcon={<LoadIcon />}>Load Images</Button>
           </Box>

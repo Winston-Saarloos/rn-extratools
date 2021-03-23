@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
@@ -17,20 +18,11 @@ function ChangeLog() {
                     <Grid container direction="column" spacing={0} >
                         <Grid item>
                             <Paper>
-                                <div id="Item-Title"><h1>Test</h1></div>
-                                <div id="Item-Body"><p>This is some bogus text that is used to fill up some space.</p></div>
-                            </Paper>
-                        </Grid>
-                        <Grid item>
-                            <Paper>
-                                <div id="Item-Title"><h1>Test</h1></div>
-                                <div id="Item-Body"><p>This is some bogus text that is used to fill up some space.</p></div>
-                            </Paper>
-                        </Grid>
-                        <Grid item>
-                            <Paper>
-                                <div id="Item-Title"><h1>Test</h1></div>
-                                <div id="Item-Body"><p>This is some bogus text that is used to fill up some space.</p></div>
+                                <div id="Item-Title"><h1>Image Browser</h1></div>
+                                <div id="Item-Body">
+                                    <p>Use this application to view and search for photos avaiable on rec.net</p>
+                                    <Link to="/imagebrowser">Image Browser</Link>
+                                </div>
                             </Paper>
                         </Grid>
                     </Grid>
