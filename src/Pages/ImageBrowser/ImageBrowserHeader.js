@@ -49,22 +49,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ImageBrowserHeader() {
-    const classes = useStyles();
-    const [age, setAge] = React.useState('');
-  const handleChange = (event) => {
-    setAge(event.target.value);
+function ImageBrowserHeader(props) {
+  const classes = useStyles();
+  const [imageLocation, setImageLocation] = React.useState(0);
+  const handleImageLocationChange = (event) => {
+    setImageLocation(event.target.value);
+  };
+
+  const [displayOrder, setDisplayOrder] = React.useState(0);
+  const handleDisplayOrderChange = (event) => {
+    setDisplayOrder(event.target.value);
   };
 
   return (
     <div className="ImageBrowserHeader">
       <Grid container spacing={0} direction="row">
-        <Grid item xs={12} md={0} lg={0} xl={0} className="orangeB"></Grid>
+        <Grid item xs={12} className="orangeB"></Grid>
         <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
           <Box display="flex" justifyContent="center" p={1} >
             <FormControl variant="outlined" className={classes.imageLocation}>
-              <InputLabel id="demo-simple-select-outlined-label">Image Location</InputLabel>
-              <Select labelId="demo-simple-select-outlined-label" id="cboFeedType" value={age} onChange={handleChange} label="Image Location">
+              <InputLabel id="lblImageLocation">Image Location</InputLabel>
+              <Select labelId="lblImageLocation" id="cboFeedType" value={imageLocation} onChange={handleImageLocationChange} label="Image Location">
                 <MenuItem value={1}>Global Feed</MenuItem>
                 <MenuItem value={2}>User Photo Feed</MenuItem>
                 <MenuItem value={3}>User Photo Library</MenuItem>
@@ -75,8 +80,8 @@ function ImageBrowserHeader() {
         <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
           <Box display="flex" justifyContent="center" p={1} >
             <FormControl variant="outlined" className={classes.displayOrder}>
-              <InputLabel id="demo-simple-select-outlined-label">Image Location</InputLabel>
-              <Select labelId="demo-simple-select-outlined-label" id="cboFeedType" value={age} onChange={handleChange} label="Image Location">
+              <InputLabel id="lblDisplayOrder">Display Order</InputLabel>
+              <Select labelId="lblDisplayOrder" id="cboDisplayOrder" value={displayOrder} onChange={handleDisplayOrderChange} label="Display Order">
                 <MenuItem value={1}>Oldest To Newest</MenuItem>
                 <MenuItem value={2}>Newest To Oldest</MenuItem>
                 <MenuItem value={3}>Cheers Ascending</MenuItem>
@@ -94,7 +99,7 @@ function ImageBrowserHeader() {
         </Grid>
         <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
           <Box display="flex" justifyContent="center" p={2}>
-            <Button id="btnLoadImages" variant="contained" className={classes.loadImagesButton} size="large" color="primary" startIcon={<LoadIcon />}>Load Images</Button>
+            <Button id="btnLoadImages" variant="contained" className={classes.loadImagesButton} size="large" color="primary" onClick={props.LoadImages} startIcon={<LoadIcon />}>Load Images</Button>
           </Box>
         </Grid>
       </Grid>

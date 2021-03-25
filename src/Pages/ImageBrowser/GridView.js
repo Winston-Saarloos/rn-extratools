@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 //import Grid from '@material-ui/core/Grid';
 // import { Paper } from "@material-ui/core";
 // import GridList from '@material-ui/core/GridList';
