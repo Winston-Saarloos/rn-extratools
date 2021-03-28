@@ -1,3 +1,7 @@
 :root {
     flex-grow: 1
   }
+
+  .imageThumbnail {
+    width: 100%;
+  }
