@@ -51,12 +51,12 @@ const useStyles = makeStyles((theme) => ({
 
 function ImageBrowserHeader(props) {
   const classes = useStyles();
-  const [imageLocation, setImageLocation] = React.useState(0);
+  const [imageLocation, setImageLocation] = React.useState(1);
   const handleImageLocationChange = (event) => {
     setImageLocation(event.target.value);
   };
 
-  const [displayOrder, setDisplayOrder] = React.useState(0);
+  const [displayOrder, setDisplayOrder] = React.useState(1);
   const handleDisplayOrderChange = (event) => {
     setDisplayOrder(event.target.value);
   };
@@ -82,8 +82,8 @@ function ImageBrowserHeader(props) {
             <FormControl variant="outlined" className={classes.displayOrder}>
               <InputLabel id="lblDisplayOrder">Display Order</InputLabel>
               <Select labelId="lblDisplayOrder" id="cboDisplayOrder" value={displayOrder} onChange={handleDisplayOrderChange} label="Display Order">
-                <MenuItem value={1}>Oldest To Newest</MenuItem>
-                <MenuItem value={2}>Newest To Oldest</MenuItem>
+                <MenuItem value={1}>Newest To Oldest</MenuItem>
+                <MenuItem value={2}>Oldest To Newest</MenuItem>
                 <MenuItem value={3}>Cheers Ascending</MenuItem>
                 <MenuItem value={4}>Cheers Descending</MenuItem>
                 <MenuItem value={5}>Comment Count Ascending</MenuItem>
