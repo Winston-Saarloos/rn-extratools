@@ -49,15 +49,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ImageBrowserHeader(props) {
+function ImageBrowserHeader() {
   const classes = useStyles();
   const [imageLocation, setImageLocation] = React.useState(1);
-  const handleImageLocationChange = (event) => {
+  const handleImageLocationChange = (event: { target: { value: React.SetStateAction<number>; }; }) => {
     setImageLocation(event.target.value);
   };
 
   const [displayOrder, setDisplayOrder] = React.useState(1);
-  const handleDisplayOrderChange = (event) => {
+  const handleDisplayOrderChange = (event: { target: { value: React.SetStateAction<number>; }; }) => {
     setDisplayOrder(event.target.value);
   };
 
@@ -69,7 +69,8 @@ function ImageBrowserHeader(props) {
           <Box display="flex" justifyContent="center" p={1} >
             <FormControl variant="outlined" className={classes.imageLocation}>
               <InputLabel id="lblImageLocation">Image Location</InputLabel>
-              <Select labelId="lblImageLocation" id="cboFeedType" value={imageLocation} onChange={handleImageLocationChange} label="Image Location">
+              <Select labelId="lblImageLocation" id="cboFeedType" value={imageLocation} label="Image Location"> 
+              {/* onChange={handleImageLocationChange} */}
                 <MenuItem value={1}>Global Feed</MenuItem>
                 <MenuItem value={2}>User Photo Feed</MenuItem>
                 <MenuItem value={3}>User Photo Library</MenuItem>
@@ -81,7 +82,8 @@ function ImageBrowserHeader(props) {
           <Box display="flex" justifyContent="center" p={1} >
             <FormControl variant="outlined" className={classes.displayOrder}>
               <InputLabel id="lblDisplayOrder">Display Order</InputLabel>
-              <Select labelId="lblDisplayOrder" id="cboDisplayOrder" value={displayOrder} onChange={handleDisplayOrderChange} label="Display Order">
+              <Select labelId="lblDisplayOrder" id="cboDisplayOrder" value={displayOrder} label="Display Order">
+              {/* onChange={handleDisplayOrderChange} */}
                 <MenuItem value={1}>Newest To Oldest</MenuItem>
                 <MenuItem value={2}>Oldest To Newest</MenuItem>
                 <MenuItem value={3}>Cheers Ascending</MenuItem>
@@ -99,7 +101,7 @@ function ImageBrowserHeader(props) {
         </Grid>
         <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
           <Box display="flex" justifyContent="center" p={2}>
-            <Button id="btnLoadImages" variant="contained" className={classes.loadImagesButton} size="large" color="primary" onClick={props.LoadImages} startIcon={<LoadIcon />}>Load Images</Button>
+            <Button id="btnLoadImages" variant="contained" className={classes.loadImagesButton} size="large" color="primary" startIcon={<LoadIcon />}>Load Images</Button>
           </Box>
         </Grid>
       </Grid>

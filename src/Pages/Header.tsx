@@ -1,7 +1,11 @@
 import React from "react";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
 
-export default function Header({title}) {
+interface IProps {
+  title: string
+}
+
+export default function Header({title}: IProps) {
   const displayDesktop = () => {
     return <Toolbar>{Logo}</Toolbar>;
   };
@@ -20,3 +24,4 @@ export default function Header({title}) {
     </header>
   );
 }
+

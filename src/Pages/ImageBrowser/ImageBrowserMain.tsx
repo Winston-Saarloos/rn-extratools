@@ -1,13 +1,25 @@
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
-// import { Paper } from "@material-ui/core";
-// import GridList from '@material-ui/core/GridList';
-// import GridListTile from '@material-ui/core/GridListTile';
-//import { useState } from 'react';
-//import axios from 'axios';
+import React from 'react'
+//import Request from 'react-axios';
+import Header from '../Header';
+import Divider from '@material-ui/core/Divider';
 
-// Styling
-import './GridView.css';
+//import Paper from '@material-ui/core/Paper';
+//import { useState } from 'react'
+//import axios from 'axios';
+import Grid from '@material-ui/core/Grid';
+//import { makeStyles } from '@material-ui/core/styles';
+
+// Component imports
+import GridView from './GridView';
+import ImageBrowserHeader from './ImageBrowserHeader';
+//import { ContactSupportOutlined } from '@material-ui/icons';
+
+function LoadImages(imageLocation: number, displayOrder: number, username: string) {
+  console.log('Load Images fired!');
+  console.log(imageLocation);
+  console.log(displayOrder);
+  console.log(username);
+}
 
 // Test data
 var imageJson = [
@@ -254,20 +266,30 @@ var imageJson = [
     "CreatedAt": "2019-04-10T02:07:46.2530937Z",
     "CheerCount": 0,
     "CommentCount": 0
-}]
+}];
 
-function GridView() {
+function ImageBrowserMain() {
   return (
-    <div className="GridView" style={{overflow: 'hidden'}}>
-      <Grid container spacing={1} direction="row">
-        {imageJson.map(image =>
-          <Grid item xs={12} md={6} lg={3} xl={2}>
-            <img src={'https://img.rec.net/' + image.ImageName + '?width=500'} className="imageThumbnail" />
+    <div style={{ marginTop: 70 }} className="ImageBrowserMain">
+      <Header title={"RR Image Browser"} />
+      <Grid container style={{margin: 0, width: '100%',}} direction="column">
+        <Grid item xs={12}>
+          <Grid container alignItems="flex-start" justify="center" spacing={0} direction="row" >
+            <Grid item xs={1}></Grid>
+            <Grid item xs={10}>
+              <ImageBrowserHeader />
+            </Grid>
+            <Grid item xs={1}></Grid>
           </Grid>
-        )}
+          <Divider light />
+          <Grid item xs={12}>
+            <GridView  />
+            {/* imageData={imageJson} */}
+          </Grid>
+        </Grid>
       </Grid>
     </div>
   );
 }
 
-export default GridView;
+export default ImageBrowserMain;
