@@ -8,12 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-//import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-
-//import { useState } from 'react';
-//import axios from 'axios';
-//import Grid from '@material-ui/core/Grid';
 
 // Component imports
 
@@ -52,14 +47,12 @@ const useStyles = makeStyles((theme) => ({
 function ImageBrowserHeader() {
   const classes = useStyles();
   const [imageLocation, setImageLocation] = React.useState(1);
-  const handleImageLocationChange = (event: { target: { value: React.SetStateAction<number>; }; }) => {
-    setImageLocation(event.target.value);
+
+  const changeImageLocation = (event: React.ChangeEvent<{ value: unknown }>) => {
+    return setImageLocation(event.target.value as number);
   };
 
-  const [displayOrder, setDisplayOrder] = React.useState(1);
-  const handleDisplayOrderChange = (event: { target: { value: React.SetStateAction<number>; }; }) => {
-    setDisplayOrder(event.target.value);
-  };
+  console.log(`Image Location: ${imageLocation}`);
 
   return (
     <div className="ImageBrowserHeader">
@@ -69,8 +62,7 @@ function ImageBrowserHeader() {
           <Box display="flex" justifyContent="center" p={1} >
             <FormControl variant="outlined" className={classes.imageLocation}>
               <InputLabel id="lblImageLocation">Image Location</InputLabel>
-              <Select labelId="lblImageLocation" id="cboFeedType" value={imageLocation} label="Image Location"> 
-              {/* onChange={handleImageLocationChange} */}
+              <Select labelId="lblImageLocation" id="cboFeedType" label="Image Location" value={imageLocation} onChange={changeImageLocation} defaultValue="1"> 
                 <MenuItem value={1}>Global Feed</MenuItem>
                 <MenuItem value={2}>User Photo Feed</MenuItem>
                 <MenuItem value={3}>User Photo Library</MenuItem>
@@ -82,8 +74,7 @@ function ImageBrowserHeader() {
           <Box display="flex" justifyContent="center" p={1} >
             <FormControl variant="outlined" className={classes.displayOrder}>
               <InputLabel id="lblDisplayOrder">Display Order</InputLabel>
-              <Select labelId="lblDisplayOrder" id="cboDisplayOrder" value={displayOrder} label="Display Order">
-              {/* onChange={handleDisplayOrderChange} */}
+              <Select labelId="lblDisplayOrder" id="cboDisplayOrder" label="Display Order" defaultValue="1">
                 <MenuItem value={1}>Newest To Oldest</MenuItem>
                 <MenuItem value={2}>Oldest To Newest</MenuItem>
                 <MenuItem value={3}>Cheers Ascending</MenuItem>
