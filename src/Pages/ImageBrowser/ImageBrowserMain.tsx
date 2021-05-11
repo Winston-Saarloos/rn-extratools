@@ -274,7 +274,8 @@ function ImageBrowserMain() {
       <Header title={"RR Image Browser"} />
       <Grid container style={{margin: 0, width: '100%',}} direction="column">
         <Grid item xs={12}>
-          <Grid container alignItems="flex-start" justify="center" spacing={0} direction="row" >
+          <Grid container alignItems="flex-start" spacing={0} direction="row">
+          {/* <Grid container alignItems="flex-start" justify="center" spacing={0} direction="row" > */}
             <Grid item xs={1}></Grid>
             <Grid item xs={10}>
               <ImageBrowserHeader />

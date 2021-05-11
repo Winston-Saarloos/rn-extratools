@@ -10,7 +10,7 @@ function Home() {
 
   return (
     <div style={{ marginTop: 80 }} className="Home">
-      <Grid container direction="column" justify="flex-start" alignItems="stretch">
+      <Grid container direction="column" alignItems="stretch">
         <Header title={'Home'} />
         <Grid item xs={12}>
           <ChangeLog />
