@@ -43,16 +43,27 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
 }));
+interface IProps {
+  loadImages: Function;
+}
 
-function ImageBrowserHeader() {
+function ImageBrowserHeader({ loadImages }: IProps) {
   const classes = useStyles();
   const [imageLocation, setImageLocation] = React.useState(1);
+  const [imageDisplayOrder, setImageDisplayOrder] = React.useState(1);
+  const [searchTerm, setSearchTerm] = React.useState('Rocko');
 
   const changeImageLocation = (event: React.ChangeEvent<{ value: number }>) => {
     return setImageLocation(event.target.value as number);
   };
 
-  console.log(`Image Location: ${imageLocation}`);
+  const changeImageDisplayOrder = (event: React.ChangeEvent<{ value: number }>) => {
+    return setImageDisplayOrder(event.target.value as number);
+  };
+
+  const changeSearchTerm = (event: React.ChangeEvent<{ value: string }>) => {
+    return setSearchTerm(event.target.value as string);
+  };
 
   return (
     <div className="ImageBrowserHeader">
@@ -74,7 +85,7 @@ function ImageBrowserHeader() {
           <Box display="flex" justifyContent="center" p={1} >
             <FormControl variant="outlined" className={classes.displayOrder}>
               <InputLabel id="lblDisplayOrder">Display Order</InputLabel>
-              <Select labelId="lblDisplayOrder" id="cboDisplayOrder" label="Display Order" defaultValue="1">
+              <Select labelId="lblDisplayOrder" id="cboDisplayOrder" label="Display Order" value={imageDisplayOrder} onChange={changeImageDisplayOrder} defaultValue={1} >
                 <MenuItem value={1}>Newest To Oldest</MenuItem>
                 <MenuItem value={2}>Oldest To Newest</MenuItem>
                 <MenuItem value={3}>Cheers Ascending</MenuItem>
@@ -87,12 +98,12 @@ function ImageBrowserHeader() {
         </Grid>
         <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
           <Box display="flex" justifyContent="center" p={1} >
-            <TextField id="txtRecRoomUsername" className={classes.nameTextBox} label="RR @ Name" variant="outlined" />
+            <TextField id="txtSearch" className={classes.nameTextBox} label="Enter Search.." variant="outlined" onChange={changeSearchTerm} value={searchTerm}/>
           </Box>
         </Grid>
         <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
           <Box display="flex" justifyContent="center" p={2}>
-            <Button id="btnLoadImages" variant="contained" className={classes.loadImagesButton} size="large" color="primary" startIcon={<LoadIcon />}>Load Images</Button>
+            <Button id="btnLoadImages" variant="contained" onClick={() => loadImages(imageLocation, imageDisplayOrder, searchTerm)} className={classes.loadImagesButton} size="large" color="primary" startIcon={<LoadIcon />}>Load Images</Button>
           </Box>
         </Grid>
       </Grid>
