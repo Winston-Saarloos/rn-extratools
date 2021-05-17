@@ -308,6 +308,10 @@ function ImageBrowserMain() {
           // handle success
           //console.log(response);
           imageObjectArray = await response.data;
+          setImageDataObject(imageObjectArray);
+          console.log('State Value');
+          console.log(imageDataObject);
+    
         })
         .catch(function (error) {
           // handle error
@@ -318,9 +322,6 @@ function ImageBrowserMain() {
         });
   
       console.log(imageObjectArray);
-      setImageDataObject(imageObjectArray);
-      console.log('State Value');
-      console.log(imageDataObject);
     }
     // SET IMAGE JSON DATA TO STATE
     // gridView = (<GridView imageData={imageDataJson} />);
