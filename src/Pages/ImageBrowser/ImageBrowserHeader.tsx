@@ -49,9 +49,9 @@ interface IProps {
 
 function ImageBrowserHeader({ loadImages }: IProps) {
   const classes = useStyles();
-  const [imageLocation, setImageLocation] = React.useState(1);
-  const [imageDisplayOrder, setImageDisplayOrder] = React.useState(1);
-  const [searchTerm, setSearchTerm] = React.useState('Rocko');
+  const [imageLocation, setImageLocation] = React.useState<number>(1);
+  const [imageDisplayOrder, setImageDisplayOrder] = React.useState<number>(1);
+  const [searchTerm, setSearchTerm] = React.useState<string>('leekzh');
 
   const changeImageLocation = (event: React.ChangeEvent<{ value: number }>) => {
     return setImageLocation(event.target.value as number);
