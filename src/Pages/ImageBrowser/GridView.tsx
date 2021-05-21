@@ -1,4 +1,5 @@
 import Grid from '@material-ui/core/Grid';
+//import { useInView } from 'react-intersection-observer';
 //import React from 'react';
 // import { Paper } from "@material-ui/core";
 // import GridList from '@material-ui/core/GridList';
@@ -22,7 +23,7 @@ type GridImageItem = {
     ImageName: string,
     Description?: string | null,
     PlayerId: number,
-    TaggedPlayerIds?: Array<number>,
+    TaggedPlayerIds: Array<number>,
     RoomId: number,
     PlayerEventId?: number | null,
     CreatedAt: string,
@@ -31,23 +32,34 @@ type GridImageItem = {
 }
 
 function GridView({ imageData }: GridViewProps) {
-    if (typeof imageData === 'undefined' || null) {
-        imageData = [];
-      }
-    console.log(`Rendering Grid ${imageData.length}`);
+    // const { ref, inView, entry } = useInView({
+    //     /* Optional options */
+    //     threshold: 0,
+    //   });
+
+    console.log(`Image Data:`);
+    console.log(imageData);
+    console.log(imageData.length);
+
+    if (typeof imageData == 'string' || imageData.length < 1) {
+        return (
+            <div className="GridView" style={{ overflow: 'hidden' }}>
+                    No Image Results! {imageData}
+            </div>
+        )
+    } else {
         return (
             <div className="GridView" style={{ overflow: 'hidden' }}>
                 <Grid container spacing={1} direction="row">
-                    {
-                        imageData.map((image: GridImageItem) => 
-                            <Grid item xs={6} md={6} lg={3} xl={2}>
-                                <img src={'https://img.rec.net/' + image.ImageName + '?width=500'} key={(image.Id).toString()} alt={(image.Id).toString()} className="imageThumbnail" />
-                            </Grid>
-                        )
-                    }
+                    {imageData.map((image: GridImageItem) =>
+                        <Grid item xs={6} md={6} lg={3} xl={2} key={image.Id.toString()} >
+                            <img src={'https://img.rec.net/' + image.ImageName + '?width=500'} alt={image.Id.toString()} className="imageThumbnail" />
+                        </Grid>
+                    )}
                 </Grid>
             </div>
         );
+    }
 }
 
 export default GridView;

@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
 }));
+
 interface IProps {
   loadImages: Function;
 }
@@ -74,9 +75,9 @@ function ImageBrowserHeader({ loadImages }: IProps) {
             <FormControl variant="outlined" className={classes.imageLocation}>
               <InputLabel id="lblImageLocation">Image Location</InputLabel>
               <Select labelId="lblImageLocation" id="cboFeedType" label="Image Location" value={imageLocation} onChange={changeImageLocation} defaultValue={1}> 
-                <MenuItem value={1}>Global Feed</MenuItem>
-                <MenuItem value={2}>User Photo Feed</MenuItem>
-                <MenuItem value={3}>User Photo Library</MenuItem>
+                <MenuItem value={1}>User Photo Feed</MenuItem>
+                <MenuItem value={2}>User Photo Library</MenuItem>
+                <MenuItem value={3}>Global Image Feed</MenuItem>
               </Select>
             </FormControl>
           </Box>
