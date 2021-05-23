@@ -30,30 +30,46 @@ var imageObjectArray : {
   CommentCount: number
 }[] = [];
 
+var imageRequestParameters : {
+  Url: string,
+  DisplayOrder: number,
+  ImageLocation: number,
+  SkipAmount: number,
+  TakeAmount: number,
+  Query?: string | null
+}
+
 function ImageBrowserMain() {
   const [imageDataObject, setImageDataObject] = React.useState<typeof imageObjectArray>([]);
+  const [imageRequestParams, setImageRequestParams] = React.useState<typeof imageRequestParameters>();
 
-  async function LoadImages(imageLocation: number, displayOrder: number, username: string) {
-    //var gridView = (<GridView imageData={imageDataJson} />);
+  async function LoadImages(imageLocation: number, displayOrder: number, searchQuery: string) {
     var takeAmount = 75;
     var skipAmount = 0;
-    var szUrl = '';
+    var szUrl = 'https://rn-rest-api.herokuapp.com/images';
+
+    var imageParams = {
+      "Url": szUrl,
+      "DisplayOrder": displayOrder,
+      "ImageLocation": imageLocation,
+      "SkipAmount": skipAmount,
+      "TakeAmount": takeAmount,
+      "Query": searchQuery
+    };
+    
+    setImageRequestParams(imageParams);
 
     if (imageLocation === 3) {
-      szUrl = `https://rn-rest-api.herokuapp.com/images?sort=${displayOrder}&type=${imageLocation}&skip=${skipAmount}&take=${takeAmount}`
+      szUrl = szUrl + `?sort=${displayOrder}&type=${imageLocation}&skip=${skipAmount}&take=${takeAmount}`
     } else {
-      szUrl = `https://rn-rest-api.herokuapp.com/images?u=${username}&sort=${displayOrder}&type=${imageLocation}&skip=${skipAmount}&take=${takeAmount}`;
+      szUrl = szUrl + `?u=${searchQuery}&sort=${displayOrder}&type=${imageLocation}&skip=${skipAmount}&take=${takeAmount}`;
     }
 
-    console.log('Load Images fired!');
-    console.log(szUrl);
-    console.log(displayOrder);
-    console.log(username);
     // URL https://rn-rest-api.herokuapp.com/images?u={username}
-    if (username === '' && imageLocation !== 3) {
+    if (searchQuery === '' && imageLocation !== 3) {
       setImageDataObject([]);
+
     } else {
-  
       axios.get(szUrl)
         .then(async function (response) {
           // handle success
@@ -62,6 +78,7 @@ function ImageBrowserMain() {
 
           if (imageObjectArray.length > 0) {
             setImageDataObject(imageObjectArray);
+
           } else {
             setImageDataObject([]);
           }    
@@ -73,12 +90,7 @@ function ImageBrowserMain() {
         .then(function () {
           // always executed
         });
-  
-      //console.log(imageObjectArray);
     }
-    // SET IMAGE JSON DATA TO STATE
-    // gridView = (<GridView imageData={imageDataJson} />);
-    //ReactDOM.render(gridView, document.getElementById('imageView'));
   }
 
   return (
@@ -96,7 +108,7 @@ function ImageBrowserMain() {
           </Grid>
           <Divider light />
           <Grid id="imageView" item xs={12}>
-            <GridView imageData={imageDataObject} />
+            <GridView imageData={imageDataObject} queryParams={imageRequestParams} />
           </Grid>
         </Grid>
       </Grid>

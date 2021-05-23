@@ -52,7 +52,7 @@ function ImageBrowserHeader({ loadImages }: IProps) {
   const classes = useStyles();
   const [imageLocation, setImageLocation] = React.useState<number>(1);
   const [imageDisplayOrder, setImageDisplayOrder] = React.useState<number>(1);
-  const [searchTerm, setSearchTerm] = React.useState<string>('leekzh');
+  const [searchQuery, setSearchQuery] = React.useState<string>('leekzh');
 
   const changeImageLocation = (event: React.ChangeEvent<{ value: number }>) => {
     return setImageLocation(event.target.value as number);
@@ -62,8 +62,8 @@ function ImageBrowserHeader({ loadImages }: IProps) {
     return setImageDisplayOrder(event.target.value as number);
   };
 
-  const changeSearchTerm = (event: React.ChangeEvent<{ value: string }>) => {
-    return setSearchTerm(event.target.value as string);
+  const changeSearchQuery = (event: React.ChangeEvent<{ value: string }>) => {
+    return setSearchQuery(event.target.value as string);
   };
 
   return (
@@ -89,22 +89,22 @@ function ImageBrowserHeader({ loadImages }: IProps) {
               <Select labelId="lblDisplayOrder" id="cboDisplayOrder" label="Display Order" value={imageDisplayOrder} onChange={changeImageDisplayOrder} defaultValue={1} >
                 <MenuItem value={1}>Newest To Oldest</MenuItem>
                 <MenuItem value={2}>Oldest To Newest</MenuItem>
-                <MenuItem value={3}>Cheers Ascending</MenuItem>
-                <MenuItem value={4}>Cheers Descending</MenuItem>
-                <MenuItem value={5}>Comment Count Ascending</MenuItem>
-                <MenuItem value={6}>Comment Count Descending</MenuItem>
+                <MenuItem value={3}>Lowest Cheer #</MenuItem>
+                <MenuItem value={4}>Highest Cheer #</MenuItem>
+                <MenuItem value={5}>Lowest Comment #</MenuItem>
+                <MenuItem value={6}>Highest Comment #</MenuItem>
               </Select>
             </FormControl>
           </Box>
         </Grid>
         <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
           <Box display="flex" justifyContent="center" p={1} >
-            <TextField id="txtSearch" className={classes.nameTextBox} label="Enter Search.." variant="outlined" onChange={changeSearchTerm} value={searchTerm}/>
+            <TextField id="txtSearch" className={classes.nameTextBox} label="Enter Search.." variant="outlined" onChange={changeSearchQuery} value={searchQuery}/>
           </Box>
         </Grid>
         <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
           <Box display="flex" justifyContent="center" p={2}>
-            <Button id="btnLoadImages" variant="contained" onClick={() => loadImages(imageLocation, imageDisplayOrder, searchTerm)} className={classes.loadImagesButton} size="large" color="primary" startIcon={<LoadIcon />}>Load Images</Button>
+            <Button id="btnLoadImages" variant="contained" onClick={() => loadImages(imageLocation, imageDisplayOrder, searchQuery)} className={classes.loadImagesButton} size="large" color="primary" startIcon={<LoadIcon />}>Load Images</Button>
           </Box>
         </Grid>
       </Grid>

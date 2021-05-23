@@ -7,13 +7,24 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import CloseIcon from '@material-ui/icons/Close';
+import axios from 'axios';
 
 // Styling
 import './GridView.css';
 //import { Component } from 'react';
+type QueryParams = {
+    Url: string,
+    DisplayOrder: number,
+    ImageLocation: number,
+    SkipAmount: number,
+    TakeAmount: number,
+    Query?: string | null
+}
 
 type GridViewProps = {
     imageData: GridImageItem[],
+    queryParams: QueryParams | undefined
 }
 
 type GridImageItem = {
@@ -32,36 +43,90 @@ type GridImageItem = {
     CommentCount: number
 }
 
-function GridView({ imageData }: GridViewProps) {
+function GridView(props: GridViewProps) {
     //const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+
+    // Modal Data
     const [modalImage, setModalImage] = React.useState<Partial<GridImageItem>>({});
+    const [taggedPlayerString, setTaggedPlayerString] = React.useState<string>('');
+
     // const [fullWidth, setFullWidth] = React.useState(true);
     // const [maxWidth, setMaxWidth] = React.useState<DialogProps['maxWidth']>('sm');
-  
-    const handleClickOpen = (imageId: number) => {
-      var imageItem = {};
-        for (var i = 0; i < imageData.length; i++) {
+    var imageData = props.imageData;
+    var queryParams = {};
+    if (props.queryParams) {
+        queryParams = props.queryParams;
+    }
+
+    const handleClickOpen = async (imageId: number) => {
+        var imageItem = {};
+        var i = 0;
+        for (i = 0; i < imageData.length; i++) {
             if (imageData[i].Id === imageId) {
                 imageItem = imageData[i];
                 break;
             }
         }
-        
+
         setModalImage(imageItem);
 
+        // Get Player Data
+        if (imageData[i].TaggedPlayerIds.length > 0) {
+            var userParams = '';
+            for (var t = 0; t < imageData[i].TaggedPlayerIds.length; t++) {
+                if (t === 0) {
+                    userParams = `?id=${imageData[i].TaggedPlayerIds[t]}`;
+                } else {
+                    userParams += `&id=${imageData[i].TaggedPlayerIds[t]}`;
+                }
+            }
+                
+            axios.get("https://rn-rest-api.herokuapp.com/bulk/users" + userParams)
+                .then(async function (response) {
+                    // handle success
+                    //resolve(response.data);
+
+                    var playerInfoJson = await response.data;
+                    var szTaggedPlayers = "";
+                    var i = 0;
+                    playerInfoJson.forEach((item: { displayName: string; username: string; accountId: number; }) => {
+                        if (item.accountId !== 1) {
+                            if (i === playerInfoJson.length - 1) {
+                                szTaggedPlayers = szTaggedPlayers + (item.displayName + " (@" + item.username + ") \r\n");
+                            } else {
+                                szTaggedPlayers = szTaggedPlayers + (item.displayName + " (@" + item.username + "), \r\n");
+                            }
+                        }
+
+                        i++
+                    });
+
+                    setTaggedPlayerString(szTaggedPlayers);
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                })
+                .then(function () {
+                    // always executed
+                });
+
+        } else {
+            setTaggedPlayerString("No players were tagged.");
+        }
+
         setOpen(true);
-        console.log(modalImage);
     };
-  
+
     const handleClose = () => {
-      setOpen(false);
+        setOpen(false);
     };
-  
+
     // const handleMaxWidthChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     //   setMaxWidth(event.target.value as DialogProps['maxWidth']);
     // };
-  
+
     // const handleFullWidthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     //   setFullWidth(event.target.checked);
     // };
@@ -75,7 +140,6 @@ function GridView({ imageData }: GridViewProps) {
     const MD_VALUE = 6;
     const LG_VALUE = 6;
     const XL_VALUE = 6;
-
     if (typeof imageData == 'string' || imageData.length < 1) {
         return (
             <div className="GridView" style={{ overflow: 'hidden' }}>
@@ -134,7 +198,7 @@ function GridView({ imageData }: GridViewProps) {
                             </Grid>
 
                             <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblCreatedAt" zeroMinWidth >
-                                <strong>Take On:</strong>
+                                <strong>Taken On:</strong>
                             </Grid>
                             <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblCreatedAtValue" zeroMinWidth >
                                 {modalImage.CreatedAt}
@@ -181,19 +245,19 @@ function GridView({ imageData }: GridViewProps) {
                                 <strong>Tagged Players:</strong>
                             </Grid>
                             <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblTaggedPlayersIdsValue" zeroMinWidth >
-                                {modalImage.TaggedPlayerIds?.join(", ")}
+                                {((taggedPlayerString !== '') ? taggedPlayerString : modalImage.TaggedPlayerIds?.join(", "))}
                             </Grid>
 
-                            <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblTaggedPlayersIds" zeroMinWidth >
+                            <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblRecNetLink" zeroMinWidth >
                                 <strong>Rec.net Image Page:</strong>
                             </Grid>
-                            <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblTaggedPlayersIdsValue" zeroMinWidth >
+                            <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblRecNetLinkValue" zeroMinWidth >
                                 <Link href={`https://rec.net/image/${modalImage.Id}`} target="_blank" rel="noopener" >https://rec.net/image/{modalImage.Id}</Link>
                             </Grid>
                         </Grid>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} color="primary">Close</Button>
+                        <Button onClick={handleClose} variant="contained" color="primary" size="large" startIcon={<CloseIcon />}>Close</Button>
                     </DialogActions>
                 </Dialog>
             </div>
