@@ -9,6 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
 import axios from 'axios';
+import moment from 'moment';
 
 // Styling
 import './GridView.css';
@@ -49,6 +50,8 @@ function GridView(props: GridViewProps) {
 
     // Modal Data
     const [modalImage, setModalImage] = React.useState<Partial<GridImageItem>>({});
+    const [photoOwnerName, setPhotoOwnerName] = React.useState<string>('');
+    const [roomName, setRoomName] = React.useState<string>('');
     const [taggedPlayerString, setTaggedPlayerString] = React.useState<string>('');
 
     // const [fullWidth, setFullWidth] = React.useState(true);
@@ -71,7 +74,44 @@ function GridView(props: GridViewProps) {
 
         setModalImage(imageItem);
 
-        // Get Player Data
+        // Get Room Name
+        console.log(imageData[i].RoomId);
+        axios.get("https://rn-rest-api.herokuapp.com/bulk/rooms?id=" + imageData[i].RoomId)
+        .then(async function (response) {
+            // handle success
+            //resolve(response.data);
+
+            var roomInfoJson = await response.data;
+            setRoomName(roomInfoJson.Name);
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+        .then(function () {
+            // always executed
+        });
+
+
+        // Get Photo Owner Name
+        axios.get("https://rn-rest-api.herokuapp.com/account?id=" + imageData[i].PlayerId)
+        .then(async function (response) {
+            // handle success
+            //resolve(response.data);
+
+            var playerInfoJson = await response.data;
+            setPhotoOwnerName(`${playerInfoJson.displayName} (@${playerInfoJson.username})`);
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+        .then(function () {
+            // always executed
+        });
+
+
+        // Get Tagged Player Data
         if (imageData[i].TaggedPlayerIds.length > 0) {
             var userParams = '';
             for (var t = 0; t < imageData[i].TaggedPlayerIds.length; t++) {
@@ -201,7 +241,7 @@ function GridView(props: GridViewProps) {
                                 <strong>Taken On:</strong>
                             </Grid>
                             <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblCreatedAtValue" zeroMinWidth >
-                                {modalImage.CreatedAt}
+                                {moment(modalImage.CreatedAt).format('MMMM Do YYYY, h:mm a') + ' (' + moment(modalImage.CreatedAt, "YYYYMMDD").fromNow() + ')'}
                             </Grid>
 
                             <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblDescription" zeroMinWidth >
@@ -221,24 +261,24 @@ function GridView(props: GridViewProps) {
                             </Grid>
                             
                             <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblPlayerEventId" zeroMinWidth >
-                                <strong>Player Event ID:</strong>
+                                <strong>Player Event Name:</strong>
                             </Grid>
                             <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblPlayerEventIdValue" zeroMinWidth >
-                                {((modalImage.PlayerEventId) ? modalImage.PlayerEventId : 'No Event Information')}
+                                {((modalImage.PlayerEventId) ? modalImage.PlayerEventId + ' - Not Implemented Fully Yet' : 'No Event Information')}
                             </Grid>
 
                             <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblPlayerId" zeroMinWidth >
-                                <strong>Player ID:</strong>
+                                <strong>Photo Owner:</strong>
                             </Grid>
                             <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblPlayerIdValue" zeroMinWidth >
-                                {modalImage.PlayerId}
+                                {((photoOwnerName !== '') ? photoOwnerName : modalImage.PlayerId)}
                             </Grid>
 
                             <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblRoomId" zeroMinWidth >
-                                <strong>Room ID:</strong>
+                                <strong>Room Name:</strong>
                             </Grid>
                             <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblRoomIdValue" zeroMinWidth >
-                                {modalImage.RoomId}
+                                {((roomName !== '') ? roomName : modalImage.RoomId)}
                             </Grid>
 
                             <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblTaggedPlayersIds" zeroMinWidth >

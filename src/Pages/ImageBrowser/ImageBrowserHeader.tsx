@@ -99,7 +99,7 @@ function ImageBrowserHeader({ loadImages }: IProps) {
         </Grid>
         <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
           <Box display="flex" justifyContent="center" p={1} >
-            <TextField id="txtSearch" className={classes.nameTextBox} label="Enter Search.." variant="outlined" onChange={changeSearchQuery} value={searchQuery}/>
+            <TextField id="txtSearch" className={classes.nameTextBox} label="Enter @name.." variant="outlined" onChange={changeSearchQuery} value={searchQuery}/>
           </Box>
         </Grid>
         <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
