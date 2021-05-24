@@ -82,7 +82,11 @@ function GridView(props: GridViewProps) {
             //resolve(response.data);
 
             var roomInfoJson = await response.data;
-            setRoomName(roomInfoJson.Name);
+            if (roomInfoJson.length > 0) {
+                setRoomName(roomInfoJson[0].Name);
+            } else {
+                setRoomName("[Room is Private] - Cannot retreive room name.");
+            }
         })
         .catch(function (error) {
             // handle error
