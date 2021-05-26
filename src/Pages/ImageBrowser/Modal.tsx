@@ -41,10 +41,9 @@ type ModalProps = {
 function Modal(props: ModalProps) {
 
     // State Variables
-    //const [modalImage, setModalImage] = React.useState<Partial<GridImageItem>>({});
     const [photoOwnerName, setPhotoOwnerName] = React.useState<string>('');
     const [roomName, setRoomName] = React.useState<string>('');
-    const [taggedPlayerString, setTaggedPlayerString] = React.useState<string>('');
+    const [taggedPlayerString, setTaggedPlayerString] = React.useState<string>("No players were tagged.");
 
     // Constants
     const XS_VALUE = 12;
@@ -80,15 +79,11 @@ function Modal(props: ModalProps) {
             // handle success
             var playerInfoJson = await response.data;
             setPhotoOwnerName(`${playerInfoJson.displayName} (@${playerInfoJson.username})`);
-
         })
         .catch(function (error) {
             // handle error
             console.log(error);
         })
-        .then(function () {
-            // always executed
-        });
 
         // Get Tagged Player Data
         if (modalImage.TaggedPlayerIds.length > 0) {
@@ -100,7 +95,7 @@ function Modal(props: ModalProps) {
                     userParams += `&id=${modalImage.TaggedPlayerIds[t]}`;
                 }
             }
-                
+
             axios.get("https://rn-rest-api.herokuapp.com/bulk/users" + userParams)
                 .then(async function (response) {
                     // handle success
@@ -125,12 +120,6 @@ function Modal(props: ModalProps) {
                     // handle error
                     console.log(error);
                 })
-                .then(function () {
-                    // always executed
-                });
-
-        } else {
-            setTaggedPlayerString("No players were tagged.");
         }
 
         return (
@@ -255,106 +244,3 @@ function Modal(props: ModalProps) {
 }
 
 export default Modal;
-
-
-
-    //console.log(props.imageId);
-
-
-    // var imageData = props.imageData;
-
-
-
-        // setModalImage(imageItem);
-
-        // // Get Room Name
-        // axios.get("https://rn-rest-api.herokuapp.com/bulk/rooms?id=" + imageData[i].RoomId)
-        // .then(async function (response) {
-        //     // handle success
-        //     //resolve(response.data);
-
-        //     var roomInfoJson = await response.data;
-        //     if (roomInfoJson.length > 0) {
-        //         setRoomName(roomInfoJson[0].Name);
-        //     } else {
-        //         setRoomName("[Room is Private] - Cannot retreive room name.");
-        //     }
-        // })
-        // .catch(function (error) {
-        //     // handle error
-        //     console.log(error);
-        // })
-        // .then(function () {
-        //     // always executed
-        // });
-
-
-        // // Get Photo Owner Name
-        // axios.get("https://rn-rest-api.herokuapp.com/account?id=" + imageData[i].PlayerId)
-        // .then(async function (response) {
-        //     // handle success
-        //     //resolve(response.data);
-
-        //     var playerInfoJson = await response.data;
-        //     setPhotoOwnerName(`${playerInfoJson.displayName} (@${playerInfoJson.username})`);
-        // })
-        // .catch(function (error) {
-        //     // handle error
-        //     console.log(error);
-        // })
-        // .then(function () {
-        //     // always executed
-        // });
-
-
-        // // Get Tagged Player Data
-        // if (imageData[i].TaggedPlayerIds.length > 0) {
-        //     var userParams = '';
-        //     for (var t = 0; t < imageData[i].TaggedPlayerIds.length; t++) {
-        //         if (t === 0) {
-        //             userParams = `?id=${imageData[i].TaggedPlayerIds[t]}`;
-        //         } else {
-        //             userParams += `&id=${imageData[i].TaggedPlayerIds[t]}`;
-        //         }
-        //     }
-                
-        //     axios.get("https://rn-rest-api.herokuapp.com/bulk/users" + userParams)
-        //         .then(async function (response) {
-        //             // handle success
-        //             //resolve(response.data);
-
-        //             var playerInfoJson = await response.data;
-        //             var szTaggedPlayers = "";
-        //             var i = 0;
-        //             playerInfoJson.forEach((item: { displayName: string; username: string; accountId: number; }) => {
-        //                 if (item.accountId !== 1) {
-        //                     if (i === playerInfoJson.length - 1) {
-        //                         szTaggedPlayers = szTaggedPlayers + (item.displayName + " (@" + item.username + ") \r\n");
-        //                     } else {
-        //                         szTaggedPlayers = szTaggedPlayers + (item.displayName + " (@" + item.username + "), \r\n");
-        //                     }
-        //                 }
-
-        //                 i++
-        //             });
-
-        //             setTaggedPlayerString(szTaggedPlayers);
-        //         })
-        //         .catch(function (error) {
-        //             // handle error
-        //             console.log(error);
-        //         })
-        //         .then(function () {
-        //             // always executed
-        //         });
-
-        // } else {
-        //     setTaggedPlayerString("No players were tagged.");
-        // }
-
-
-    // if (props.imageId !== 0) {
-    //     console.log("Opening Modal to image.. " + props.imageId);
-    //     handleClickOpen(props.imageId)
-    // }
-
