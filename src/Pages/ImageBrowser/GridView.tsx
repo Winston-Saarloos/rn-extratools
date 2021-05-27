@@ -1,10 +1,11 @@
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // Styling
 import './GridView.css';
 import Modal from './Modal';
+import ImageThumbnail from './ImageThumbnail';
 
 type RequestParams = {
     Url: string,
@@ -35,7 +36,7 @@ type GridImageItem = {
     CommentCount: number
 }
 
-var ImageItem : {
+var ImageItem: {
     Id: number,
     Type: number,
     Accessibility: number,
@@ -51,7 +52,7 @@ var ImageItem : {
     CommentCount: number
 }
 
-var imageObjectArray : {
+var imageObjectArray: {
     Id: number,
     Type: number,
     Accessibility: number,
@@ -65,32 +66,73 @@ var imageObjectArray : {
     CreatedAt: string,
     CheerCount: number,
     CommentCount: number
-  }[] = [];
+}[] = [];
 
 function GridView(props: GridViewProps) {
-    //const [imageId, setImageId] = React.useState<number>(0);
     const [open, setOpen] = React.useState(false);
     const [modalImage, setModalImage] = React.useState<GridImageItem>(ImageItem);
     const [imageDataResultCollection, setImageDataResultCollection] = React.useState<typeof imageObjectArray>([]);
 
     var imageData = imageDataResultCollection;
 
-    // Only Fetch New Images when the request parameters have changed.
+    // Only Fetch New Images when the request parameters have changed (aka Load Images button was clicked)!
     useEffect(() => {
         if (props.requestParams !== undefined) {
+            console.log("First Effect Fired!");
             LoadImages(props.requestParams);
         }
-      }, [props.requestParams]);
+    }, [props.requestParams]);
+
+    // Separate Use Effect that fires when page number is updated
+    const [imageObserver, setImageObserver] = useState<IntersectionObserver>();
+
+    // const defaultOptions = {
+    //     root: null,
+    //     rootMargin: '0px',
+    //     threshold: 1,
+    //   }
+
+    function createObserver(inViewCallback: IntersectionObserverCallback, newOptions = {}) {
+        const defaultOptions = {
+            threshold: 1,
+        }
+        return new IntersectionObserver(inViewCallback, Object.assign(defaultOptions, newOptions));
+    }
+
+    function onImageInView(entries: any[], observer: { unobserve: (arg0: any) => void; }) {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const element = entry.target;
+                const imageSrc = element.getAttribute('data-src');
+
+                element.removeAttribute('data-src');
+                element.setAttribute('src', imageSrc);
+
+                observer.unobserve(element);
+            }
+        });
+    }
+
+    useEffect(() => {
+        const imageObserver = createObserver(onImageInView);
+        setImageObserver(imageObserver);
+
+        return () => {
+            imageObserver.disconnect();
+        }
+    }, []);
 
     // Calls the API to load a set of images based on supplied parameters.
     async function LoadImages(requestParameters: RequestParams) {
         console.log("Load Images Function Fired..");
         var imageLocation = requestParameters.ImageLocation;
         var szUrl = requestParameters.Url;
-        var skipAmount = requestParameters.SkipAmount;
         var takeAmount = requestParameters.TakeAmount;
+        var skipAmount = requestParameters.SkipAmount;
         var searchQuery = requestParameters.Query;
         var displayOrder = requestParameters.DisplayOrder;
+
+        console.log("Skip Amount: " + skipAmount);
 
         if (imageLocation === 3) {
             szUrl = szUrl + `?sort=${displayOrder}&type=${imageLocation}&skip=${skipAmount}&take=${takeAmount}`
@@ -106,7 +148,6 @@ function GridView(props: GridViewProps) {
             axios.get(szUrl)
                 .then(async function (response) {
                     // handle success
-                    //console.log(response);
                     imageObjectArray = await response.data;
 
                     if (imageObjectArray.length > 0) {
@@ -146,20 +187,22 @@ function GridView(props: GridViewProps) {
     if (typeof imageData == 'string' || imageData.length < 1) {
         return (
             <div className="GridView" style={{ overflow: 'hidden' }}>
-                    No Image Results!
+                No Image Results!
             </div>
         )
     } else {
         return (
             <div className="GridView" style={{ overflow: 'hidden' }}>
                 <Grid container spacing={1} direction="row">
-                    {imageData.map((image: GridImageItem) =>
-                        <Grid item xs={6} md={6} lg={3} xl={2} key={image.Id.toString()} >
-                            <img src={'https://img.rec.net/' + image.ImageName + '?width=500'} alt={image.Id.toString()} className="imageThumbnail" onClick={() => handleClickOpen(image.Id)} />
-                        </Grid>
-                    )}
+                    {imageData.map((image: GridImageItem) => {
+                        return (
+                            <Grid item xs={6} md={6} lg={3} xl={2} key={image.Id.toString()} >
+                                <ImageThumbnail src={'https://img.rec.net/' + image.ImageName + '?width=500'} observer={imageObserver} alt={image.Id.toString()} openModal={handleClickOpen} imageId={image.Id} />
+                            </Grid>
+                        )
+                    })}
                 </Grid>
-                 <Modal open={open} onClose={handleClose} imageData={modalImage} />
+                <Modal open={open} onClose={handleClose} imageData={modalImage} />
             </div>
         );
     }

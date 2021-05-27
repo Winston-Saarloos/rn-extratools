@@ -43,9 +43,13 @@ function ImageBrowserMain() {
   const [imageRequestParams, setImageRequestParams] = React.useState<typeof imageRequestParameters>();
 
   async function LoadImages(imageLocation: number, displayOrder: number, searchQuery: string) {
-    var takeAmount = 75;
+    var takeAmount = 100000;
     var skipAmount = 0;
     var szUrl = 'https://rn-rest-api.herokuapp.com/images';
+
+    if (imageLocation === 3) {
+      takeAmount = 2000;
+    }
     
     setImageRequestParams({
       "Url": szUrl,

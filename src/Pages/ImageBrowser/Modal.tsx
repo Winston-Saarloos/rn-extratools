@@ -10,7 +10,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Grid from '@material-ui/core/Grid';
 
 // Not Material Imports
-import React from 'react'
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 
@@ -51,48 +51,55 @@ function Modal(props: ModalProps) {
     const LG_VALUE = 6;
     const XL_VALUE = 6;
 
-    if (props.imageData && props.imageData.Id) {
-        var modalImage = props.imageData;
+    useEffect(() => {
+        if (props.imageData !== undefined) {
+            console.log("Fetching Image Data");
+            getDataForModal(props.imageData);
+        }
+    }, [props.imageData]);
 
+    async function getDataForModal(image: ImageItem) {
         // Get Room Name
-        axios.get("https://rn-rest-api.herokuapp.com/bulk/rooms?id=" + modalImage.RoomId)
-        .then(async function (response) {
-            // handle success
-            var roomInfoJson = await response.data;
-            if (roomInfoJson.length > 0) {
-                setRoomName(roomInfoJson[0].Name);
-            } else {
-                setRoomName("[Room is Private] - Cannot retreive room name.");
-            }
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-        .then(function () {
-            // always executed
-        });
+        axios.get("https://rn-rest-api.herokuapp.com/bulk/rooms?id=" + image.RoomId)
+            .then(async function (response) {
+                // handle success
+                var roomInfoJson = await response.data;
+                console.log("Fetching Room Data");
+                if (roomInfoJson.length > 0) {
+                    setRoomName(roomInfoJson[0].Name);
+                } else {
+                    setRoomName("[Room is Private] - Cannot retreive room name.");
+                }
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .then(function () {
+                // always executed
+            });
 
         // Get Photo Owner Name
-        axios.get("https://rn-rest-api.herokuapp.com/account?id=" + modalImage.PlayerId)
-        .then(async function (response) {
-            // handle success
-            var playerInfoJson = await response.data;
-            setPhotoOwnerName(`${playerInfoJson.displayName} (@${playerInfoJson.username})`);
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        })
+        axios.get("https://rn-rest-api.herokuapp.com/account?id=" + image.PlayerId)
+            .then(async function (response) {
+                // handle success
+                var playerInfoJson = await response.data;
+                console.log("Fetching Photo Owner Data");
+                setPhotoOwnerName(`${playerInfoJson.displayName} (@${playerInfoJson.username})`);
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
 
         // Get Tagged Player Data
-        if (modalImage.TaggedPlayerIds.length > 0) {
+        if (image.TaggedPlayerIds.length > 0) {
             var userParams = '';
-            for (var t = 0; t < modalImage.TaggedPlayerIds.length; t++) {
+            for (var t = 0; t < image.TaggedPlayerIds.length; t++) {
                 if (t === 0) {
-                    userParams = `?id=${modalImage.TaggedPlayerIds[t]}`;
+                    userParams = `?id=${image.TaggedPlayerIds[t]}`;
                 } else {
-                    userParams += `&id=${modalImage.TaggedPlayerIds[t]}`;
+                    userParams += `&id=${image.TaggedPlayerIds[t]}`;
                 }
             }
 
@@ -100,6 +107,7 @@ function Modal(props: ModalProps) {
                 .then(async function (response) {
                     // handle success
                     var playerInfoJson = await response.data;
+                    console.log("Fetching User Data");
                     var szTaggedPlayers = "";
                     var i = 0;
                     playerInfoJson.forEach((item: { displayName: string; username: string; accountId: number; }) => {
@@ -121,6 +129,11 @@ function Modal(props: ModalProps) {
                     console.log(error);
                 })
         }
+
+    }
+
+    if (props.imageData && props.imageData.Id) {
+        var modalImage = props.imageData;
 
         return (
             <Dialog maxWidth={'lg'} open={props.open} onClose={() => props.onClose()} aria-labelledby="max-width-dialog-title">
@@ -234,7 +247,7 @@ function Modal(props: ModalProps) {
                 <DialogTitle id="max-width-dialog-title">Image Information</DialogTitle>
                 <DialogContent>
                     An error occured loading the dialog window.
-        </DialogContent>
+                </DialogContent>
                 <DialogActions>
                     <Button onClick={() => props.onClose()} variant="contained" color="primary" size="large" startIcon={<CloseIcon />}>Close</Button>
                 </DialogActions>
