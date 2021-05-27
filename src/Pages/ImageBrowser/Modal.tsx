@@ -39,7 +39,6 @@ type ModalProps = {
 }
 
 function Modal(props: ModalProps) {
-
     // State Variables
     const [photoOwnerName, setPhotoOwnerName] = React.useState<string>('');
     const [roomName, setRoomName] = React.useState<string>('');

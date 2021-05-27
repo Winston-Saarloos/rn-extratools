@@ -86,12 +86,6 @@ function GridView(props: GridViewProps) {
     // Separate Use Effect that fires when page number is updated
     const [imageObserver, setImageObserver] = useState<IntersectionObserver>();
 
-    // const defaultOptions = {
-    //     root: null,
-    //     rootMargin: '0px',
-    //     threshold: 1,
-    //   }
-
     function createObserver(inViewCallback: IntersectionObserverCallback, newOptions = {}) {
         const defaultOptions = {
             threshold: 1,

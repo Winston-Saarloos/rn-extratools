@@ -1,34 +1,11 @@
 import React from 'react'
-//import Request from 'react-axios';
 import Header from '../Header';
 import Divider from '@material-ui/core/Divider';
-//import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios'
-//import Paper from '@material-ui/core/Paper';
-//import { useState } from 'react'
-//import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
-//import axios from 'axios';
-//import { makeStyles } from '@material-ui/core/styles';
 
 // Component imports
 import GridView from './GridView';
 import ImageBrowserHeader from './ImageBrowserHeader';
-
-// var imageObjectArray : {
-//   Id: number,
-//   Type: number,
-//   Accessibility: number,
-//   AccessibilityLocked: boolean,
-//   ImageName: string,
-//   Description?: string | null,
-//   PlayerId: number,
-//   TaggedPlayerIds: Array<number>,
-//   RoomId: number,
-//   PlayerEventId?: number | null,
-//   CreatedAt: string,
-//   CheerCount: number,
-//   CommentCount: number
-// }[] = [];
 
 var imageRequestParameters : {
   Url: string,
