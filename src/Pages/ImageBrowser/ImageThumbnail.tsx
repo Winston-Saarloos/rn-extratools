@@ -28,7 +28,7 @@ const LazyImage = ({ observer, src, alt, openModal, imageId }: IProps) => {
     }, [observer]);
 
     return (
-        <img ref={imageEl} data-src={src} alt={alt} className="imageThumbnail" onClick={() => openModal(imageId)} />
+        <img ref={imageEl} data-src={src} alt={alt} className="imageThumbnail" onClick={() => openModal(imageId)} style={{ minHeight: 100 }} />
     )
 }
 export default LazyImage;
