@@ -1,16 +1,16 @@
 // Components
- //import React from "react";
  import {Route, BrowserRouter as Router} from 'react-router-dom';
  import { ThemeProvider } from "@material-ui/core/styles";
  import CssBaseline from '@material-ui/core/CssBaseline';
- import deepPurple from '@material-ui/core/colors/deepPurple';
  import {createTheme} from '@material-ui/core/styles';
  import './App.css';
 
 // Pages
-//import Header from './Pages/Header';
 import Home from './Pages/Home';
 import ImageBrowser from './Pages/ImageBrowser/ImageBrowserMain';
+import { grey, deepPurple } from '@material-ui/core/colors';
+import { useMediaQuery } from '@material-ui/core';
+import React from 'react';
 
 declare module "@material-ui/core/styles/createPalette" {
   interface Palette {
@@ -26,10 +26,24 @@ const theme = createTheme({
   palette: {
     type: 'dark',
     primary: deepPurple,
-  },
-});
+    secondary: grey,
+}});
 
-function App() {
+function App() { 
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+  console.log(`User prefers dark mode: ${prefersDarkMode}`);
+
+  // const theme = React.useMemo(
+  //   () =>
+  //     createTheme({
+  //       palette: {
+  //         type: prefersDarkMode ? 'dark' : 'light'
+  //       },
+  //     }),
+  //   [prefersDarkMode],
+  // );
+
   return (
      <ThemeProvider theme={theme}>
        <CssBaseline />

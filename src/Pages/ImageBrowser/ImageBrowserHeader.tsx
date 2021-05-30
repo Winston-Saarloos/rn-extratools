@@ -14,6 +14,8 @@ import Grid from '@material-ui/core/Grid';
 
 // Styling
 import './ImageBrowserHeader.css';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import { IconButton } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,11 +72,11 @@ function ImageBrowserHeader({ loadImages }: IProps) {
     <div className="ImageBrowserHeader">
       <Grid container spacing={0} direction="row">
         <Grid item xs={12} className="orangeB"></Grid>
-        <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
+        <Grid item xs={12} md={6} lg={2} xl={2} className="orangeB">
           <Box display="flex" justifyContent="center" p={1} >
             <FormControl variant="outlined" className={classes.imageLocation}>
               <InputLabel id="lblImageLocation">Image Location</InputLabel>
-              <Select labelId="lblImageLocation" id="cboFeedType" label="Image Location" value={imageLocation} onChange={changeImageLocation} defaultValue={1}> 
+              <Select labelId="lblImageLocation" id="cboFeedType" label="Image Location" value={imageLocation} onChange={changeImageLocation} defaultValue={1}>
                 <MenuItem value={1}>User Photo Feed</MenuItem>
                 <MenuItem value={2}>User Photo Library</MenuItem>
                 <MenuItem value={3}>Global Image Feed</MenuItem>
@@ -82,7 +84,7 @@ function ImageBrowserHeader({ loadImages }: IProps) {
             </FormControl>
           </Box>
         </Grid>
-        <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
+        <Grid item xs={12} md={6} lg={2} xl={2} className="orangeB">
           <Box display="flex" justifyContent="center" p={1} >
             <FormControl variant="outlined" className={classes.displayOrder}>
               <InputLabel id="lblDisplayOrder">Display Order</InputLabel>
@@ -99,12 +101,19 @@ function ImageBrowserHeader({ loadImages }: IProps) {
         </Grid>
         <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
           <Box display="flex" justifyContent="center" p={1} >
-            <TextField id="txtSearch" className={classes.nameTextBox} label="Enter @name.." variant="outlined" onChange={changeSearchQuery} value={searchQuery}/>
+            <TextField id="txtSearch" className={classes.nameTextBox} label="Enter @name.." variant="outlined" onChange={changeSearchQuery} value={searchQuery} />
           </Box>
         </Grid>
-        <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
+        <Grid item xs={10} md={5} lg={4} xl={4} className="orangeB">
           <Box display="flex" justifyContent="center" p={2}>
             <Button id="btnLoadImages" variant="contained" onClick={() => loadImages(imageLocation, imageDisplayOrder, searchQuery)} className={classes.loadImagesButton} size="large" color="primary" startIcon={<LoadIcon />}>Load Images</Button>
+          </Box>
+        </Grid>
+        <Grid item xs={2} md={1} lg={1} xl={1} className="orangeB">
+          <Box display="flex" justifyContent="center" p={2}>
+            <IconButton color="secondary" aria-label="advanced search" component="span" >
+              <FilterListIcon fontSize="large" />
+            </IconButton>
           </Box>
         </Grid>
       </Grid>

@@ -1,10 +1,6 @@
-import React from 'react'
 import Header from './Header';
 import ChangeLog from './ChangeLog';
 import Grid from '@material-ui/core/Grid';
-//import { Paper } from "@material-ui/core";
-//import { useState } from 'react';
-//import axios from 'axios';
 
 function Home() {
 

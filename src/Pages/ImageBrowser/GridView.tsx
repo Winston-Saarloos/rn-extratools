@@ -6,6 +6,19 @@ import React, { useEffect, useState } from 'react'
 import './GridView.css';
 import Modal from './Modal';
 import ImageThumbnail from './ImageThumbnail';
+import { makeStyles, Paper, Skeleton, Theme } from '@material-ui/core';
+
+const useStyles = makeStyles((theme: Theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+    paper: {
+      padding: theme.spacing(2),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+    },
+  }),
+);
 
 type RequestParams = {
     Url: string,
@@ -69,9 +82,11 @@ var imageObjectArray: {
 }[] = [];
 
 function GridView(props: GridViewProps) {
+    const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [modalImage, setModalImage] = React.useState<GridImageItem>(ImageItem);
     const [imageDataResultCollection, setImageDataResultCollection] = React.useState<typeof imageObjectArray>([]);
+    const [loading, setLoading] = React.useState<boolean>(false);
 
     var imageData = imageDataResultCollection;
 
@@ -79,6 +94,7 @@ function GridView(props: GridViewProps) {
     useEffect(() => {
         if (props.requestParams !== undefined) {
             console.log("First Effect Fired!");
+            setLoading(true);
             LoadImages(props.requestParams);
         }
     }, [props.requestParams]);
@@ -150,6 +166,7 @@ function GridView(props: GridViewProps) {
                     } else {
                         setImageDataResultCollection([]);
                     }
+
                 })
                 .catch(function (error) {
                     // handle error
@@ -159,6 +176,7 @@ function GridView(props: GridViewProps) {
                     // always executed
                 });
         }
+        setLoading(false);
     }
 
     // Control Modal Open/Close State
@@ -178,12 +196,45 @@ function GridView(props: GridViewProps) {
         setOpen(false);
     };
 
+    const XS_SIZE = 6;
+    const MD_SIZE = 6;
+    const LG_SIZE =3
+    const XL_SIZE = 2;
+
+    const SKELE_WIDTH_BOX = "100%";
+    const SKELE_LINE_ONE = "90%";
+    const SKELE_LINE_TWO = "85%";
+    const SKELE_ANIMATION = "wave";
+
     if (typeof imageData == 'string' || imageData.length < 1) {
-        return (
-            <div className="GridView" style={{ overflow: 'hidden' }}>
-                No Image Results!
-            </div>
-        )
+        if (loading) {
+            const itemArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+            return (
+                <div className="GridView" >
+                    <Grid container spacing={1} direction="row" style={{ overflow: 'hidden' }}>
+                        {itemArray.map((value) => {
+                            return (
+                                <Grid item xs={XS_SIZE} md={MD_SIZE} lg={LG_SIZE} xl={XL_SIZE} key={value} >
+                                    <Skeleton animation={SKELE_ANIMATION} variant="rectangular" width={SKELE_WIDTH_BOX} height={250} />
+                                    <Skeleton animation={SKELE_ANIMATION} variant="text" width={SKELE_LINE_ONE} height={20} />
+                                    <Skeleton animation={SKELE_ANIMATION} variant="text" width={SKELE_LINE_TWO} height={20} />
+                                </Grid>
+                            )
+                        })}
+                    </Grid>
+                </div>
+            )
+        } else {
+            return (
+                <div className="GridView" style={{ overflow: 'hidden' }}>
+                    <Grid container spacing={1} direction="row">
+                        <Grid item xs={12} md={12} lg={12} xl={12}>
+                            <Paper className={classes.paper}>No Image Results!</Paper>
+                        </Grid>
+                    </Grid>
+                </div>
+            )
+        }
     } else {
         return (
             <div className="GridView" style={{ overflow: 'hidden' }}>

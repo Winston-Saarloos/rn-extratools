@@ -1,26 +1,52 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import MatLink from '@material-ui/core/Link';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
 import { Paper } from "@material-ui/core";
-//import { useState } from 'react';
-//import axios from 'axios';
+import Typography from '@material-ui/core/Typography';
 
 function ChangeLog() {
 
     return (
         <div className="ChangeLog">
-            <Grid container direction="row" style={{ border: "2px solid grey" }}>
+            <Grid container direction="row" spacing={3} >
                 <Grid item xs={3}>
                 </Grid>
                 <Grid item xs={6}>
                     <Grid container direction="column" spacing={0} >
                         <Grid item>
-                            <Paper>
-                                <div id="Item-Title"><h1>Image Browser</h1></div>
+                            <Paper elevation={2}>
+                                <div id="Item-Title">
+                                    <Typography variant="h4">
+                                        About the Project
+                                    </Typography>
+                                </div>
                                 <div id="Item-Body">
-                                    <p>Use this application to view and search for photos avaiable on rec.net</p>
+                                    <Typography variant="body1">
+                                        Hello! This project is created and maintained by Rec Room user <strong>@Rocko</strong>. 
+                                        If you have suggestions or feedback feel free to send me a message on Discord. (Rocko#8625)
+                                    </Typography>
+                                    <MatLink href={`https://github.com/Winston-Saarloos/rn-extratools`} target="_blank" rel="noopener" >Project Github Repo</MatLink>
+                                </div>
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item xs={3}>
+                </Grid>
+                <Grid item xs={3}>
+                </Grid>
+                <Grid item xs={6}>
+                    <Grid container direction="column" spacing={0} >
+                        <Grid item>
+                            <Paper elevation={2}>
+                                <div id="Item-Title">
+                                    <Typography variant="h4">
+                                        Image Browser v2.0.5
+                                    </Typography></div>
+                                <div id="Item-Body">
+                                <Typography variant="body1">Use this application to view and search for public photos avaiable on rec.net</Typography>
                                     <Link to="/imagebrowser">Image Browser</Link>
                                 </div>
                             </Paper>
