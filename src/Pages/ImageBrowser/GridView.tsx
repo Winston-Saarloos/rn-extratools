@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 // Styling
 import './GridView.css';
-import Modal from './Modal';
+import Modal from './ImageDetailModal';
 import ImageThumbnail from './ImageThumbnail';
 import { makeStyles, Paper, Skeleton, Theme } from '@material-ui/core';
 
@@ -104,7 +104,7 @@ function GridView(props: GridViewProps) {
 
     function createObserver(inViewCallback: IntersectionObserverCallback, newOptions = {}) {
         const defaultOptions = {
-            threshold: 1,
+            threshold: 0.1,
         }
         return new IntersectionObserver(inViewCallback, Object.assign(defaultOptions, newOptions));
     }
@@ -158,7 +158,7 @@ function GridView(props: GridViewProps) {
             axios.get(szUrl)
                 .then(async function (response) {
                     // handle success
-                    imageObjectArray = await response.data;
+                    imageObjectArray = await response.data.dataObject;
 
                     if (imageObjectArray.length > 0) {
                         setImageDataResultCollection(imageObjectArray);
@@ -185,7 +185,6 @@ function GridView(props: GridViewProps) {
         for (i = 0; i < imageData.length; i++) {
             if (imageData[i].Id === imageId) {
                 setModalImage(imageData[i]);
-                console.log(imageData[i]);
                 break;
             }
         }

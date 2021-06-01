@@ -11,6 +11,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 
 // Component imports
+import Modal from './SearchFilterModal';
 
 // Styling
 import './ImageBrowserHeader.css';
@@ -54,7 +55,14 @@ function ImageBrowserHeader({ loadImages }: IProps) {
   const classes = useStyles();
   const [imageLocation, setImageLocation] = React.useState<number>(1);
   const [imageDisplayOrder, setImageDisplayOrder] = React.useState<number>(1);
-  const [searchQuery, setSearchQuery] = React.useState<string>('leekzh');
+  const [searchQuery, setSearchQuery] = React.useState<string>('');
+
+  // Modal
+  const [open, setOpen] = React.useState(false);
+
+  // Text Select
+  // const [searchCategory, setSearchCategory] = React.useState("1");
+
 
   const changeImageLocation = (event: React.ChangeEvent<{ value: number }>) => {
     return setImageLocation(event.target.value as number);
@@ -67,6 +75,18 @@ function ImageBrowserHeader({ loadImages }: IProps) {
   const changeSearchQuery = (event: React.ChangeEvent<{ value: string }>) => {
     return setSearchQuery(event.target.value as string);
   };
+
+  const handleClickOpen = async () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setSearchCategory(event.target.value);
+  // };
 
   return (
     <div className="ImageBrowserHeader">
@@ -84,7 +104,7 @@ function ImageBrowserHeader({ loadImages }: IProps) {
             </FormControl>
           </Box>
         </Grid>
-        <Grid item xs={12} md={6} lg={2} xl={2} className="orangeB">
+        <Grid item xs={12} md={6} lg={3} xl={2} className="orangeB">
           <Box display="flex" justifyContent="center" p={1} >
             <FormControl variant="outlined" className={classes.displayOrder}>
               <InputLabel id="lblDisplayOrder">Display Order</InputLabel>
@@ -101,22 +121,27 @@ function ImageBrowserHeader({ loadImages }: IProps) {
         </Grid>
         <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
           <Box display="flex" justifyContent="center" p={1} >
-            <TextField id="txtSearch" className={classes.nameTextBox} label="Enter @name.." variant="outlined" onChange={changeSearchQuery} value={searchQuery} />
+              <TextField id="txtSearch" className={classes.nameTextBox} label="Enter Search.." variant="outlined" onChange={changeSearchQuery} value={searchQuery} />
+            {/* <TextField id="txtSearch" select label="Enter Search.." className={classes.nameTextBox} value={searchCategory} onChange={handleChange} SelectProps={{ native: true, }} variant="outlined" >
+              <option key="playerSearch" value="1">@</option>
+              <option key="roomSearch" value="2">^</option>
+            </TextField> */}
           </Box>
         </Grid>
-        <Grid item xs={10} md={5} lg={4} xl={4} className="orangeB">
+        <Grid item xs={10} md={5} lg={3} xl={4} className="orangeB">
           <Box display="flex" justifyContent="center" p={2}>
             <Button id="btnLoadImages" variant="contained" onClick={() => loadImages(imageLocation, imageDisplayOrder, searchQuery)} className={classes.loadImagesButton} size="large" color="primary" startIcon={<LoadIcon />}>Load Images</Button>
           </Box>
         </Grid>
         <Grid item xs={2} md={1} lg={1} xl={1} className="orangeB">
           <Box display="flex" justifyContent="center" p={2}>
-            <IconButton color="secondary" aria-label="advanced search" component="span" >
+            <IconButton color="secondary" aria-label="advanced search" component="span" onClick={() => handleClickOpen()} >
               <FilterListIcon fontSize="large" />
             </IconButton>
           </Box>
         </Grid>
       </Grid>
+      <Modal open={open} onClose={handleClose} />
     </div>
   );
 }

@@ -43,7 +43,7 @@ function ChangeLog() {
                             <Paper elevation={2}>
                                 <div id="Item-Title">
                                     <Typography variant="h4">
-                                        Image Browser v2.0.5
+                                        Image Browser v2.1.0
                                     </Typography></div>
                                 <div id="Item-Body">
                                 <Typography variant="body1">Use this application to view and search for public photos avaiable on rec.net</Typography>

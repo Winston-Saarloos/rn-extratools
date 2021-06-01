@@ -52,7 +52,6 @@ function Modal(props: ModalProps) {
 
     useEffect(() => {
         if (props.imageData !== undefined) {
-            console.log("Fetching Image Data");
             getDataForModal(props.imageData);
         }
     }, [props.imageData]);
@@ -63,9 +62,9 @@ function Modal(props: ModalProps) {
             .then(async function (response) {
                 // handle success
                 var roomInfoJson = await response.data;
-                console.log("Fetching Room Data");
-                if (roomInfoJson.length > 0) {
-                    setRoomName(roomInfoJson[0].Name);
+                var roomInfoObject = roomInfoJson.dataObject;
+                if (roomInfoObject.length > 0) {
+                    setRoomName(`^${roomInfoObject[0].Name}`);
                 } else {
                     setRoomName("[Room is Private] - Cannot retreive room name.");
                 }
@@ -82,8 +81,7 @@ function Modal(props: ModalProps) {
         axios.get("https://rn-rest-api.herokuapp.com/account?id=" + image.PlayerId)
             .then(async function (response) {
                 // handle success
-                var playerInfoJson = await response.data;
-                console.log("Fetching Photo Owner Data");
+                var playerInfoJson = await response.data.dataObject;
                 setPhotoOwnerName(`${playerInfoJson.displayName} (@${playerInfoJson.username})`);
             })
             .catch(function (error) {
@@ -105,8 +103,7 @@ function Modal(props: ModalProps) {
             axios.get("https://rn-rest-api.herokuapp.com/bulk/users" + userParams)
                 .then(async function (response) {
                     // handle success
-                    var playerInfoJson = await response.data;
-                    console.log("Fetching User Data");
+                    var playerInfoJson = await response.data.dataObject;
                     var szTaggedPlayers = "";
                     var i = 0;
                     playerInfoJson.forEach((item: { displayName: string; username: string; accountId: number; }) => {
