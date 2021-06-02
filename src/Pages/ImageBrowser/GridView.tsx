@@ -6,18 +6,19 @@ import React, { useEffect, useState } from 'react'
 import './GridView.css';
 import Modal from './ImageDetailModal';
 import ImageThumbnail from './ImageThumbnail';
-import { makeStyles, Paper, Skeleton, Theme } from '@material-ui/core';
+import { makeStyles, Paper, Theme } from '@material-ui/core';
+import ScrollToTopButton from './GridViewScrollToTop';
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
-      flexGrow: 1,
+        flexGrow: 1,
     },
     paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
     },
-  }),
+}),
 );
 
 type RequestParams = {
@@ -65,36 +66,25 @@ var ImageItem: {
     CommentCount: number
 }
 
-var imageObjectArray: {
-    Id: number,
-    Type: number,
-    Accessibility: number,
-    AccessibilityLocked: boolean,
-    ImageName: string,
-    Description?: string | null,
-    PlayerId: number,
-    TaggedPlayerIds: Array<number>,
-    RoomId: number,
-    PlayerEventId?: number | null,
-    CreatedAt: string,
-    CheerCount: number,
-    CommentCount: number
-}[] = [];
+var resultObject: {
+    dataObject: Array<GridImageItem> | [],
+    status: number,
+    message: string
+};
 
 function GridView(props: GridViewProps) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [modalImage, setModalImage] = React.useState<GridImageItem>(ImageItem);
-    const [imageDataResultCollection, setImageDataResultCollection] = React.useState<typeof imageObjectArray>([]);
-    const [loading, setLoading] = React.useState<boolean>(false);
+    const [imageDataResultCollection, setImageDataResultCollection] = React.useState<typeof resultObject>({ dataObject: [], status: -1, message: 'No Image Results!' });
+    //const [loading, setLoading] = React.useState<boolean>(false);
 
-    var imageData = imageDataResultCollection;
+    var imageData = imageDataResultCollection.dataObject;
 
     // Only Fetch New Images when the request parameters have changed (aka Load Images button was clicked)!
     useEffect(() => {
         if (props.requestParams !== undefined) {
-            console.log("First Effect Fired!");
-            setLoading(true);
+            //setLoading(true);
             LoadImages(props.requestParams);
         }
     }, [props.requestParams]);
@@ -152,88 +142,86 @@ function GridView(props: GridViewProps) {
 
         // URL https://rn-rest-api.herokuapp.com/images?u={username}
         if (searchQuery === '' && imageLocation !== 3) {
-            setImageDataResultCollection([]);
+            setImageDataResultCollection({ dataObject: [], status: -1, message: "Enter an '@' name to find photos."});
 
         } else {
             axios.get(szUrl)
                 .then(async function (response) {
                     // handle success
-                    imageObjectArray = await response.data.dataObject;
+                    resultObject = await response.data;
 
-                    if (imageObjectArray.length > 0) {
-                        setImageDataResultCollection(imageObjectArray);
-
+                    if (resultObject.status > -1) {
+                        setImageDataResultCollection(resultObject);
                     } else {
-                        setImageDataResultCollection([]);
+                        setImageDataResultCollection({ dataObject: [], status: -1, message: '' });
                     }
 
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
+                    setImageDataResultCollection({ dataObject: [], status: 500, message: 'An unexpected error occured. Please refresh and try again.  If problem persists contact @Rocko on Rec Room.' });
                 })
-                .then(function () {
-                    // always executed
-                });
         }
-        setLoading(false);
+        //setLoading(false);
     }
 
     // Control Modal Open/Close State
     const handleClickOpen = async (imageId: number) => {
         var i = 0;
-        for (i = 0; i < imageData.length; i++) {
-            if (imageData[i].Id === imageId) {
-                setModalImage(imageData[i]);
-                break;
+        if (imageData !== []) {
+            for (i = 0; i < imageData.length; i++) {
+                if (imageData[i].Id === imageId) {
+                    setModalImage(imageData[i]);
+                    break;
+                }
             }
+            setOpen(true);
         }
-        setOpen(true);
     };
 
     const handleClose = () => {
         setOpen(false);
     };
 
-    const XS_SIZE = 6;
-    const MD_SIZE = 6;
-    const LG_SIZE =3
-    const XL_SIZE = 2;
+    // const XS_SIZE = 6;
+    // const MD_SIZE = 6;
+    // const LG_SIZE = 3
+    // const XL_SIZE = 2;
 
-    const SKELE_WIDTH_BOX = "100%";
-    const SKELE_LINE_ONE = "90%";
-    const SKELE_LINE_TWO = "85%";
-    const SKELE_ANIMATION = "wave";
+    // const SKELE_WIDTH_BOX = "100%";
+    // const SKELE_LINE_ONE = "90%";
+    // const SKELE_LINE_TWO = "85%";
+    // const SKELE_ANIMATION = "wave";
 
-    if (typeof imageData == 'string' || imageData.length < 1) {
-        if (loading) {
-            const itemArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            return (
-                <div className="GridView" >
-                    <Grid container spacing={1} direction="row" style={{ overflow: 'hidden' }}>
-                        {itemArray.map((value) => {
-                            return (
-                                <Grid item xs={XS_SIZE} md={MD_SIZE} lg={LG_SIZE} xl={XL_SIZE} key={value} >
-                                    <Skeleton animation={SKELE_ANIMATION} variant="rectangular" width={SKELE_WIDTH_BOX} height={250} />
-                                    <Skeleton animation={SKELE_ANIMATION} variant="text" width={SKELE_LINE_ONE} height={20} />
-                                    <Skeleton animation={SKELE_ANIMATION} variant="text" width={SKELE_LINE_TWO} height={20} />
-                                </Grid>
-                            )
-                        })}
+    if (imageData.length < 1) {
+        // if (loading) { // Not currently working as intended
+        //     const itemArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+        //     return (
+        //         <div className="GridView" >
+        //             <Grid container spacing={1} direction="row" style={{ overflow: 'hidden' }}>
+        //                 {itemArray.map((value) => {
+        //                     return (
+        //                         <Grid item xs={XS_SIZE} md={MD_SIZE} lg={LG_SIZE} xl={XL_SIZE} key={value} >
+        //                             <Skeleton animation={SKELE_ANIMATION} variant="rectangular" width={SKELE_WIDTH_BOX} height={250} />
+        //                             <Skeleton animation={SKELE_ANIMATION} variant="text" width={SKELE_LINE_ONE} height={20} />
+        //                             <Skeleton animation={SKELE_ANIMATION} variant="text" width={SKELE_LINE_TWO} height={20} />
+        //                         </Grid>
+        //                     )
+        //                 })}
+        //             </Grid>
+        //         </div>
+        //     )
+        // } else {
+        return (
+            <div className="GridView" style={{ overflow: 'hidden' }}>
+                <Grid container spacing={1} direction="row">
+                    <Grid item xs={12} md={12} lg={12} xl={12}>
+                        <Paper className={classes.paper}>{imageDataResultCollection.message}</Paper>
                     </Grid>
-                </div>
-            )
-        } else {
-            return (
-                <div className="GridView" style={{ overflow: 'hidden' }}>
-                    <Grid container spacing={1} direction="row">
-                        <Grid item xs={12} md={12} lg={12} xl={12}>
-                            <Paper className={classes.paper}>No Image Results!</Paper>
-                        </Grid>
-                    </Grid>
-                </div>
-            )
-        }
+                </Grid>
+            </div>
+        )
     } else {
         return (
             <div className="GridView" style={{ overflow: 'hidden' }}>
@@ -246,6 +234,7 @@ function GridView(props: GridViewProps) {
                         )
                     })}
                 </Grid>
+                <ScrollToTopButton />
                 <Modal open={open} onClose={handleClose} imageData={modalImage} />
             </div>
         );

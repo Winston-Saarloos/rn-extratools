@@ -1,5 +1,5 @@
 import {useEffect, useRef} from 'react';
-import './GridView.css';
+import './ImageThumbnail.css';
 
 interface IProps {
     openModal: Function,

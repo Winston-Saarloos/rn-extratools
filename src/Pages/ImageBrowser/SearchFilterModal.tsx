@@ -26,7 +26,7 @@ function Modal(props: ModalProps) { //props: ModalProps
             <DialogTitle id="max-width-dialog-title">Advanced Filters</DialogTitle>
             <DialogContent>
                 Not Implemented Yet - This modal will be used to set filter criteria.
-                </DialogContent>
+            </DialogContent>
             <DialogActions>
                 <Button onClick={() => props.onClose()} variant="contained" color="primary" size="large" startIcon={<CloseIcon />}>Close</Button>
             </DialogActions>
