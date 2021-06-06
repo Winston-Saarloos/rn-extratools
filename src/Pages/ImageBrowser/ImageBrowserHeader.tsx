@@ -122,7 +122,7 @@ function ImageBrowserHeader({ loadImages }: IProps) {
         </Grid>
         <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
           <Box display="flex" justifyContent="center" p={1} >
-            <TextField id="txtSearch" className={classes.nameTextBox} label="Enter Search.." variant="outlined" onChange={changeSearchQuery} value={searchQuery} />
+            <TextField id="txtSearch" autoFocus className={classes.nameTextBox} label="Enter Search.." variant="outlined" onChange={changeSearchQuery} value={searchQuery} />
             {/* <TextField id="txtSearch" select label="Enter Search.." className={classes.nameTextBox} value={searchCategory} onChange={handleChange} SelectProps={{ native: true, }} variant="outlined" >
               <option key="playerSearch" value="1">@</option>
               <option key="roomSearch" value="2">^</option>

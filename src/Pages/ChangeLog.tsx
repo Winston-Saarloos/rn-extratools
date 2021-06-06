@@ -26,6 +26,7 @@ function ChangeLog() {
                                     <Typography variant="body1">
                                         Hello! This project is created and maintained by Rec Room user <strong>@Rocko</strong>. 
                                         If you have suggestions or feedback feel free to send me a message on Discord. (Rocko#8625)
+                                        Project creation date: Feburary 9th, 2021.
                                     </Typography>
                                     <MatLink href={`https://github.com/Winston-Saarloos/rn-extratools`} target="_blank" rel="noopener" >Project Github Repo</MatLink>
                                 </div>
@@ -43,7 +44,7 @@ function ChangeLog() {
                             <Paper elevation={2}>
                                 <div id="Item-Title">
                                     <Typography variant="h4">
-                                        Image Browser v2.1.0
+                                        Image Browser v2.2.0
                                     </Typography></div>
                                 <div id="Item-Body">
                                 <Typography variant="body1">Use this application to view and search for public photos avaiable on rec.net</Typography>

@@ -217,7 +217,7 @@ function GridView(props: GridViewProps) {
             <div className="GridView" style={{ overflow: 'hidden' }}>
                 <Grid container spacing={1} direction="row">
                     <Grid item xs={12} md={12} lg={12} xl={12}>
-                        <Paper className={classes.paper}>{imageDataResultCollection.message}</Paper>
+                        <Paper elevation={2} className={classes.paper}>{imageDataResultCollection.message}</Paper>
                     </Grid>
                 </Grid>
             </div>
@@ -226,6 +226,9 @@ function GridView(props: GridViewProps) {
         return (
             <div className="GridView" style={{ overflow: 'hidden' }}>
                 <Grid container spacing={1} direction="row">
+                    <Grid item xs={12} md={12} lg={12} xl={12}>
+                        <Paper elevation={2} className={classes.paper}>Total Results: {imageData.length}</Paper>
+                    </Grid>
                     {imageData.map((image: GridImageItem) => {
                         return (
                             <Grid item xs={6} md={6} lg={3} xl={2} key={image.Id.toString()} >
