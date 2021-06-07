@@ -13,13 +13,14 @@ var imageRequestParameters : {
   ImageLocation: number,
   SkipAmount: number,
   TakeAmount: number,
-  Query?: string | null
+  Query?: string | null,
+  FilterString: string
 }
 
 function ImageBrowserMain() {
   const [imageRequestParams, setImageRequestParams] = React.useState<typeof imageRequestParameters>();
 
-  async function LoadImages(imageLocation: number, displayOrder: number, searchQuery: string) {
+  async function LoadImages(imageLocation: number, displayOrder: number, searchQuery: string, filterString: string) {
     var takeAmount = 100000;
     var skipAmount = 0;
     var szUrl = 'https://rn-rest-api.herokuapp.com/images';
@@ -34,7 +35,8 @@ function ImageBrowserMain() {
       "ImageLocation": imageLocation,
       "SkipAmount": skipAmount,
       "TakeAmount": takeAmount,
-      "Query": searchQuery
+      "Query": searchQuery,
+      "FilterString": filterString
     });
   }
 

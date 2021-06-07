@@ -57,6 +57,7 @@ function ImageBrowserHeader({ loadImages }: IProps) {
   const [imageLocation, setImageLocation] = React.useState<number>(1);
   const [imageDisplayOrder, setImageDisplayOrder] = React.useState<number>(1);
   const [searchQuery, setSearchQuery] = React.useState<string>('');
+  const [filterString, setFilterString] = React.useState<string>('...');
 
   // Modal
   const [open, setOpen] = React.useState(false);
@@ -131,7 +132,7 @@ function ImageBrowserHeader({ loadImages }: IProps) {
         </Grid>
         <Grid item xs={10} md={5} lg={3} xl={4} className="orangeB">
           <Box display="flex" justifyContent="center" p={2}>
-            <Button id="btnLoadImages" variant="contained" onClick={() => loadImages(imageLocation, imageDisplayOrder, searchQuery)} className={classes.loadImagesButton} size="large" color="primary" startIcon={<LoadIcon />}>Load Images</Button>
+            <Button id="btnLoadImages" variant="contained" onClick={() => loadImages(imageLocation, imageDisplayOrder, searchQuery, filterString)} className={classes.loadImagesButton} size="large" color="primary" startIcon={<LoadIcon />}>Load Images</Button>
           </Box>
         </Grid>
         <Grid item xs={2} md={1} lg={1} xl={1} className="orangeB">

@@ -27,7 +27,8 @@ type RequestParams = {
     ImageLocation: number,
     SkipAmount: number,
     TakeAmount: number,
-    Query?: string | null
+    Query?: string | null,
+    FilterString: string,
 }
 
 type GridViewProps = {
@@ -125,6 +126,7 @@ function GridView(props: GridViewProps) {
     // Calls the API to load a set of images based on supplied parameters.
     async function LoadImages(requestParameters: RequestParams) {
         console.log("Load Images Function Fired..");
+        console.log("Filter String: " + requestParameters.FilterString);
         var imageLocation = requestParameters.ImageLocation;
         var szUrl = requestParameters.Url;
         var takeAmount = requestParameters.TakeAmount;
