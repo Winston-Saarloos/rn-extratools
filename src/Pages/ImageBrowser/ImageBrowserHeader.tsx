@@ -17,7 +17,7 @@ import Modal from './SearchFilterModal';
 import './ImageBrowserHeader.css';
 import FilterListIcon from '@material-ui/icons/FilterList';
 //import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import { IconButton } from '@material-ui/core';
+import { Badge, IconButton } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +48,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+interface FilterItemData {
+  key: number;
+  label: string;
+  type: number;
+  negate: boolean;
+  isValid: boolean;
+  filterString: string;
+}
+
 interface IProps {
   loadImages: Function;
 }
@@ -57,7 +66,8 @@ function ImageBrowserHeader({ loadImages }: IProps) {
   const [imageLocation, setImageLocation] = React.useState<number>(1);
   const [imageDisplayOrder, setImageDisplayOrder] = React.useState<number>(1);
   const [searchQuery, setSearchQuery] = React.useState<string>('');
-  const [filterString, setFilterString] = React.useState<string>('...');
+  const [filterItemDataLength, setFilterItemDataLength] = React.useState<string>('');
+  const [filterString, setFilterString] = React.useState<string>('');
 
   // Modal
   const [open, setOpen] = React.useState(false);
@@ -82,7 +92,9 @@ function ImageBrowserHeader({ loadImages }: IProps) {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (filterObject: FilterItemData[]) => {
+    // Call function to handling turning these into a string..
+    setFilterItemDataLength(`${filterObject.length}`);
     setOpen(false);
   };
 
@@ -138,7 +150,9 @@ function ImageBrowserHeader({ loadImages }: IProps) {
         <Grid item xs={2} md={1} lg={1} xl={1} className="orangeB">
           <Box display="flex" justifyContent="center" p={2}>
             <IconButton color="secondary" aria-label="advanced search" component="span" onClick={() => handleClickOpen()} >
-              <FilterListIcon fontSize="large" />
+              <Badge color="error" badgeContent={filterItemDataLength}>
+                <FilterListIcon fontSize="large" />
+              </Badge>
             </IconButton>
           </Box>
         </Grid>
