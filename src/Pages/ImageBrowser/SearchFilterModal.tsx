@@ -124,6 +124,7 @@ function Modal(props: ModalProps) { //props: ModalProps
 
         if (filterItem.isValid === false) {
           console.log("Attempting to validate value...");
+          var newFilterItemData = [...filterItemData];
 
           // Attempt to validate a user account
           if (filterItem.type === USER_ACCOUNT) {
@@ -144,7 +145,6 @@ function Modal(props: ModalProps) { //props: ModalProps
             };
 
             var szUrl = 'https://rn-rest-api.herokuapp.com/account?u=' + filterItem.label;
-            var newFilterItemData = [...filterItemData];
 
             axios.get(szUrl)
               .then(async function (response) {
@@ -188,7 +188,6 @@ function Modal(props: ModalProps) { //props: ModalProps
           } else if (filterItem.type === ACTIVITY) {
               // VALIDATE ACTIVITY HERE
           } else {
-            var newFilterItemData = [...filterItemData];
             var originalValue = filterItem.label;
             filterItem.isValid = true;
 
@@ -212,7 +211,6 @@ function Modal(props: ModalProps) { //props: ModalProps
                 filterItem.filterString = `${filterTextDateRange}${filterItem.label.replaceAll(' ', '')}`;
                 break;
               default:
-                var originalValue = filterItem.label;
                 filterItem.label = `INVALID VALUE: ${originalValue}`;
                 filterItem.isValid = true;
                 filterItem.filterString = 'INVALID_VALUE';
@@ -224,7 +222,6 @@ function Modal(props: ModalProps) { //props: ModalProps
         }
       });
     }
-    console.log(filterItemData);
   }, [filterItemData]);
 
   // Check Box State
@@ -325,7 +322,7 @@ function Modal(props: ModalProps) { //props: ModalProps
 
   return (
     <Dialog maxWidth={false} fullWidth open={props.open} onClose={() => props.onClose(filterItemData)} aria-labelledby="max-width-dialog-title">
-      <DialogTitle id="max-width-dialog-title">Advanced Filters</DialogTitle>
+      <DialogTitle id="max-width-dialog-title">Advanced Filters - WORK IN PROGRESS!</DialogTitle>
       <DialogContent>
         <Grid container spacing={3} direction="row">
           <Grid item xs={12} md={12} lg={12} xl={12} className="orangeB">

@@ -233,7 +233,7 @@ function GridView(props: GridViewProps) {
                     </Grid>
                     {imageData.map((image: GridImageItem) => {
                         return (
-                            <Grid item xs={6} md={6} lg={3} xl={2} key={image.Id.toString()} >
+                            <Grid item xs={6} md={4} lg={3} xl={2} key={image.Id.toString()} >
                                 <ImageThumbnail src={'https://img.rec.net/' + image.ImageName + '?width=500'} observer={imageObserver} alt={image.Id.toString()} openModal={handleClickOpen} imageId={image.Id} />
                             </Grid>
                         )

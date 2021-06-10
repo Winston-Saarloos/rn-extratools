@@ -48,7 +48,7 @@ function Modal(props: ModalProps) {
     const XS_VALUE = 12;
     const MD_VALUE = 6;
     const LG_VALUE = 6;
-    const XL_VALUE = 6;
+    const XL_VALUE = 3;
 
     useEffect(() => {
         if (props.imageData !== undefined) {
@@ -124,6 +124,8 @@ function Modal(props: ModalProps) {
                     // handle error
                     console.log(error);
                 })
+        } else {
+            setTaggedPlayerString("No players were tagged.");
         }
 
     }

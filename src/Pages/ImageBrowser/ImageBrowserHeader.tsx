@@ -95,12 +95,22 @@ function ImageBrowserHeader({ loadImages }: IProps) {
   const handleClose = (filterObject: FilterItemData[]) => {
     // Call function to handling turning these into a string..
     setFilterItemDataLength(`${filterObject.length}`);
+    setFilterString('testFilterString');
     setOpen(false);
   };
 
   // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   setSearchCategory(event.target.value);
   // };
+
+  let filterDataLength;
+  if (filterItemDataLength === '') {
+    filterDataLength = 0;
+  } else if (filterItemDataLength === '!') {
+    filterDataLength = '!';
+  } else {
+    filterDataLength = parseInt(filterItemDataLength);
+  }
 
   return (
     <div className="ImageBrowserHeader">
@@ -150,7 +160,7 @@ function ImageBrowserHeader({ loadImages }: IProps) {
         <Grid item xs={2} md={1} lg={1} xl={1} className="orangeB">
           <Box display="flex" justifyContent="center" p={2}>
             <IconButton color="secondary" aria-label="advanced search" component="span" onClick={() => handleClickOpen()} >
-              <Badge color="error" badgeContent={filterItemDataLength}>
+              <Badge color="error" badgeContent={filterDataLength}>
                 <FilterListIcon fontSize="large" />
               </Badge>
             </IconButton>
