@@ -73,6 +73,8 @@ var resultObject: {
     message: string
 };
 
+var bLoadContainsFilters: boolean = false;
+
 function GridView(props: GridViewProps) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -133,6 +135,7 @@ function GridView(props: GridViewProps) {
         var skipAmount = requestParameters.SkipAmount;
         var searchQuery = requestParameters.Query;
         var displayOrder = requestParameters.DisplayOrder;
+        var filterString = requestParameters.FilterString;
 
         console.log("Skip Amount: " + skipAmount);
 
@@ -140,6 +143,12 @@ function GridView(props: GridViewProps) {
             szUrl = szUrl + `?sort=${displayOrder}&type=${imageLocation}&skip=${skipAmount}&take=${takeAmount}`
         } else {
             szUrl = szUrl + `?u=${searchQuery}&sort=${displayOrder}&type=${imageLocation}&skip=${skipAmount}&take=${takeAmount}`;
+        }
+
+        if (filterString !== '') {
+            filterString = encodeURI(filterString);  // This contains values that are not valid in a URL therefore it needs to be encoded
+            szUrl = `${szUrl}&filter=${filterString}`;
+            bLoadContainsFilters = true;
         }
 
         // URL https://rn-rest-api.herokuapp.com/images?u={username}
@@ -162,7 +171,7 @@ function GridView(props: GridViewProps) {
                 .catch(function (error) {
                     // handle error
                     console.log(error);
-                    setImageDataResultCollection({ dataObject: [], status: 500, message: 'An unexpected error occured. Please refresh and try again.  If problem persists contact @Rocko on Rec Room.' });
+                    setImageDataResultCollection({ dataObject: [], status: 500, message: 'An unexpected error occured. Please refresh and try again.  If problem persists contact @Rocko on Rec Room or Discord (Rocko#8625).' });
                 })
         }
         //setLoading(false);
@@ -215,21 +224,33 @@ function GridView(props: GridViewProps) {
         //         </div>
         //     )
         // } else {
-        return (
-            <div className="GridView" style={{ overflow: 'hidden' }}>
-                <Grid container spacing={1} direction="row">
-                    <Grid item xs={12} md={12} lg={12} xl={12}>
-                        <Paper elevation={2} className={classes.paper}>{imageDataResultCollection.message}</Paper>
+        if (bLoadContainsFilters) {
+            return (
+                <div className="GridView" style={{ overflow: 'hidden' }}>
+                    <Grid container spacing={1} direction="row">
+                        <Grid item xs={12} md={12} lg={12} xl={12}>
+                            <Paper elevation={2} className={classes.paper}>No images match filter criteria.</Paper>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </div>
-        )
+                </div>
+            )
+        } else {
+            return (
+                <div className="GridView" style={{ overflow: 'hidden' }}>
+                    <Grid container spacing={1} direction="row">
+                        <Grid item xs={12} md={12} lg={12} xl={12}>
+                            <Paper elevation={2} className={classes.paper}>{imageDataResultCollection.message}</Paper>
+                        </Grid>
+                    </Grid>
+                </div>
+            )
+        }
     } else {
         return (
             <div className="GridView" style={{ overflow: 'hidden' }}>
                 <Grid container spacing={1} direction="row">
                     <Grid item xs={12} md={12} lg={12} xl={12}>
-                        <Paper elevation={2} className={classes.paper}>Total Results: {imageData.length}</Paper>
+                        <Paper elevation={2} className={classes.paper}>Total Image Results: {imageData.length}</Paper>
                     </Grid>
                     {imageData.map((image: GridImageItem) => {
                         return (

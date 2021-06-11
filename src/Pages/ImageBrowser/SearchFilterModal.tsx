@@ -6,8 +6,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
 import Grid from '@material-ui/core/Grid';
-import { Box, Checkbox, Chip, FormControl, FormControlLabel, InputLabel, makeStyles, 
-  MenuItem, Paper, Select, TextField, Theme, Typography } from '@material-ui/core';
+import {
+  Box, Checkbox, Chip, FormControl, FormControlLabel, InputLabel, makeStyles,
+  MenuItem, Paper, Select, TextField, Theme, Typography
+} from '@material-ui/core';
 import React, { useEffect } from 'react';
 
 // Icons
@@ -50,6 +52,49 @@ interface FilterItemData {
   isValid: boolean;
   filterString: string;
 }
+
+// type RoomInfoObject = {
+//   RoomId: number,
+//   IsDorm: boolean,
+//   MaxPlayerCalculationMode: number,
+//   MaxPlayers: number,
+//   CloningAllowed: boolean,
+//   DisableMicAutoMute: boolean,
+//   DisableRoomComments: boolean,
+//   EncryptVoiceChat: boolean,
+//   LoadScreenLocked: boolean,
+//   Name: string,
+//   Description: string,
+//   ImageName: string,
+//   WarningMask: number,
+//   CustomWarning: string | null,
+//   CreatorAccountId: number,
+//   State: number,
+//   Accessibility: number,
+//   SupportsLevelVoting: boolean,
+//   IsRRO: boolean,
+//   SupportsScreens: boolean,
+//   SupportsWalkVR: boolean,
+//   SupportsTeleportVR: boolean,
+//   SupportsVRLow: boolean,
+//   SupportsQuest2: boolean,
+//   SupportsMobile: true,
+//   SupportsJuniors: boolean,
+//   MinLevel: number,
+//   CreatedAt: string,
+//   Stats: {
+//     CheerCount: number,
+//     FavoriteCount: number,
+//     VisitorCount: number,
+//     VisitCount: number
+//   }
+// }
+
+// type RoomInfoResult = {
+//   dataObject: RoomInfoObject[],
+//   status: number,
+//   message: string
+// }
 
 type AccountInfoObject = {
   accountId: number,
@@ -139,8 +184,8 @@ function Modal(props: ModalProps) { //props: ModalProps
                 isJunior: false,
                 platforms: -1,
                 createdAt: ''
-              }, 
-              status: -1, 
+              },
+              status: -1,
               message: ''
             };
 
@@ -150,10 +195,10 @@ function Modal(props: ModalProps) { //props: ModalProps
               .then(async function (response) {
                 responseObject = await response.data;
 
-                if (responseObject.status === 200) { // THIS SHOULD USE SET STATE SO THE COMPONENT REFRESHES
+                if (responseObject.status === 200) {
                   var filterText = 'U|';
                   filterItem.isValid = true;
-                  
+
                   if (filterItem.negate === true) {
                     filterText = '!U|';
                   }
@@ -185,13 +230,102 @@ function Modal(props: ModalProps) { //props: ModalProps
                 newFilterItemData.splice(index, 1, filterItem);
                 setFilterItemData(newFilterItemData);
               })
+
+
           } else if (filterItem.type === ACTIVITY) {
-              // VALIDATE ACTIVITY HERE
+            // VALIDATE ACTIVITY HERE
+            // console.log("Attempting to validate ACTIVITY value..");
+            // var responseObjectRoom: RoomInfoResult = {
+            //   dataObject: [{
+            //     RoomId: -1,
+            //     IsDorm: false,
+            //     MaxPlayerCalculationMode: -1,
+            //     MaxPlayers: -1,
+            //     CloningAllowed: false,
+            //     DisableMicAutoMute: false,
+            //     DisableRoomComments: false,
+            //     EncryptVoiceChat: false,
+            //     LoadScreenLocked: false,
+            //     Name: '',
+            //     Description: '',
+            //     ImageName: '',
+            //     WarningMask: -1,
+            //     CustomWarning: null,
+            //     CreatorAccountId: -1,
+            //     State: -1,
+            //     Accessibility: -1,
+            //     SupportsLevelVoting: false,
+            //     IsRRO: false,
+            //     SupportsScreens: false,
+            //     SupportsWalkVR: false,
+            //     SupportsTeleportVR: false,
+            //     SupportsVRLow: false,
+            //     SupportsQuest2: false,
+            //     SupportsMobile: true,
+            //     SupportsJuniors: false,
+            //     MinLevel: -1,
+            //     CreatedAt: '',
+            //     Stats: {
+            //       CheerCount: -1,
+            //       FavoriteCount: -1,
+            //       VisitorCount: -1,
+            //       VisitCount: -1
+            //     }
+            //   }],
+            //   status: -1,
+            //   message: ''
+            // };
+
+            // var szRoomUrl = 'https://rn-rest-api.herokuapp.com/bulk/rooms?name=' + filterItem.label;
+
+            // axios.get(szRoomUrl)
+            //   .then(async function (response) {
+            //     responseObjectRoom = await response.data;
+
+            //     if (responseObjectRoom.status === 200) {
+            //       var filterText = 'A|';
+            //       filterItem.isValid = true;
+
+            //       if (filterItem.negate === true) {
+            //         filterText = '!A|';
+            //       }
+
+            //       console.log(responseObjectRoom);
+
+            //       filterItem.filterString = filterText + responseObjectRoom.dataObject[0].RoomId; // !A|GoldenTrophy
+
+            //       // Add our modified object to the old list
+            //       newFilterItemData.splice(index, 1, filterItem);
+            //       setFilterItemData(newFilterItemData);
+
+            //     } else {
+            //       var originalValue = filterItem.label;
+            //       filterItem.label = `INVALID VALUE: ${originalValue}`;
+            //       filterItem.isValid = true;
+            //       filterItem.filterString = 'INVALID_VALUE';
+
+            //       newFilterItemData.splice(index, 1, filterItem);
+            //       setFilterItemData(newFilterItemData);
+            //     }
+            //   })
+            //   .catch(function (error) {
+            //     // handle error
+            //     console.log(error);
+            //     var originalValue = filterItem.label;
+            //     filterItem.label = `ERROR: ${originalValue}`;
+            //     filterItem.isValid = true;
+            //     filterItem.filterString = 'ERROR_OCCURED';
+
+            //     newFilterItemData.splice(index, 1, filterItem);
+            //     setFilterItemData(newFilterItemData);
+            //   })
+
+
           } else {
             var originalValue = filterItem.label;
             filterItem.isValid = true;
 
-            switch(filterItem.type) {
+            switch (filterItem.type) {
               case DATE:
                 var filterTextDate = 'D|';
 
@@ -297,32 +431,32 @@ function Modal(props: ModalProps) { //props: ModalProps
 
   // Manipulate the UI based on the select value
   let filterInput = <Grid item xs={12} md={12} lg={12} xl={12} className="orangeB">
-                      <TextField autoFocus id="outlined-multiline-static" onChange={updateAdvancedFilterString} label="Filter String" fullWidth value={advancedFilterString} variant="outlined" />
-                    </Grid>;
+    <TextField autoFocus id="outlined-multiline-static" onChange={updateAdvancedFilterString} label="Filter String" fullWidth value={advancedFilterString} variant="outlined" />
+  </Grid>;
   let filterInput2;
 
   if (criteriaType === DATE) {
     filterInput = <Grid item xs={12} md={12} lg={6} xl={6} className="orangeB">
-                    <form className={classes.container} noValidate>
-                      <TextField id="dtInput1" fullWidth label="Date Input 1" onChange={updateAdvancedFilterString} type="date" value={advancedFilterString} className={classes.textField} InputLabelProps={{shrink: true,}} />
-                    </form>
-                  </Grid>;
+      <form className={classes.container} noValidate>
+        <TextField id="dtInput1" fullWidth label="Date Input 1" onChange={updateAdvancedFilterString} type="date" value={advancedFilterString} className={classes.textField} InputLabelProps={{ shrink: true, }} />
+      </form>
+    </Grid>;
   } else if (criteriaType === DATE_RANGE) {
     filterInput = <Grid item xs={12} md={12} lg={6} xl={6} className="orangeB">
-                    <form className={classes.container} noValidate>
-                      <TextField id="dtInput1" fullWidth label="Date Input 1" onChange={updateAdvancedFilterString} value={advancedFilterString} type="date" className={classes.textField} InputLabelProps={{shrink: true,}} />
-                    </form>
-                  </Grid>;
+      <form className={classes.container} noValidate>
+        <TextField id="dtInput1" fullWidth label="Date Input 1" onChange={updateAdvancedFilterString} value={advancedFilterString} type="date" className={classes.textField} InputLabelProps={{ shrink: true, }} />
+      </form>
+    </Grid>;
     filterInput2 = <Grid item xs={12} md={12} lg={6} xl={6} className="orangeB">
-                    <form className={classes.container} noValidate>
-                      <TextField id="dtInput2" fullWidth label="Date Input 2" onChange={updateAdvancedFilterStringTwo} value={advancedFilterStringTwo} type="date" className={classes.textField} InputLabelProps={{shrink: true,}} />
-                    </form>
-                  </Grid>;
+      <form className={classes.container} noValidate>
+        <TextField id="dtInput2" fullWidth label="Date Input 2" onChange={updateAdvancedFilterStringTwo} value={advancedFilterStringTwo} type="date" className={classes.textField} InputLabelProps={{ shrink: true, }} />
+      </form>
+    </Grid>;
   }
 
   return (
     <Dialog maxWidth={false} fullWidth open={props.open} onClose={() => props.onClose(filterItemData)} aria-labelledby="max-width-dialog-title">
-      <DialogTitle id="max-width-dialog-title">Advanced Filters - WORK IN PROGRESS!</DialogTitle>
+      <DialogTitle id="max-width-dialog-title">Advanced Filters</DialogTitle>
       <DialogContent>
         <Grid container spacing={3} direction="row">
           <Grid item xs={12} md={12} lg={12} xl={12} className="orangeB">
@@ -332,42 +466,53 @@ function Modal(props: ModalProps) { //props: ModalProps
           </Grid>
           <Grid item xs={12} md={6} lg={6} xl={6} className="orangeB">
             <Paper component="ul" className={classes.root}>
-              {filterItemData.map((data) => {
-                let icon;
-                let props: props = {variant: 'filled', color: 'primary'};
+              <Grid container spacing={2} direction="row">
+                <Grid item xs={12} md={12} lg={12} xl={12} className="orangeB">
+                  <Box display="flex" justifyContent="center" p={1} >
+                    {filterItemData.map((data) => {
+                      let icon;
+                      let props: props = { variant: 'filled', color: 'primary' };
 
-                if (data.negate === true) {
-                  props.variant = 'outlined';
-                }
+                      if (data.negate === true) {
+                        props.variant = 'outlined';
+                      }
 
-                if (data.isValid === false && (data.type === USER_ACCOUNT || data.type === ACTIVITY)) {
-                  props.color = 'secondary';
-                }
+                      if (data.isValid === false && (data.type === USER_ACCOUNT || data.type === ACTIVITY)) {
+                        props.color = 'secondary';
+                      }
 
-                if (data.type === ACTIVITY) { // This should be a select case instead..
-                  icon = <HomeIcon />;
-                } else if (data.type === USER_ACCOUNT) {
-                  icon = <PersonIcon />;
-                } else if (data.type === EVENT) {
-                  icon = <EventNoteIcon />;
-                } else if (data.type === DATE) {
-                  icon = <TodayIcon />;
-                } else if (data.type === DATE_RANGE) {
-                  icon = <DateRangeIcon />;
-                } else if (data.type === CHEER_COUNT) {
-                  icon = <ThumbUpIcon />;
-                } else if (data.type === COMMENT_COUNT) {
-                  icon = <ChatIcon />;
-                } else {
-                  icon = <HelpOutlineIcon />;
-                }
-                return (
-                  <li key={data.key}>
-                    <Chip icon={icon} variant={props.variant} color={props.color} label={data.label} onDelete={handleDelete(data)} className={classes.chip} />
-                  </li>
-                );
-              })}
-              {emptyFilterMessage}
+                      if (data.type === ACTIVITY) { // This should be a select case instead..
+                        icon = <HomeIcon />;
+                      } else if (data.type === USER_ACCOUNT) {
+                        icon = <PersonIcon />;
+                      } else if (data.type === EVENT) {
+                        icon = <EventNoteIcon />;
+                      } else if (data.type === DATE) {
+                        icon = <TodayIcon />;
+                      } else if (data.type === DATE_RANGE) {
+                        icon = <DateRangeIcon />;
+                      } else if (data.type === CHEER_COUNT) {
+                        icon = <ThumbUpIcon />;
+                      } else if (data.type === COMMENT_COUNT) {
+                        icon = <ChatIcon />;
+                      } else {
+                        icon = <HelpOutlineIcon />;
+                      }
+                      return (
+                        <li key={data.key}>
+                          <Chip icon={icon} variant={props.variant} color={props.color} label={data.label} onDelete={handleDelete(data)} className={classes.chip} />
+                        </li>
+                      );
+                    })}
+                    {emptyFilterMessage}
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={12} lg={12} xl={12} className="orangeB">
+                  <Typography variant="caption" display="block" gutterBottom>
+                    Please do not close filter window until all criteria show in a "purple" color.  User account and activity names go through validation to make sure they exist in Rec Room.
+                  </Typography>
+                </Grid>
+              </Grid>
             </Paper>
           </Grid>
           <Grid item xs={12} md={6} lg={6} xl={6} className="orangeB">
@@ -380,8 +525,8 @@ function Modal(props: ModalProps) { //props: ModalProps
                       <MenuItem value={1}>User Account</MenuItem>
                       {/* <MenuItem value={2}>Room</MenuItem> */}
                       {/* <MenuItem value={3}>Event</MenuItem> */}
-                      <MenuItem value={4}>Date</MenuItem>
-                      <MenuItem value={5}>Date Range</MenuItem>
+                      {/* <MenuItem value={4}>Date</MenuItem>
+                      <MenuItem value={5}>Date Range</MenuItem> */}
                       {/* <MenuItem value={6}>Cheer Count</MenuItem>
                       <MenuItem value={7}>Comment Count</MenuItem> */}
                     </Select>

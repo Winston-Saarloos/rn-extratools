@@ -73,9 +73,6 @@ function ImageBrowserHeader({ loadImages }: IProps) {
   const [open, setOpen] = React.useState(false);
 
   // Text Select
-  // const [searchCategory, setSearchCategory] = React.useState("1");
-
-
   const changeImageLocation = (event: React.ChangeEvent<{ value: number }>) => {
     return setImageLocation(event.target.value as number);
   };
@@ -94,20 +91,24 @@ function ImageBrowserHeader({ loadImages }: IProps) {
 
   const handleClose = (filterObject: FilterItemData[]) => {
     // Call function to handling turning these into a string..
-    setFilterItemDataLength(`${filterObject.length}`);
-    setFilterString('testFilterString');
+
+    var szFilterNum: string = filterObject.length.toString();
+    filterObject.forEach(filterItem => {
+      if (filterItem.filterString === '' || filterItem.filterString === 'INVALID_VALUE') {
+        szFilterNum = 'ERROR!';
+      }
+    });
+
+    setFilterItemDataLength(szFilterNum);
+    setFilterString(assembleFilterString(filterObject));
     setOpen(false);
   };
-
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setSearchCategory(event.target.value);
-  // };
 
   let filterDataLength;
   if (filterItemDataLength === '') {
     filterDataLength = 0;
-  } else if (filterItemDataLength === '!') {
-    filterDataLength = '!';
+  } else if (filterItemDataLength === 'ERROR!') {
+    filterDataLength = 'ERROR!';
   } else {
     filterDataLength = parseInt(filterItemDataLength);
   }
@@ -173,3 +174,24 @@ function ImageBrowserHeader({ loadImages }: IProps) {
 }
 
 export default ImageBrowserHeader;
+
+// Assembles all filter items into a single string separated by the ( $ ) symbol
+function assembleFilterString(filterObject: FilterItemData[]): string {
+  var filterString: string = '';
+
+  if (filterObject.length === 1) {
+    filterString = filterObject[0].filterString;
+
+  } else if (filterObject.length > 1) {
+    // Each filter item is separated by a $
+    filterObject.forEach(filterItem => {
+      if (filterItem.key === (filterObject.length - 1)) {
+        filterString += filterItem.filterString;
+      } else {
+        filterString += filterItem.filterString + '$';
+      }
+    });
+  }
+
+  return filterString
+}
