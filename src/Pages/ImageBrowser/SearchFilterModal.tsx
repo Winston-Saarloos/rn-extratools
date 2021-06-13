@@ -53,48 +53,48 @@ interface FilterItemData {
   filterString: string;
 }
 
-// type RoomInfoObject = {
-//   RoomId: number,
-//   IsDorm: boolean,
-//   MaxPlayerCalculationMode: number,
-//   MaxPlayers: number,
-//   CloningAllowed: boolean,
-//   DisableMicAutoMute: boolean,
-//   DisableRoomComments: boolean,
-//   EncryptVoiceChat: boolean,
-//   LoadScreenLocked: boolean,
-//   Name: string,
-//   Description: string,
-//   ImageName: string,
-//   WarningMask: number,
-//   CustomWarning: string | null,
-//   CreatorAccountId: number,
-//   State: number,
-//   Accessibility: number,
-//   SupportsLevelVoting: boolean,
-//   IsRRO: boolean,
-//   SupportsScreens: boolean,
-//   SupportsWalkVR: boolean,
-//   SupportsTeleportVR: boolean,
-//   SupportsVRLow: boolean,
-//   SupportsQuest2: boolean,
-//   SupportsMobile: true,
-//   SupportsJuniors: boolean,
-//   MinLevel: number,
-//   CreatedAt: string,
-//   Stats: {
-//     CheerCount: number,
-//     FavoriteCount: number,
-//     VisitorCount: number,
-//     VisitCount: number
-//   }
-// }
+type RoomInfoObject = {
+  RoomId: number,
+  IsDorm: boolean,
+  MaxPlayerCalculationMode: number,
+  MaxPlayers: number,
+  CloningAllowed: boolean,
+  DisableMicAutoMute: boolean,
+  DisableRoomComments: boolean,
+  EncryptVoiceChat: boolean,
+  LoadScreenLocked: boolean,
+  Name: string,
+  Description: string,
+  ImageName: string,
+  WarningMask: number,
+  CustomWarning: string | null,
+  CreatorAccountId: number,
+  State: number,
+  Accessibility: number,
+  SupportsLevelVoting: boolean,
+  IsRRO: boolean,
+  SupportsScreens: boolean,
+  SupportsWalkVR: boolean,
+  SupportsTeleportVR: boolean,
+  SupportsVRLow: boolean,
+  SupportsQuest2: boolean,
+  SupportsMobile: true,
+  SupportsJuniors: boolean,
+  MinLevel: number,
+  CreatedAt: string,
+  Stats: {
+    CheerCount: number,
+    FavoriteCount: number,
+    VisitorCount: number,
+    VisitCount: number
+  }
+}
 
-// type RoomInfoResult = {
-//   dataObject: RoomInfoObject[],
-//   status: number,
-//   message: string
-// }
+type RoomInfoResult = {
+  dataObject: RoomInfoObject[],
+  status: number,
+  message: string
+}
 
 type AccountInfoObject = {
   accountId: number,
@@ -234,124 +234,91 @@ function Modal(props: ModalProps) { //props: ModalProps
 
           } else if (filterItem.type === ACTIVITY) {
             // VALIDATE ACTIVITY HERE
-            // console.log("Attempting to validate ACTIVITY value..");
-            // var responseObjectRoom: RoomInfoResult = {
-            //   dataObject: [{
-            //     RoomId: -1,
-            //     IsDorm: false,
-            //     MaxPlayerCalculationMode: -1,
-            //     MaxPlayers: -1,
-            //     CloningAllowed: false,
-            //     DisableMicAutoMute: false,
-            //     DisableRoomComments: false,
-            //     EncryptVoiceChat: false,
-            //     LoadScreenLocked: false,
-            //     Name: '',
-            //     Description: '',
-            //     ImageName: '',
-            //     WarningMask: -1,
-            //     CustomWarning: null,
-            //     CreatorAccountId: -1,
-            //     State: -1,
-            //     Accessibility: -1,
-            //     SupportsLevelVoting: false,
-            //     IsRRO: false,
-            //     SupportsScreens: false,
-            //     SupportsWalkVR: false,
-            //     SupportsTeleportVR: false,
-            //     SupportsVRLow: false,
-            //     SupportsQuest2: false,
-            //     SupportsMobile: true,
-            //     SupportsJuniors: false,
-            //     MinLevel: -1,
-            //     CreatedAt: '',
-            //     Stats: {
-            //       CheerCount: -1,
-            //       FavoriteCount: -1,
-            //       VisitorCount: -1,
-            //       VisitCount: -1
-            //     }
-            //   }],
-            //   status: -1,
-            //   message: ''
-            // };
-
-            // var szRoomUrl = 'https://rn-rest-api.herokuapp.com/bulk/rooms?name=' + filterItem.label;
-
-            // axios.get(szRoomUrl)
-            //   .then(async function (response) {
-            //     responseObjectRoom = await response.data;
-
-            //     if (responseObjectRoom.status === 200) {
-            //       var filterText = 'A|';
-            //       filterItem.isValid = true;
-
-            //       if (filterItem.negate === true) {
-            //         filterText = '!A|';
-            //       }
-
-            //       console.log(responseObjectRoom);
-
-            //       filterItem.filterString = filterText + responseObjectRoom.dataObject[0].RoomId; // !A|GoldenTrophy
-
-            //       // Add our modified object to the old list
-            //       newFilterItemData.splice(index, 1, filterItem);
-            //       setFilterItemData(newFilterItemData);
-
-            //     } else {
-            //       var originalValue = filterItem.label;
-            //       filterItem.label = `INVALID VALUE: ${originalValue}`;
-            //       filterItem.isValid = true;
-            //       filterItem.filterString = 'INVALID_VALUE';
-
-            //       newFilterItemData.splice(index, 1, filterItem);
-            //       setFilterItemData(newFilterItemData);
-            //     }
-            //   })
-            //   .catch(function (error) {
-            //     // handle error
-            //     console.log(error);
-            //     var originalValue = filterItem.label;
-            //     filterItem.label = `ERROR: ${originalValue}`;
-            //     filterItem.isValid = true;
-            //     filterItem.filterString = 'ERROR_OCCURED';
-
-            //     newFilterItemData.splice(index, 1, filterItem);
-            //     setFilterItemData(newFilterItemData);
-            //   })
-
-
-          } else {
-            var originalValue = filterItem.label;
-            filterItem.isValid = true;
-
-            switch (filterItem.type) {
-              case DATE:
-                var filterTextDate = 'D|';
-
-                if (filterItem.negate === true) {
-                  filterTextDate = '!D|';
+            console.log("Attempting to validate ACTIVITY value..");
+            var responseObjectRoom: RoomInfoResult = {
+              dataObject: [{
+                RoomId: -1,
+                IsDorm: false,
+                MaxPlayerCalculationMode: -1,
+                MaxPlayers: -1,
+                CloningAllowed: false,
+                DisableMicAutoMute: false,
+                DisableRoomComments: false,
+                EncryptVoiceChat: false,
+                LoadScreenLocked: false,
+                Name: '',
+                Description: '',
+                ImageName: '',
+                WarningMask: -1,
+                CustomWarning: null,
+                CreatorAccountId: -1,
+                State: -1,
+                Accessibility: -1,
+                SupportsLevelVoting: false,
+                IsRRO: false,
+                SupportsScreens: false,
+                SupportsWalkVR: false,
+                SupportsTeleportVR: false,
+                SupportsVRLow: false,
+                SupportsQuest2: false,
+                SupportsMobile: true,
+                SupportsJuniors: false,
+                MinLevel: -1,
+                CreatedAt: '',
+                Stats: {
+                  CheerCount: -1,
+                  FavoriteCount: -1,
+                  VisitorCount: -1,
+                  VisitCount: -1
                 }
+              }],
+              status: -1,
+              message: ''
+            };
 
-                filterItem.filterString = `${filterTextDate}${filterItem.label}`;
-                break;
-              case DATE_RANGE:
-                var filterTextDateRange = 'DR|';
+            var szRoomUrl = 'https://rn-rest-api.herokuapp.com/bulk/rooms?name=' + filterItem.label;
 
-                if (filterItem.negate === true) {
-                  filterTextDateRange = '!DR|';
+            axios.get(szRoomUrl)
+              .then(async function (response) {
+                responseObjectRoom = await response.data;
+
+                if (responseObjectRoom.status === 200) {
+                  var filterText = 'A|';
+                  filterItem.isValid = true;
+
+                  if (filterItem.negate === true) {
+                    filterText = '!A|';
+                  }
+
+                  console.log(responseObjectRoom);
+
+                  filterItem.filterString = filterText + responseObjectRoom.dataObject[0].RoomId; // !A|GoldenTrophy
+
+                  // Add our modified object to the old list
+                  newFilterItemData.splice(index, 1, filterItem);
+                  setFilterItemData(newFilterItemData);
+
+                } else {
+                  var originalValue = filterItem.label;
+                  filterItem.label = `INVALID VALUE: ${originalValue}`;
+                  filterItem.isValid = true;
+                  filterItem.filterString = 'INVALID_VALUE';
+
+                  newFilterItemData.splice(index, 1, filterItem);
+                  setFilterItemData(newFilterItemData);
                 }
-
-                filterItem.filterString = `${filterTextDateRange}${filterItem.label.replaceAll(' ', '')}`;
-                break;
-              default:
-                filterItem.label = `INVALID VALUE: ${originalValue}`;
+              })
+              .catch(function (error) {
+                // handle error
+                console.log(error);
+                var originalValue = filterItem.label;
+                filterItem.label = `ERROR: ${originalValue}`;
                 filterItem.isValid = true;
-                filterItem.filterString = 'INVALID_VALUE';
-            }
+                filterItem.filterString = 'ERROR_OCCURED';
 
-            newFilterItemData.splice(index, 1, filterItem);
-            setFilterItemData(newFilterItemData);
+                newFilterItemData.splice(index, 1, filterItem);
+                setFilterItemData(newFilterItemData);
+              })
           }
         }
       });
@@ -385,17 +352,29 @@ function Modal(props: ModalProps) { //props: ModalProps
     if (advancedFilterString !== '') {
       var newFilterItemData = [...filterItemData];
       var labelText = '';
+      var filterPrefix = '';
+      var filterString = '';
+
       if (advancedFilterStringTwo !== '') {
         if (criteriaType === DATE_RANGE) {
           var dateObj1 = new Date(advancedFilterString);
           var momentObj1 = moment(dateObj1);
-          var momentString1 = momentObj1.format('DD/MM/YYYY');
+          var momentString1 = momentObj1.format('YYYY-MM-DD');
 
           var dateObj2 = new Date(advancedFilterStringTwo);
           var momentObj2 = moment(dateObj2);
-          var momentString2 = momentObj2.format('DD/MM/YYYY');
+          var momentString2 = momentObj2.format('YYYY-MM-DD');
 
           labelText = `${momentString1} - ${momentString2}`;
+
+          filterPrefix = 'DR|';
+
+          if (checked === true) {
+            filterPrefix = '!DR|';
+          }
+      
+          filterString = `${filterPrefix}${momentString1}#${momentString2}`; // TODO order these properly before calling API
+          console.log('Filter String: ' + filterString);
 
         } else {
           labelText = `${advancedFilterString} - ${advancedFilterStringTwo}`;
@@ -404,14 +383,23 @@ function Modal(props: ModalProps) { //props: ModalProps
         if (criteriaType === DATE) {
           var dateObj = new Date(advancedFilterString);
           var momentObj = moment(dateObj);
-          var momentString = momentObj.format('DD/MM/YYYY');
+          var momentString = momentObj.format('YYYY-MM-DD');
 
           labelText = momentString;
+
+          filterPrefix = 'D|';
+
+          if (checked === true) {
+            filterPrefix = '!D|';
+          }
+      
+          filterString = `${filterPrefix}${momentString}`;
+      
         } else {
           labelText = advancedFilterString;
         }
       }
-      newFilterItemData.push({ key: filterItemData.length, label: labelText, type: criteriaType, negate: checked, isValid: false, filterString: '' });
+      newFilterItemData.push({ key: filterItemData.length, label: labelText, type: criteriaType, negate: checked, isValid: false, filterString: filterString });
       setFilterItemData(newFilterItemData);
 
       // Reset form values for next user input...
@@ -523,10 +511,10 @@ function Modal(props: ModalProps) { //props: ModalProps
                     <InputLabel id="lblCriteriaType">Criteria Type</InputLabel>
                     <Select labelId="lblCriteriaType" id="cboFeedType" label="Criteria Type" value={criteriaType} onChange={changeCriteriaType} defaultValue={1}>
                       <MenuItem value={1}>User Account</MenuItem>
-                      {/* <MenuItem value={2}>Room</MenuItem> */}
+                      <MenuItem value={2}>Room</MenuItem>
                       {/* <MenuItem value={3}>Event</MenuItem> */}
-                      {/* <MenuItem value={4}>Date</MenuItem>
-                      <MenuItem value={5}>Date Range</MenuItem> */}
+                      <MenuItem value={4}>Date</MenuItem>
+                      {/* <MenuItem value={5}>Date Range</MenuItem> */}
                       {/* <MenuItem value={6}>Cheer Count</MenuItem>
                       <MenuItem value={7}>Comment Count</MenuItem> */}
                     </Select>
