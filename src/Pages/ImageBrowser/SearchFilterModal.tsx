@@ -24,7 +24,7 @@ import ChatIcon from '@material-ui/icons/Chat';
 
 // Non-Material Imports
 import axios from 'axios';
-import moment from 'moment';
+import { DateTime } from "luxon";
 
 // Component Props
 type ModalProps = {
@@ -357,15 +357,13 @@ function Modal(props: ModalProps) { //props: ModalProps
 
       if (advancedFilterStringTwo !== '') {
         if (criteriaType === DATE_RANGE) {
-          var dateObj1 = new Date(advancedFilterString);
-          var momentObj1 = moment(dateObj1);
-          var momentString1 = momentObj1.format('YYYY-MM-DD');
+          var dateObj1 = DateTime.fromISO(advancedFilterString);
+          var dateLabelText1 = dateObj1.toLocaleString();
 
-          var dateObj2 = new Date(advancedFilterStringTwo);
-          var momentObj2 = moment(dateObj2);
-          var momentString2 = momentObj2.format('YYYY-MM-DD');
+          var dateObj2 = DateTime.fromISO(advancedFilterStringTwo);
+          var dateLabelText2 = dateObj2.toLocaleString();
 
-          labelText = `${momentString1} - ${momentString2}`;
+          labelText = `${dateLabelText1} - ${dateLabelText2}`;
 
           filterPrefix = 'DR|';
 
@@ -373,19 +371,17 @@ function Modal(props: ModalProps) { //props: ModalProps
             filterPrefix = '!DR|';
           }
       
-          filterString = `${filterPrefix}${momentString1}#${momentString2}`; // TODO order these properly before calling API
-          console.log('Filter String: ' + filterString);
+          filterString = `${filterPrefix}${dateObj1.toISODate()}!${dateObj2.toISODate()}`;
 
         } else {
-          labelText = `${advancedFilterString} - ${advancedFilterStringTwo}`;
+          labelText = `${advancedFilterString} - ${advancedFilterStringTwo}`; // I'm not sure what this "else" is used for.
         }
       } else {
         if (criteriaType === DATE) {
-          var dateObj = new Date(advancedFilterString);
-          var momentObj = moment(dateObj);
-          var momentString = momentObj.format('YYYY-MM-DD');
+          var dateObj = DateTime.fromISO(advancedFilterString);
+          var dateLabelText = dateObj.toLocaleString();
 
-          labelText = momentString;
+          labelText = dateLabelText;
 
           filterPrefix = 'D|';
 
@@ -393,12 +389,13 @@ function Modal(props: ModalProps) { //props: ModalProps
             filterPrefix = '!D|';
           }
       
-          filterString = `${filterPrefix}${momentString}`;
+          filterString = `${filterPrefix}${dateObj.toISODate()}`;
       
         } else {
           labelText = advancedFilterString;
         }
       }
+
       newFilterItemData.push({ key: filterItemData.length, label: labelText, type: criteriaType, negate: checked, isValid: false, filterString: filterString });
       setFilterItemData(newFilterItemData);
 
@@ -514,7 +511,7 @@ function Modal(props: ModalProps) { //props: ModalProps
                       <MenuItem value={2}>Room</MenuItem>
                       {/* <MenuItem value={3}>Event</MenuItem> */}
                       <MenuItem value={4}>Date</MenuItem>
-                      {/* <MenuItem value={5}>Date Range</MenuItem> */}
+                      <MenuItem value={5}>Date Range</MenuItem>
                       {/* <MenuItem value={6}>Cheer Count</MenuItem>
                       <MenuItem value={7}>Comment Count</MenuItem> */}
                     </Select>
