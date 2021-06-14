@@ -27,6 +27,11 @@ function ImageBrowserMain() {
 
     if (imageLocation === 3) {
       takeAmount = 2000;
+    } else if (imageLocation === 4) {
+      takeAmount = 5000;
+      if (filterString !== '') {
+        takeAmount = 10000;
+      }
     }
     
     setImageRequestParams({

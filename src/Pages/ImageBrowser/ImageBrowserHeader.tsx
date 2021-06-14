@@ -113,6 +113,13 @@ function ImageBrowserHeader({ loadImages }: IProps) {
     filterDataLength = parseInt(filterItemDataLength);
   }
 
+  let searchInput;
+  if (imageLocation === 4) {
+    searchInput = <TextField id="txtSearchRoom" autoFocus className={classes.nameTextBox} label="Enter RR Room Name.." variant="outlined" onChange={changeSearchQuery} value={searchQuery} />;
+  } else if (imageLocation === 1 || imageLocation === 2) {
+    searchInput = <TextField id="txtSearchUsername" autoFocus className={classes.nameTextBox} label="Enter RR '@' Name.." variant="outlined" onChange={changeSearchQuery} value={searchQuery} />;
+  }
+
   return (
     <div className="ImageBrowserHeader">
       <Grid container spacing={0} direction="row">
@@ -125,6 +132,7 @@ function ImageBrowserHeader({ loadImages }: IProps) {
                 <MenuItem value={1}>User Photo Feed</MenuItem>
                 <MenuItem value={2}>User Photo Library</MenuItem>
                 <MenuItem value={3}>Global Image Feed</MenuItem>
+                <MenuItem value={4}>Room Image Feed</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -146,11 +154,7 @@ function ImageBrowserHeader({ loadImages }: IProps) {
         </Grid>
         <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
           <Box display="flex" justifyContent="center" p={1} >
-            <TextField id="txtSearch" autoFocus className={classes.nameTextBox} label="Enter Search.." variant="outlined" onChange={changeSearchQuery} value={searchQuery} />
-            {/* <TextField id="txtSearch" select label="Enter Search.." className={classes.nameTextBox} value={searchCategory} onChange={handleChange} SelectProps={{ native: true, }} variant="outlined" >
-              <option key="playerSearch" value="1">@</option>
-              <option key="roomSearch" value="2">^</option>
-            </TextField> */}
+            {searchInput}
           </Box>
         </Grid>
         <Grid item xs={10} md={5} lg={3} xl={4} className="orangeB">

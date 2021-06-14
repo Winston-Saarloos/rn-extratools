@@ -8,11 +8,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
 import Grid from '@material-ui/core/Grid';
+import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 
 // Not Material Imports
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
+import { IconButton } from '@material-ui/core';
 
 //Types
 type ImageItem = {
@@ -231,6 +233,9 @@ function Modal(props: ModalProps) {
                         </Grid>
                         <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblRecNetLinkValue" zeroMinWidth >
                             <Link href={`https://rec.net/image/${modalImage.Id}`} target="_blank" rel="noopener" >https://rec.net/image/{modalImage.Id}</Link>
+                            <IconButton aria-label="Copy rec.net Link" onClick={() => {navigator.clipboard.writeText(`https://rec.net/image/${modalImage.Id}`)}}>
+                                <FileCopyOutlinedIcon />
+                            </IconButton>
                         </Grid>
                     </Grid>
                 </DialogContent>

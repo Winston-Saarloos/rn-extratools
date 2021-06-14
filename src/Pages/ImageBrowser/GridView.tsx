@@ -141,6 +141,8 @@ function GridView(props: GridViewProps) {
 
         if (imageLocation === 3) {
             szUrl = szUrl + `?sort=${displayOrder}&type=${imageLocation}&skip=${skipAmount}&take=${takeAmount}`
+        } else if (imageLocation === 4) {
+            szUrl = szUrl + `?room=${searchQuery}&sort=${displayOrder}&type=${imageLocation}&skip=${skipAmount}&take=${takeAmount}`;
         } else {
             szUrl = szUrl + `?u=${searchQuery}&sort=${displayOrder}&type=${imageLocation}&skip=${skipAmount}&take=${takeAmount}`;
         }
@@ -153,7 +155,13 @@ function GridView(props: GridViewProps) {
 
         // URL https://rn-rest-api.herokuapp.com/images?u={username}
         if (searchQuery === '' && imageLocation !== 3) {
-            setImageDataResultCollection({ dataObject: [], status: -1, message: "Enter an '@' name to find photos."});
+            var szMessage = "Enter an '@' name to find photos.";
+
+            if (imageLocation === 4) {
+                szMessage = "Enter a room name '^' to find photos."
+            }
+
+            setImageDataResultCollection({ dataObject: [], status: -1, message: szMessage});
 
         } else {
             axios.get(szUrl)
