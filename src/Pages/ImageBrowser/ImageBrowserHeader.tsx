@@ -74,6 +74,13 @@ function ImageBrowserHeader({ loadImages }: IProps) {
 
   // Text Select
   const changeImageLocation = (event: React.ChangeEvent<{ value: number }>) => {
+    if (imageLocation === 4 && event.target.value !== 4 && searchQuery !== '') {
+      console.log("Resetting search query..");
+      setSearchQuery('');
+    } else if ((imageLocation === 1 || imageLocation === 2) && (event.target.value !== 1 && event.target.value !== 2) && searchQuery !== '') {
+      setSearchQuery('');
+    }
+
     return setImageLocation(event.target.value as number);
   };
 
