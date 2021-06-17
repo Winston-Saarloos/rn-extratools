@@ -3,11 +3,13 @@ import Header from '../Header';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 
-// Component imports
+// Custom Component/Constants
 import GridView from './GridView';
 import ImageBrowserHeader from './ImageBrowserHeader';
+import * as Constants from './Constants';
 
-var imageRequestParameters : {
+// Type structure for imageRequestParameters
+type imageRequestParameters = {
   Url: string,
   DisplayOrder: number,
   ImageLocation: number,
@@ -18,17 +20,22 @@ var imageRequestParameters : {
 }
 
 function ImageBrowserMain() {
-  const [imageRequestParams, setImageRequestParams] = React.useState<typeof imageRequestParameters>();
+  const [imageRequestParams, setImageRequestParams] = React.useState<imageRequestParameters>();
 
   async function LoadImages(imageLocation: number, displayOrder: number, searchQuery: string, filterString: string) {
     var takeAmount = 100000;
     var skipAmount = 0;
-    var szUrl = 'https://rn-rest-api.herokuapp.com/images';
+    var szUrl = `${Constants.BASE_URL}images`;
 
-    if (imageLocation === 3) {
+    // Hard coded take amounts since these photo locations contain millions of images
+    if (imageLocation === Constants.GLOBAL_IMAGE_FEED) {
       takeAmount = 2000;
-    } else if (imageLocation === 4) {
+
+    } else if (imageLocation === Constants.ROOM_IMAGE_FEED) {
       takeAmount = 5000;
+
+      // If a user applies a filter I double the take amount since the 
+      // returned amount *should* be less than the take amount
       if (filterString !== '') {
         takeAmount = 10000;
       }
@@ -51,7 +58,6 @@ function ImageBrowserMain() {
       <Grid container style={{margin: 0, width: '100%',}} direction="column">
         <Grid item xs={12}>
           <Grid container alignItems="flex-start" spacing={0} direction="row">
-          {/* <Grid container alignItems="flex-start" justify="center" spacing={0} direction="row" > */}
             <Grid item xs={1}></Grid>
             <Grid item xs={10}>
               <ImageBrowserHeader loadImages={LoadImages} />

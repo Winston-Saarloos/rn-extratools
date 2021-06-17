@@ -10,13 +10,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 
-// Component imports
+// Custom components/constants
 import Modal from './SearchFilterModal';
+import * as Constants from './Constants';
 
 // Styling
 import './ImageBrowserHeader.css';
 import FilterListIcon from '@material-ui/icons/FilterList';
-//import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { Badge, IconButton } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -63,8 +63,8 @@ interface IProps {
 
 function ImageBrowserHeader({ loadImages }: IProps) {
   const classes = useStyles();
-  const [imageLocation, setImageLocation] = React.useState<number>(1);
-  const [imageDisplayOrder, setImageDisplayOrder] = React.useState<number>(1);
+  const [imageLocation, setImageLocation] = React.useState<number>(Constants.USER_PHOTO_FEED);
+  const [imageDisplayOrder, setImageDisplayOrder] = React.useState<number>(Constants.NEWEST_TO_OLDEST);
   const [searchQuery, setSearchQuery] = React.useState<string>('');
   const [filterItemDataLength, setFilterItemDataLength] = React.useState<string>('');
   const [filterString, setFilterString] = React.useState<string>('');
@@ -74,10 +74,11 @@ function ImageBrowserHeader({ loadImages }: IProps) {
 
   // Text Select
   const changeImageLocation = (event: React.ChangeEvent<{ value: number }>) => {
-    if (imageLocation === 4 && event.target.value !== 4 && searchQuery !== '') {
-      console.log("Resetting search query..");
+    if (imageLocation === Constants.ROOM_IMAGE_FEED && event.target.value !== Constants.ROOM_IMAGE_FEED && searchQuery !== '') {
       setSearchQuery('');
-    } else if ((imageLocation === 1 || imageLocation === 2) && (event.target.value !== 1 && event.target.value !== 2) && searchQuery !== '') {
+      
+    } else if ((imageLocation === Constants.USER_PHOTO_FEED || imageLocation === Constants.USER_PHOTO_LIBRARY) && 
+               (event.target.value !== Constants.USER_PHOTO_FEED && event.target.value !== Constants.USER_PHOTO_LIBRARY) && searchQuery !== '') {
       setSearchQuery('');
     }
 
@@ -106,8 +107,13 @@ function ImageBrowserHeader({ loadImages }: IProps) {
       }
     });
 
-    setFilterItemDataLength(szFilterNum);
+    if (filterObject.length.toString() !== filterItemDataLength) {
+      // Reload the images using the defined filters
+      loadImages(imageLocation, imageDisplayOrder, searchQuery, assembleFilterString(filterObject));
+    }
+
     setFilterString(assembleFilterString(filterObject));
+    setFilterItemDataLength(szFilterNum);
     setOpen(false);
   };
 
@@ -121,9 +127,10 @@ function ImageBrowserHeader({ loadImages }: IProps) {
   }
 
   let searchInput;
-  if (imageLocation === 4) {
+  if (imageLocation === Constants.ROOM_IMAGE_FEED) {
     searchInput = <TextField id="txtSearchRoom" autoFocus className={classes.nameTextBox} label="Enter RR Room Name.." variant="outlined" onChange={changeSearchQuery} value={searchQuery} />;
-  } else if (imageLocation === 1 || imageLocation === 2) {
+    
+  } else if (imageLocation === Constants.USER_PHOTO_FEED || imageLocation === Constants.USER_PHOTO_LIBRARY) {
     searchInput = <TextField id="txtSearchUsername" autoFocus className={classes.nameTextBox} label="Enter RR '@' Name.." variant="outlined" onChange={changeSearchQuery} value={searchQuery} />;
   }
 
@@ -135,11 +142,11 @@ function ImageBrowserHeader({ loadImages }: IProps) {
           <Box display="flex" justifyContent="center" p={1} >
             <FormControl variant="outlined" className={classes.imageLocation}>
               <InputLabel id="lblImageLocation">Image Location</InputLabel>
-              <Select labelId="lblImageLocation" id="cboFeedType" label="Image Location" value={imageLocation} onChange={changeImageLocation} defaultValue={1}>
-                <MenuItem value={1}>User Photo Feed</MenuItem>
-                <MenuItem value={2}>User Photo Library</MenuItem>
-                <MenuItem value={3}>Global Image Feed</MenuItem>
-                <MenuItem value={4}>Room Image Feed</MenuItem>
+              <Select labelId="lblImageLocation" id="cboFeedType" label="Image Location" value={imageLocation} onChange={changeImageLocation} >
+                <MenuItem value={Constants.USER_PHOTO_FEED}>User Photo Feed</MenuItem>
+                <MenuItem value={Constants.USER_PHOTO_LIBRARY}>User Photo Library</MenuItem>
+                <MenuItem value={Constants.GLOBAL_IMAGE_FEED}>Global Image Feed</MenuItem>
+                <MenuItem value={Constants.ROOM_IMAGE_FEED }>Room Image Feed</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -148,13 +155,13 @@ function ImageBrowserHeader({ loadImages }: IProps) {
           <Box display="flex" justifyContent="center" p={1} >
             <FormControl variant="outlined" className={classes.displayOrder}>
               <InputLabel id="lblDisplayOrder">Display Order</InputLabel>
-              <Select labelId="lblDisplayOrder" id="cboDisplayOrder" label="Display Order" value={imageDisplayOrder} onChange={changeImageDisplayOrder} defaultValue={1} >
-                <MenuItem value={1}>Newest To Oldest</MenuItem>
-                <MenuItem value={2}>Oldest To Newest</MenuItem>
-                <MenuItem value={3}>Lowest Cheer #</MenuItem>
-                <MenuItem value={4}>Highest Cheer #</MenuItem>
-                <MenuItem value={5}>Lowest Comment #</MenuItem>
-                <MenuItem value={6}>Highest Comment #</MenuItem>
+              <Select labelId="lblDisplayOrder" id="cboDisplayOrder" label="Display Order" value={imageDisplayOrder} onChange={changeImageDisplayOrder} >
+                <MenuItem value={Constants.NEWEST_TO_OLDEST}>Newest To Oldest</MenuItem>
+                <MenuItem value={Constants.OLDEST_TO_NEWEST}>Oldest To Newest</MenuItem>
+                <MenuItem value={Constants.LOWEST_CHEER_COUNT_FIRST}>Lowest Cheer #</MenuItem>
+                <MenuItem value={Constants.HIGHEST_CHEER_COUNT_FIRST}>Highest Cheer #</MenuItem>
+                <MenuItem value={Constants.LOWEST_COMMENT_COUNT_FIRST}>Lowest Comment #</MenuItem>
+                <MenuItem value={Constants.HIGHEST_COMMENT_COUNT_FIRST}>Highest Comment #</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -188,21 +195,22 @@ export default ImageBrowserHeader;
 
 // Assembles all filter items into a single string separated by the ( $ ) symbol
 function assembleFilterString(filterObject: FilterItemData[]): string {
-  var filterString: string = '';
+  var filter: string = '';
 
   if (filterObject.length === 1) {
-    filterString = filterObject[0].filterString;
+    filter = filterObject[0].filterString;
 
   } else if (filterObject.length > 1) {
+
     // Each filter item is separated by a $
     filterObject.forEach(filterItem => {
       if (filterItem.key === (filterObject.length - 1)) {
-        filterString += filterItem.filterString;
+        filter += filterItem.filterString;
       } else {
-        filterString += filterItem.filterString + '$';
+        filter += filterItem.filterString + Constants.FILTER_DELIMITER_SYMBOL;
       }
     });
   }
 
-  return filterString
+  return filter
 }

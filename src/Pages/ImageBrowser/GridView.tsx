@@ -2,7 +2,8 @@ import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
-// Styling
+// Custom Components/CSS/Constants
+import * as Constants from './Constants';
 import './GridView.css';
 import Modal from './ImageDetailModal';
 import ImageThumbnail from './ImageThumbnail';
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }),
 );
 
+// Contains all information related to fetching images
 type RequestParams = {
     Url: string,
     DisplayOrder: number,
@@ -67,7 +69,7 @@ var ImageItem: {
     CommentCount: number
 }
 
-var resultObject: {
+type resultObject = {
     dataObject: Array<GridImageItem> | [],
     status: number,
     message: string
@@ -79,12 +81,13 @@ function GridView(props: GridViewProps) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [modalImage, setModalImage] = React.useState<GridImageItem>(ImageItem);
-    const [imageDataResultCollection, setImageDataResultCollection] = React.useState<typeof resultObject>({ dataObject: [], status: -1, message: 'No Image Results!' });
-    //const [loading, setLoading] = React.useState<boolean>(false);
+    const [imageDataResultCollection, setImageDataResultCollection] = React.useState<resultObject>({ dataObject: [], status: -1, message: 'No Image Results!' });
+    // TODO - Add loading spinner that triggers after load image button is clicked.
+    //const [loading, setLoading] = React.useState<boolean>(false); 
 
     var imageData = imageDataResultCollection.dataObject;
 
-    // Only Fetch New Images when the request parameters have changed (aka Load Images button was clicked)!
+    // Only Fetch New Images when the request parameters have changed (aka Load Images button was clicked)
     useEffect(() => {
         if (props.requestParams !== undefined) {
             //setLoading(true);
@@ -92,7 +95,7 @@ function GridView(props: GridViewProps) {
         }
     }, [props.requestParams]);
 
-    // Separate Use Effect that fires when page number is updated
+    // Image Observer Related Logic
     const [imageObserver, setImageObserver] = useState<IntersectionObserver>();
 
     function createObserver(inViewCallback: IntersectionObserverCallback, newOptions = {}) {
@@ -125,10 +128,8 @@ function GridView(props: GridViewProps) {
         }
     }, []);
 
-    // Calls the API to load a set of images based on supplied parameters.
+    // Calls the API to load a set of images based on the supplied parameters.
     async function LoadImages(requestParameters: RequestParams) {
-        console.log("Load Images Function Fired..");
-        console.log("Filter String: " + requestParameters.FilterString);
         var imageLocation = requestParameters.ImageLocation;
         var szUrl = requestParameters.Url;
         var takeAmount = requestParameters.TakeAmount;
@@ -137,27 +138,27 @@ function GridView(props: GridViewProps) {
         var displayOrder = requestParameters.DisplayOrder;
         var filterString = requestParameters.FilterString;
 
-        console.log("Skip Amount: " + skipAmount);
+        if (imageLocation === Constants.GLOBAL_IMAGE_FEED) {
+            szUrl = szUrl + `?sort=${displayOrder}&type=${imageLocation}&skip=${skipAmount}&take=${takeAmount}`;
 
-        if (imageLocation === 3) {
-            szUrl = szUrl + `?sort=${displayOrder}&type=${imageLocation}&skip=${skipAmount}&take=${takeAmount}`
-        } else if (imageLocation === 4) {
+        } else if (imageLocation === Constants.ROOM_IMAGE_FEED) {
             szUrl = szUrl + `?room=${searchQuery}&sort=${displayOrder}&type=${imageLocation}&skip=${skipAmount}&take=${takeAmount}`;
+
         } else {
             szUrl = szUrl + `?u=${searchQuery}&sort=${displayOrder}&type=${imageLocation}&skip=${skipAmount}&take=${takeAmount}`;
         }
 
         if (filterString !== '') {
-            filterString = encodeURI(filterString);  // This contains values that are not valid in a URL therefore it needs to be encoded
+            filterString = encodeURI(filterString);  // A filter string contains values that are not valid in a URL therefore it needs to be encoded
             szUrl = `${szUrl}&filter=${filterString}`;
             bLoadContainsFilters = true;
         }
 
         // URL https://rn-rest-api.herokuapp.com/images?u={username}
-        if (searchQuery === '' && imageLocation !== 3) {
+        if (searchQuery === '' && imageLocation === Constants.ROOM_IMAGE_FEED) {
             var szMessage = "Enter an '@' name to find photos.";
 
-            if (imageLocation === 4) {
+            if (imageLocation === Constants.ROOM_IMAGE_FEED) {
                 szMessage = "Enter a room name '^' to find photos."
             }
 
@@ -167,7 +168,7 @@ function GridView(props: GridViewProps) {
             axios.get(szUrl)
                 .then(async function (response) {
                     // handle success
-                    resultObject = await response.data;
+                    var resultObject: resultObject = await response.data;
 
                     if (resultObject.status > -1) {
                         setImageDataResultCollection(resultObject);
@@ -179,7 +180,7 @@ function GridView(props: GridViewProps) {
                 .catch(function (error) {
                     // handle error
                     console.log(error);
-                    setImageDataResultCollection({ dataObject: [], status: 500, message: 'An unexpected error occured. Please refresh and try again.  If problem persists contact @Rocko on Rec Room or Discord (Rocko#8625).' });
+                    setImageDataResultCollection({ dataObject: [], status: 500, message: 'An unexpected error occured. Please refresh and try again.  If problem persists contact (@Rocko) on Rec Room or Discord (Rocko#8625).' });
                 })
         }
         //setLoading(false);
@@ -199,39 +200,12 @@ function GridView(props: GridViewProps) {
         }
     };
 
+    // Handles the close modal button click
     const handleClose = () => {
         setOpen(false);
     };
 
-    // const XS_SIZE = 6;
-    // const MD_SIZE = 6;
-    // const LG_SIZE = 3
-    // const XL_SIZE = 2;
-
-    // const SKELE_WIDTH_BOX = "100%";
-    // const SKELE_LINE_ONE = "90%";
-    // const SKELE_LINE_TWO = "85%";
-    // const SKELE_ANIMATION = "wave";
-
     if (imageData.length < 1) {
-        // if (loading) { // Not currently working as intended
-        //     const itemArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-        //     return (
-        //         <div className="GridView" >
-        //             <Grid container spacing={1} direction="row" style={{ overflow: 'hidden' }}>
-        //                 {itemArray.map((value) => {
-        //                     return (
-        //                         <Grid item xs={XS_SIZE} md={MD_SIZE} lg={LG_SIZE} xl={XL_SIZE} key={value} >
-        //                             <Skeleton animation={SKELE_ANIMATION} variant="rectangular" width={SKELE_WIDTH_BOX} height={250} />
-        //                             <Skeleton animation={SKELE_ANIMATION} variant="text" width={SKELE_LINE_ONE} height={20} />
-        //                             <Skeleton animation={SKELE_ANIMATION} variant="text" width={SKELE_LINE_TWO} height={20} />
-        //                         </Grid>
-        //                     )
-        //                 })}
-        //             </Grid>
-        //         </div>
-        //     )
-        // } else {
         if (bLoadContainsFilters) {
             return (
                 <div className="GridView" style={{ overflow: 'hidden' }}>

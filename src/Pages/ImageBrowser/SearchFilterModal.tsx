@@ -7,8 +7,8 @@ import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
 import Grid from '@material-ui/core/Grid';
 import {
-  Box, Checkbox, Chip, FormControl, FormControlLabel, InputLabel, makeStyles,
-  MenuItem, Paper, Select, TextField, Theme, Typography
+  Box, Checkbox, Chip, FormControl, FormControlLabel, FormLabel, InputLabel, makeStyles,
+  MenuItem, Paper, Radio, RadioGroup, Select, TextField, Theme, Typography
 } from '@material-ui/core';
 import React, { useEffect } from 'react';
 
@@ -25,6 +25,7 @@ import ChatIcon from '@material-ui/icons/Chat';
 // Non-Material Imports
 import axios from 'axios';
 import { DateTime } from "luxon";
+import * as Constants from './Constants';
 
 // Component Props
 type ModalProps = {
@@ -144,15 +145,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 function Modal(props: ModalProps) { //props: ModalProps
   const classes = useStyles();
 
-  // Type Constants
-  const USER_ACCOUNT = 1;
-  const ACTIVITY = 2;
-  const EVENT = 3;
-  const DATE = 4;
-  const DATE_RANGE = 5;
-  const CHEER_COUNT = 6;
-  const COMMENT_COUNT = 7;
-
   const [advancedFilterString, setAdvancedFilterString] = React.useState<string>('');
   const [advancedFilterStringTwo, setAdvancedFilterStringTwo] = React.useState<string>('');
   const [checked, setChecked] = React.useState<boolean>(false);
@@ -160,20 +152,17 @@ function Modal(props: ModalProps) { //props: ModalProps
   const [filterItemData, setFilterItemData] = React.useState<FilterItemData[]>([]);
 
   // Attempt to validate the filter criteria.. once validated add filter string and set value to true
-  // Use Effect passing in chip data.. for each over all if one is not validated then attempt to validate
+  // Use Effect passing in filterItemData.. for each over all if one is not validated then attempt to validate
   useEffect(() => {
-    console.log("Data changed attempting to validate..");
     if (filterItemData !== undefined) {
-      console.log("Filter data contains values...");
       filterItemData.forEach((filterItem, index) => {
 
         if (filterItem.isValid === false) {
-          console.log("Attempting to validate value...");
           var newFilterItemData = [...filterItemData];
 
           // Attempt to validate a user account
-          if (filterItem.type === USER_ACCOUNT) {
-            console.log("Attempting to validate USER_ACCOUNT value..");
+          if (filterItem.type === Constants.USER_ACCOUNT) {
+
             var responseObject: accountInfoResult = {
               dataObject: {
                 accountId: -1,
@@ -189,18 +178,18 @@ function Modal(props: ModalProps) { //props: ModalProps
               message: ''
             };
 
-            var szUrl = 'https://rn-rest-api.herokuapp.com/account?u=' + filterItem.label;
+            var szUrl = `${Constants.BASE_URL}account?u=${filterItem.label}`;
 
             axios.get(szUrl)
               .then(async function (response) {
                 responseObject = await response.data;
 
                 if (responseObject.status === 200) {
-                  var filterText = 'U|';
+                  var filterText = Constants.USER_ACCOUNT_PREFIX;
                   filterItem.isValid = true;
 
                   if (filterItem.negate === true) {
-                    filterText = '!U|';
+                    filterText = Constants.USER_ACCOUNT_NEGATE_PREFIX;
                   }
 
                   filterItem.filterString = filterText + responseObject.dataObject.accountId; // !A|GoldenTrophy
@@ -232,9 +221,8 @@ function Modal(props: ModalProps) { //props: ModalProps
               })
 
 
-          } else if (filterItem.type === ACTIVITY) {
+          } else if (filterItem.type === Constants.ACTIVITY) {
             // VALIDATE ACTIVITY HERE
-            console.log("Attempting to validate ACTIVITY value..");
             var responseObjectRoom: RoomInfoResult = {
               dataObject: [{
                 RoomId: -1,
@@ -276,21 +264,19 @@ function Modal(props: ModalProps) { //props: ModalProps
               message: ''
             };
 
-            var szRoomUrl = 'https://rn-rest-api.herokuapp.com/bulk/rooms?name=' + filterItem.label;
+            var szRoomUrl = `${Constants.BASE_URL}bulk/rooms?name=${filterItem.label}`;
 
             axios.get(szRoomUrl)
               .then(async function (response) {
                 responseObjectRoom = await response.data;
 
                 if (responseObjectRoom.status === 200) {
-                  var filterText = 'A|';
+                  var filterText = Constants.ACTIVITY_PREFIX;
                   filterItem.isValid = true;
 
                   if (filterItem.negate === true) {
-                    filterText = '!A|';
+                    filterText = Constants.ACTIVITY_NEGATE_PREFIX;
                   }
-
-                  console.log(responseObjectRoom);
 
                   filterItem.filterString = filterText + responseObjectRoom.dataObject[0].RoomId; // !A|GoldenTrophy
 
@@ -356,7 +342,7 @@ function Modal(props: ModalProps) { //props: ModalProps
       var filterString = '';
 
       if (advancedFilterStringTwo !== '') {
-        if (criteriaType === DATE_RANGE) {
+        if (criteriaType === Constants.DATE_RANGE) {
           var dateObj1 = DateTime.fromISO(advancedFilterString);
           var dateLabelText1 = dateObj1.toLocaleString();
 
@@ -365,32 +351,53 @@ function Modal(props: ModalProps) { //props: ModalProps
 
           labelText = `${dateLabelText1} - ${dateLabelText2}`;
 
-          filterPrefix = 'DR|';
+          filterPrefix = Constants.DATE_RANGE_PREFIX;
 
           if (checked === true) {
-            filterPrefix = '!DR|';
+            filterPrefix = Constants.DATE_RANGE_NEGATE_PREFIX;
           }
-      
+
           filterString = `${filterPrefix}${dateObj1.toISODate()}!${dateObj2.toISODate()}`;
+
+        } else if (criteriaType === Constants.CHEER_COUNT || criteriaType === Constants.COMMENT_COUNT) {
+
+          labelText = `${advancedFilterString} ${advancedFilterStringTwo}`;
+
+          if (criteriaType === Constants.CHEER_COUNT) {
+            filterPrefix = Constants.CHEER_COUNT_PREFIX;
+
+            if (checked === true) {
+              filterPrefix = Constants.CHEER_COUNT_NEGATE_PREFIX;
+            }
+  
+          } else {
+            filterPrefix = Constants.COMMENT_COUNT_PREFIX;
+
+            if (checked === true) {
+              filterPrefix = Constants.COMMENT_COUNT_NEGATE_PREFIX;
+            }  
+          }
+          
+          filterString = `${filterPrefix}${advancedFilterStringTwo}${advancedFilterString}`;
 
         } else {
           labelText = `${advancedFilterString} - ${advancedFilterStringTwo}`; // I'm not sure what this "else" is used for.
         }
       } else {
-        if (criteriaType === DATE) {
+        if (criteriaType === Constants.DATE) {
           var dateObj = DateTime.fromISO(advancedFilterString);
           var dateLabelText = dateObj.toLocaleString();
 
           labelText = dateLabelText;
 
-          filterPrefix = 'D|';
+          filterPrefix = Constants.DATE_PREFIX;
 
           if (checked === true) {
-            filterPrefix = '!D|';
+            filterPrefix = Constants.DATE_NEGATE_PREFIX;
           }
-      
+
           filterString = `${filterPrefix}${dateObj.toISODate()}`;
-      
+
         } else {
           labelText = advancedFilterString;
         }
@@ -400,12 +407,11 @@ function Modal(props: ModalProps) { //props: ModalProps
       setFilterItemData(newFilterItemData);
 
       // Reset form values for next user input...
-      setCriteriaType(USER_ACCOUNT);
+      setCriteriaType(Constants.USER_ACCOUNT);
       setChecked(false);
       setAdvancedFilterString('');
       setAdvancedFilterStringTwo('');
     }
-    console.log(filterItemData);
   };
 
   let emptyFilterMessage;
@@ -415,32 +421,69 @@ function Modal(props: ModalProps) { //props: ModalProps
   }
 
   // Manipulate the UI based on the select value
-  let filterInput = <Grid item xs={12} md={12} lg={12} xl={12} className="orangeB">
+  let filterInput = 
+  <Grid item xs={12} md={12} lg={12} xl={12} className="orangeB">
     <TextField autoFocus id="outlined-multiline-static" onChange={updateAdvancedFilterString} label="Filter String" fullWidth value={advancedFilterString} variant="outlined" />
   </Grid>;
+
   let filterInput2;
 
-  if (criteriaType === DATE) {
-    filterInput = <Grid item xs={12} md={12} lg={6} xl={6} className="orangeB">
+  if (criteriaType === Constants.DATE) {
+
+    filterInput = 
+    <Grid item xs={12} md={12} lg={6} xl={6} className="orangeB">
       <form className={classes.container} noValidate>
         <TextField id="dtInput1" fullWidth label="Date Input 1" onChange={updateAdvancedFilterString} type="date" value={advancedFilterString} className={classes.textField} InputLabelProps={{ shrink: true, }} />
       </form>
     </Grid>;
-  } else if (criteriaType === DATE_RANGE) {
-    filterInput = <Grid item xs={12} md={12} lg={6} xl={6} className="orangeB">
+
+  } else if (criteriaType === Constants.DATE_RANGE) {
+
+    filterInput = 
+    <Grid item xs={12} md={12} lg={6} xl={6} className="orangeB">
       <form className={classes.container} noValidate>
         <TextField id="dtInput1" fullWidth label="Date Input 1" onChange={updateAdvancedFilterString} value={advancedFilterString} type="date" className={classes.textField} InputLabelProps={{ shrink: true, }} />
       </form>
     </Grid>;
-    filterInput2 = <Grid item xs={12} md={12} lg={6} xl={6} className="orangeB">
+
+    filterInput2 = 
+    <Grid item xs={12} md={12} lg={6} xl={6} className="orangeB">
       <form className={classes.container} noValidate>
         <TextField id="dtInput2" fullWidth label="Date Input 2" onChange={updateAdvancedFilterStringTwo} value={advancedFilterStringTwo} type="date" className={classes.textField} InputLabelProps={{ shrink: true, }} />
       </form>
     </Grid>;
+
+  } else if (criteriaType === Constants.CHEER_COUNT || criteriaType === Constants.COMMENT_COUNT) {
+    var label = '';
+    if (criteriaType === Constants.CHEER_COUNT) {
+      label = 'Cheer Amount';
+
+    } else {
+      label = 'Comment Amount';
+    }
+
+    filterInput =
+      <Grid item xs={12} md={12} lg={4} xl={4} className="orangeB">
+        <form className={classes.container} noValidate>
+          <TextField id="numericInput1" fullWidth label={label} onChange={updateAdvancedFilterString} value={advancedFilterString} type="number" className={classes.textField} InputLabelProps={{ shrink: true, }} />
+        </form>
+      </Grid>;
+
+    filterInput2 =
+      <Grid item xs={12} md={12} lg={8} xl={8} className="orangeB">
+        <FormControl component="fieldset">
+          <FormLabel component="legend">Symbol</FormLabel>
+          <RadioGroup aria-label="Symbol Selection" name="symbol" row value={advancedFilterStringTwo} onChange={updateAdvancedFilterStringTwo}>
+            <FormControlLabel value=">" control={<Radio />} label="Greater Than (>)" />
+            <FormControlLabel value="<" control={<Radio />} label="Less Than (<)" />
+            <FormControlLabel value="=" control={<Radio />} label="Equal To (=)" />
+          </RadioGroup>
+        </FormControl>
+      </Grid>;
   }
 
   return (
-    <Dialog maxWidth={false} fullWidth open={props.open} onClose={() => props.onClose(filterItemData)} aria-labelledby="max-width-dialog-title">
+    <Dialog maxWidth='xl' fullWidth open={props.open} onClose={() => props.onClose(filterItemData)} aria-labelledby="max-width-dialog-title">
       <DialogTitle id="max-width-dialog-title">Advanced Filters</DialogTitle>
       <DialogContent>
         <Grid container spacing={3} direction="row">
@@ -462,23 +505,23 @@ function Modal(props: ModalProps) { //props: ModalProps
                         props.variant = 'outlined';
                       }
 
-                      if (data.isValid === false && (data.type === USER_ACCOUNT || data.type === ACTIVITY)) {
+                      if (data.isValid === false && (data.type === Constants.USER_ACCOUNT || data.type === Constants.ACTIVITY)) {
                         props.color = 'secondary';
                       }
 
-                      if (data.type === ACTIVITY) { // This should be a select case instead..
+                      if (data.type === Constants.ACTIVITY) { // This should be a select case instead..
                         icon = <HomeIcon />;
-                      } else if (data.type === USER_ACCOUNT) {
+                      } else if (data.type === Constants.USER_ACCOUNT) {
                         icon = <PersonIcon />;
-                      } else if (data.type === EVENT) {
+                      } else if (data.type === Constants.EVENT) {
                         icon = <EventNoteIcon />;
-                      } else if (data.type === DATE) {
+                      } else if (data.type === Constants.DATE) {
                         icon = <TodayIcon />;
-                      } else if (data.type === DATE_RANGE) {
+                      } else if (data.type === Constants.DATE_RANGE) {
                         icon = <DateRangeIcon />;
-                      } else if (data.type === CHEER_COUNT) {
+                      } else if (data.type === Constants.CHEER_COUNT) {
                         icon = <ThumbUpIcon />;
-                      } else if (data.type === COMMENT_COUNT) {
+                      } else if (data.type === Constants.COMMENT_COUNT) {
                         icon = <ChatIcon />;
                       } else {
                         icon = <HelpOutlineIcon />;
@@ -507,13 +550,13 @@ function Modal(props: ModalProps) { //props: ModalProps
                   <FormControl fullWidth variant="outlined">
                     <InputLabel id="lblCriteriaType">Criteria Type</InputLabel>
                     <Select labelId="lblCriteriaType" id="cboFeedType" label="Criteria Type" value={criteriaType} onChange={changeCriteriaType} defaultValue={1}>
-                      <MenuItem value={1}>User Account</MenuItem>
-                      <MenuItem value={2}>Room</MenuItem>
-                      {/* <MenuItem value={3}>Event</MenuItem> */}
-                      <MenuItem value={4}>Date</MenuItem>
-                      <MenuItem value={5}>Date Range</MenuItem>
-                      {/* <MenuItem value={6}>Cheer Count</MenuItem>
-                      <MenuItem value={7}>Comment Count</MenuItem> */}
+                      <MenuItem value={Constants.USER_ACCOUNT}>User Account</MenuItem>
+                      <MenuItem value={Constants.ACTIVITY}>Activity</MenuItem>
+                      {/* <MenuItem value={Constants.EVENT}>Event</MenuItem> */}
+                      <MenuItem value={Constants.DATE}>Date</MenuItem>
+                      <MenuItem value={Constants.DATE_RANGE}>Date Range</MenuItem>
+                      {/* <MenuItem value={Constants.CHEER_COUNT}>Cheer Count</MenuItem>
+                      <MenuItem value={Constants.COMMENT_COUNT}>Comment Count</MenuItem> */}
                     </Select>
                   </FormControl>
                 </Grid>

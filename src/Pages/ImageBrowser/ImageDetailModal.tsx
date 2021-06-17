@@ -15,6 +15,7 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { IconButton } from '@material-ui/core';
+import * as Constants from './Constants';
 
 //Types
 type ImageItem = {
@@ -44,6 +45,7 @@ function Modal(props: ModalProps) {
     // State Variables
     const [photoOwnerName, setPhotoOwnerName] = React.useState<string>('');
     const [roomName, setRoomName] = React.useState<string>('');
+    const [eventName, setEventName] = React.useState<string>('No event information.');
     const [taggedPlayerString, setTaggedPlayerString] = React.useState<string>("No players were tagged.");
 
     // Constants
@@ -60,7 +62,7 @@ function Modal(props: ModalProps) {
 
     async function getDataForModal(image: ImageItem) {
         // Get Room Name
-        axios.get("https://rn-rest-api.herokuapp.com/bulk/rooms?id=" + image.RoomId)
+        axios.get(`${Constants.BASE_URL}bulk/rooms?id=${image.RoomId}`)
             .then(async function (response) {
                 // handle success
                 var roomInfoJson = await response.data;
@@ -80,7 +82,7 @@ function Modal(props: ModalProps) {
             });
 
         // Get Photo Owner Name
-        axios.get("https://rn-rest-api.herokuapp.com/account?id=" + image.PlayerId)
+        axios.get(`${Constants.BASE_URL}account?id=${image.PlayerId}`)
             .then(async function (response) {
                 // handle success
                 var playerInfoJson = await response.data.dataObject;
@@ -90,6 +92,20 @@ function Modal(props: ModalProps) {
                 // handle error
                 console.log(error);
             })
+
+        // Get Event Name
+        if (image.PlayerEventId !== null) {
+        axios.get(`${Constants.BASE_URL}events/?id=${image.PlayerEventId}`)
+            .then(async function (response) {
+                // handle success
+                var eventInfoJson = await response.data.dataObject;
+                setEventName(eventInfoJson.Name); // TODO SET EVENT NAME HERE
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+        }
 
         // Get Tagged Player Data
         if (image.TaggedPlayerIds.length > 0) {
@@ -102,7 +118,7 @@ function Modal(props: ModalProps) {
                 }
             }
 
-            axios.get("https://rn-rest-api.herokuapp.com/bulk/users" + userParams)
+            axios.get(`${Constants.BASE_URL}bulk/users${userParams}`)
                 .then(async function (response) {
                     // handle success
                     var playerInfoJson = await response.data.dataObject;
@@ -204,7 +220,7 @@ function Modal(props: ModalProps) {
                             <strong>Player Event Name:</strong>
                         </Grid>
                         <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblPlayerEventIdValue" zeroMinWidth >
-                            {((modalImage.PlayerEventId) ? modalImage.PlayerEventId + ' - Not Implemented Fully Yet' : 'No Event Information')}
+                            {((eventName !== '') ? eventName : modalImage.PlayerEventId)}
                         </Grid>
 
                         <Grid item xs={XS_VALUE} md={MD_VALUE} lg={LG_VALUE} xl={XL_VALUE} key="lblPlayerId" zeroMinWidth >

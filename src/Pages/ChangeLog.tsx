@@ -11,9 +11,9 @@ function ChangeLog() {
     return (
         <div className="ChangeLog">
             <Grid container direction="row" spacing={3} >
-                <Grid item xs={3}>
+                <Grid item xs={1} md={2} lg={2} xl={3}>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={10} md={8} lg={8} xl={6}>
                     <Grid container direction="column" spacing={0} >
                         <Grid item>
                             <Paper elevation={2}>
@@ -34,17 +34,18 @@ function ChangeLog() {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={1} md={2} lg={2} xl={3}>
                 </Grid>
-                <Grid item xs={3}>
+
+                <Grid item xs={1} md={2} lg={2} xl={3}>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={10} md={8} lg={8} xl={6}>
                     <Grid container direction="column" spacing={0} >
                         <Grid item>
                             <Paper elevation={2}>
                                 <div id="Item-Title">
                                     <Typography variant="h4">
-                                        Image Browser v2.2.6
+                                        Image Browser v2.2.7
                                     </Typography></div>
                                 <div id="Item-Body">
                                 <Typography variant="body1">Use this application to view and search for public photos avaiable on rec.net</Typography>
@@ -54,8 +55,9 @@ function ChangeLog() {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={1} md={2} lg={2} xl={3}>
                 </Grid>
+                
             </Grid>
         </div>
     );

@@ -10,7 +10,6 @@ import Home from './Pages/Home';
 import ImageBrowser from './Pages/ImageBrowser/ImageBrowserMain';
 import { grey, deepPurple } from '@material-ui/core/colors';
 import { useMediaQuery } from '@material-ui/core';
-import React from 'react';
 
 declare module "@material-ui/core/styles/createPalette" {
   interface Palette {
