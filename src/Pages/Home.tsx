@@ -1,5 +1,5 @@
 import Header from './Header';
-import ChangeLog from './ChangeLog';
+import AppSelection from './AppSelection';
 import Grid from '@material-ui/core/Grid';
 
 function Home() {
@@ -9,7 +9,7 @@ function Home() {
       <Grid container direction="column" alignItems="stretch">
         <Header title={'Home'} />
         <Grid item xs={12}>
-          <ChangeLog />
+          <AppSelection />
         </Grid>
       </Grid>
     </div>
