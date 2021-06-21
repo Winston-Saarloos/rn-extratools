@@ -15,7 +15,6 @@ import Modal from './SearchFilterModal';
 import * as Constants from './Constants';
 
 // Styling
-import './ImageBrowserHeader.css';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { Badge, IconButton } from '@material-ui/core';
 
@@ -117,6 +116,35 @@ function ImageBrowserHeader({ loadImages }: IProps) {
     setOpen(false);
   };
 
+  // Reloads images when the enter key is pressed
+  const handleKeyDown = (event: { key: string; }) => {
+    if (event.key === 'Enter') {
+      loadImages(imageLocation, imageDisplayOrder, searchQuery, filterString);
+    }
+  }
+
+  // Assembles all filter items into a single string separated by the ( $ ) symbol
+  function assembleFilterString(filterObject: FilterItemData[]): string {
+    var filter: string = '';
+
+    if (filterObject.length === 1) {
+      filter = filterObject[0].filterString;
+
+    } else if (filterObject.length > 1) {
+
+      // Each filter item is separated by a $
+      filterObject.forEach(filterItem => {
+        if (filterItem.key === (filterObject.length - 1)) {
+          filter += filterItem.filterString;
+        } else {
+          filter += filterItem.filterString + Constants.FILTER_DELIMITER_SYMBOL;
+        }
+      });
+    }
+
+    return filter
+  }
+
   let filterDataLength;
   if (filterItemDataLength === '') {
     filterDataLength = 0;
@@ -128,17 +156,17 @@ function ImageBrowserHeader({ loadImages }: IProps) {
 
   let searchInput;
   if (imageLocation === Constants.ROOM_IMAGE_FEED) {
-    searchInput = <TextField id="txtSearchRoom" autoFocus className={classes.nameTextBox} label="Enter RR Room Name.." variant="outlined" onChange={changeSearchQuery} value={searchQuery} />;
+    searchInput = <TextField id="txtSearchRoom" autoFocus className={classes.nameTextBox} label="Enter RR Room Name.." variant="outlined" onChange={changeSearchQuery} onKeyDown={handleKeyDown} value={searchQuery} />;
     
   } else if (imageLocation === Constants.USER_PHOTO_FEED || imageLocation === Constants.USER_PHOTO_LIBRARY) {
-    searchInput = <TextField id="txtSearchUsername" autoFocus className={classes.nameTextBox} label="Enter RR '@' Name.." variant="outlined" onChange={changeSearchQuery} value={searchQuery} />;
+    searchInput = <TextField id="txtSearchUsername" autoFocus className={classes.nameTextBox} label="Enter RR '@' Name.." variant="outlined" onChange={changeSearchQuery} onKeyDown={handleKeyDown} value={searchQuery} />;
   }
 
   return (
     <div className="ImageBrowserHeader">
       <Grid container spacing={0} direction="row">
-        <Grid item xs={12} className="orangeB"></Grid>
-        <Grid item xs={12} md={6} lg={2} xl={2} className="orangeB">
+        <Grid item xs={12}></Grid>
+        <Grid item xs={12} md={6} lg={2} xl={2} >
           <Box display="flex" justifyContent="center" p={1} >
             <FormControl variant="outlined" className={classes.imageLocation}>
               <InputLabel id="lblImageLocation">Image Location</InputLabel>
@@ -151,7 +179,7 @@ function ImageBrowserHeader({ loadImages }: IProps) {
             </FormControl>
           </Box>
         </Grid>
-        <Grid item xs={12} md={6} lg={3} xl={2} className="orangeB">
+        <Grid item xs={12} md={6} lg={3} xl={2} >
           <Box display="flex" justifyContent="center" p={1} >
             <FormControl variant="outlined" className={classes.displayOrder}>
               <InputLabel id="lblDisplayOrder">Display Order</InputLabel>
@@ -166,17 +194,17 @@ function ImageBrowserHeader({ loadImages }: IProps) {
             </FormControl>
           </Box>
         </Grid>
-        <Grid item xs={12} md={6} lg={3} xl={3} className="orangeB">
+        <Grid item xs={12} md={6} lg={3} xl={3} >
           <Box display="flex" justifyContent="center" p={1} >
             {searchInput}
           </Box>
         </Grid>
-        <Grid item xs={10} md={5} lg={3} xl={4} className="orangeB">
+        <Grid item xs={10} md={5} lg={3} xl={4} >
           <Box display="flex" justifyContent="center" p={2}>
             <Button id="btnLoadImages" variant="contained" onClick={() => loadImages(imageLocation, imageDisplayOrder, searchQuery, filterString)} className={classes.loadImagesButton} size="large" color="primary" startIcon={<LoadIcon />}>Load Images</Button>
           </Box>
         </Grid>
-        <Grid item xs={2} md={1} lg={1} xl={1} className="orangeB">
+        <Grid item xs={2} md={1} lg={1} xl={1} >
           <Box display="flex" justifyContent="center" p={2}>
             <IconButton color="secondary" aria-label="advanced search" component="span" onClick={() => handleClickOpen()} >
               <Badge color="error" badgeContent={filterDataLength}>
@@ -192,25 +220,3 @@ function ImageBrowserHeader({ loadImages }: IProps) {
 }
 
 export default ImageBrowserHeader;
-
-// Assembles all filter items into a single string separated by the ( $ ) symbol
-function assembleFilterString(filterObject: FilterItemData[]): string {
-  var filter: string = '';
-
-  if (filterObject.length === 1) {
-    filter = filterObject[0].filterString;
-
-  } else if (filterObject.length > 1) {
-
-    // Each filter item is separated by a $
-    filterObject.forEach(filterItem => {
-      if (filterItem.key === (filterObject.length - 1)) {
-        filter += filterItem.filterString;
-      } else {
-        filter += filterItem.filterString + Constants.FILTER_DELIMITER_SYMBOL;
-      }
-    });
-  }
-
-  return filter
-}

@@ -52,13 +52,13 @@ function AppSelection() {
                         <Grid item xs={1} md={1} lg={1} xl={1}>
                             {/* Empty Space */}
                         </Grid>
-                        <Grid item xs={3} md={3} lg={3} xl={3}>
+                        <Grid item xs={5} md={4} lg={3} xl={3}>
                             <MatLink href={`https://github.com/Winston-Saarloos/rn-extratools`} target="_blank" rel="noopener" >Project Github Repo</MatLink>
                         </Grid>
                         <Grid item xs={3} md={3} lg={3} xl={3}>
                             <Link to="/ChangeLog">Change Log</Link>
                         </Grid>
-                        <Grid item xs={5} md={5} lg={5} xl={8}>
+                        <Grid item xs={3} md={4} lg={5} xl={8}>
                             {/* Empty Space */}
                         </Grid>
                     </Grid>
@@ -78,7 +78,7 @@ function AppSelection() {
                             {/* Empty Space */}
                         </Grid>
                         <Grid item xs={XS_MAIN_SPACING} md={MD_MAIN_SPACING} lg={LG_MAIN_SPACING} xl={XL_MAIN_SPACING}>
-                            <Typography variant="h4">Image Browser v2.2.7</Typography>
+                            <Typography variant="h4">Image Browser v2.2.8</Typography>
                         </Grid>
                         <Grid item xs={XS_EMPTY_SPACING} md={MD_EMPTY_SPACING} lg={LG_EMPTY_SPACING} xl={XL_EMPTY_SPACING}>
                             {/* Empty Space */}
@@ -97,10 +97,10 @@ function AppSelection() {
                         <Grid item xs={1} md={1} lg={1} xl={1}>
                             {/* Empty Space */}
                         </Grid>
-                        <Grid item xs={2} md={2} lg={2} xl={2}>
+                        <Grid item xs={4} md={3} lg={2} xl={2}>
                             <Link to="/imagebrowser">Image Browser</Link>
                         </Grid>
-                        <Grid item xs={9} md={9} lg={9} xl={9}>
+                        <Grid item xs={7} md={8} lg={9} xl={9}>
                             {/* Empty Space */}
                         </Grid>
                     </Grid>

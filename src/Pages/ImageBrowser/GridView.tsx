@@ -155,7 +155,7 @@ function GridView(props: GridViewProps) {
         }
 
         // URL https://rn-rest-api.herokuapp.com/images?u={username}
-        if (searchQuery === '' && imageLocation === Constants.ROOM_IMAGE_FEED) {
+        if (searchQuery === '' && (imageLocation === Constants.ROOM_IMAGE_FEED || imageLocation === Constants.USER_PHOTO_FEED || imageLocation === Constants.USER_PHOTO_LIBRARY)) {
             var szMessage = "Enter an '@' name to find photos.";
 
             if (imageLocation === Constants.ROOM_IMAGE_FEED) {

@@ -33,7 +33,7 @@ function ChangeLog() {
                                         {/* Empty Space */}
                                     </Grid>
                                     <Grid item xs={XS_MAIN_SPACING} md={MD_MAIN_SPACING} lg={LG_MAIN_SPACING} xl={XL_MAIN_SPACING}>
-                                        <Typography variant="h5">Update - 6/18/2021</Typography>
+                                        <Typography variant="h5">Update - 6/19/2021</Typography>
                                     </Grid>
                                     <Grid item xs={XS_EMPTY_SPACING} md={MD_EMPTY_SPACING} lg={LG_EMPTY_SPACING} xl={XL_EMPTY_SPACING}>
                                         {/* Empty Space */}
@@ -46,6 +46,12 @@ function ChangeLog() {
                                         General Site:
                                         <ul>
                                             <li>Added new site change log page</li>
+                                        </ul>
+                                        Image Browser (v2.2.8):
+                                        <ul>
+                                            <li>Adjusted filter criteria modal to not be overly huge on large screens.</li>
+                                            <li>Pressing the enter key after entering a room name or username will now load images (instead of pressing the button)</li>
+                                            <li>Fixed bug with load images button that gave a weird message if the username box was left blank.</li>
                                         </ul>
                                     </Grid>
                                     <Grid item xs={XS_EMPTY_SPACING} md={MD_EMPTY_SPACING} lg={LG_EMPTY_SPACING} xl={XL_EMPTY_SPACING}>

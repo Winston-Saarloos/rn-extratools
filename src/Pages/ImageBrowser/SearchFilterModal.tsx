@@ -422,7 +422,7 @@ function Modal(props: ModalProps) { //props: ModalProps
 
   // Manipulate the UI based on the select value
   let filterInput = 
-  <Grid item xs={12} md={12} lg={12} xl={12} className="orangeB">
+  <Grid item xs={12} md={12} lg={12} xl={12} >
     <TextField autoFocus id="outlined-multiline-static" onChange={updateAdvancedFilterString} label="Filter String" fullWidth value={advancedFilterString} variant="outlined" />
   </Grid>;
 
@@ -431,7 +431,7 @@ function Modal(props: ModalProps) { //props: ModalProps
   if (criteriaType === Constants.DATE) {
 
     filterInput = 
-    <Grid item xs={12} md={12} lg={6} xl={6} className="orangeB">
+    <Grid item xs={12} md={12} lg={6} xl={6} >
       <form className={classes.container} noValidate>
         <TextField id="dtInput1" fullWidth label="Date Input 1" onChange={updateAdvancedFilterString} type="date" value={advancedFilterString} className={classes.textField} InputLabelProps={{ shrink: true, }} />
       </form>
@@ -440,14 +440,14 @@ function Modal(props: ModalProps) { //props: ModalProps
   } else if (criteriaType === Constants.DATE_RANGE) {
 
     filterInput = 
-    <Grid item xs={12} md={12} lg={6} xl={6} className="orangeB">
+    <Grid item xs={12} md={12} lg={6} xl={6} >
       <form className={classes.container} noValidate>
         <TextField id="dtInput1" fullWidth label="Date Input 1" onChange={updateAdvancedFilterString} value={advancedFilterString} type="date" className={classes.textField} InputLabelProps={{ shrink: true, }} />
       </form>
     </Grid>;
 
     filterInput2 = 
-    <Grid item xs={12} md={12} lg={6} xl={6} className="orangeB">
+    <Grid item xs={12} md={12} lg={6} xl={6} >
       <form className={classes.container} noValidate>
         <TextField id="dtInput2" fullWidth label="Date Input 2" onChange={updateAdvancedFilterStringTwo} value={advancedFilterStringTwo} type="date" className={classes.textField} InputLabelProps={{ shrink: true, }} />
       </form>
@@ -463,14 +463,14 @@ function Modal(props: ModalProps) { //props: ModalProps
     }
 
     filterInput =
-      <Grid item xs={12} md={12} lg={4} xl={4} className="orangeB">
+      <Grid item xs={12} md={12} lg={4} xl={4} >
         <form className={classes.container} noValidate>
           <TextField id="numericInput1" fullWidth label={label} onChange={updateAdvancedFilterString} value={advancedFilterString} type="number" className={classes.textField} InputLabelProps={{ shrink: true, }} />
         </form>
       </Grid>;
 
     filterInput2 =
-      <Grid item xs={12} md={12} lg={8} xl={8} className="orangeB">
+      <Grid item xs={12} md={12} lg={8} xl={8} >
         <FormControl component="fieldset">
           <FormLabel component="legend">Symbol</FormLabel>
           <RadioGroup aria-label="Symbol Selection" name="symbol" row value={advancedFilterStringTwo} onChange={updateAdvancedFilterStringTwo}>
@@ -483,19 +483,19 @@ function Modal(props: ModalProps) { //props: ModalProps
   }
 
   return (
-    <Dialog maxWidth='xl' fullWidth open={props.open} onClose={() => props.onClose(filterItemData)} aria-labelledby="max-width-dialog-title">
+    <Dialog maxWidth='lg' open={props.open} onClose={() => props.onClose(filterItemData)} aria-labelledby="max-width-dialog-title">
       <DialogTitle id="max-width-dialog-title">Advanced Filters</DialogTitle>
       <DialogContent>
         <Grid container spacing={3} direction="row">
-          <Grid item xs={12} md={12} lg={12} xl={12} className="orangeB">
+          <Grid item xs={12} md={12} lg={12} xl={12} >
             <Box display="flex" justifyContent="flex-start" alignItems="flex-end" p={1} >
               <Typography>Filter Criteria:</Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} md={6} lg={6} xl={6} className="orangeB">
+          <Grid item xs={12} md={6} lg={6} xl={6} >
             <Paper component="ul" className={classes.root}>
               <Grid container spacing={2} direction="row">
-                <Grid item xs={12} md={12} lg={12} xl={12} className="orangeB">
+                <Grid item xs={12} md={12} lg={12} xl={12} >
                   <Box display="flex" justifyContent="center" p={1} >
                     {filterItemData.map((data) => {
                       let icon;
@@ -535,7 +535,7 @@ function Modal(props: ModalProps) { //props: ModalProps
                     {emptyFilterMessage}
                   </Box>
                 </Grid>
-                <Grid item xs={12} md={12} lg={12} xl={12} className="orangeB">
+                <Grid item xs={12} md={12} lg={12} xl={12} >
                   <Typography variant="caption" display="block" gutterBottom>
                     Please do not close filter window until all criteria show in a "purple" color.  User account and activity names go through validation to make sure they exist in Rec Room.
                   </Typography>
@@ -543,10 +543,10 @@ function Modal(props: ModalProps) { //props: ModalProps
               </Grid>
             </Paper>
           </Grid>
-          <Grid item xs={12} md={6} lg={6} xl={6} className="orangeB">
+          <Grid item xs={12} md={6} lg={6} xl={6} >
             <Paper className={classes.root}>
               <Grid container spacing={2} direction="row">
-                <Grid item xs={12} md={12} lg={12} xl={12} className="orangeB">
+                <Grid item xs={12} md={12} lg={12} xl={12} >
                   <FormControl fullWidth variant="outlined">
                     <InputLabel id="lblCriteriaType">Criteria Type</InputLabel>
                     <Select labelId="lblCriteriaType" id="cboFeedType" label="Criteria Type" value={criteriaType} onChange={changeCriteriaType} defaultValue={1}>
@@ -560,12 +560,12 @@ function Modal(props: ModalProps) { //props: ModalProps
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} md={12} lg={12} xl={12} className="orangeB">
+                <Grid item xs={12} md={12} lg={12} xl={12} >
                   <FormControlLabel control={<Checkbox checked={checked} onChange={handleChange} name="checkedB" color="primary" />} label="Do not include value in results" />
                 </Grid>
                 {filterInput}
                 {filterInput2}
-                <Grid item xs={12} md={12} lg={12} xl={12} className="orangeB">
+                <Grid item xs={12} md={12} lg={12} xl={12} >
                   <Box display="flex" justifyContent="center" p={1} >
                     <Button fullWidth variant="contained" color="primary" onClick={handleAdd} >Add Item</Button>
                   </Box>
