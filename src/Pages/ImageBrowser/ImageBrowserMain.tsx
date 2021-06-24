@@ -54,7 +54,7 @@ function ImageBrowserMain() {
 
   return (
     <div style={{ marginTop: 70 }} className="ImageBrowserMain">
-      <Header title={"RR Image Browser"} />
+      <Header title={"Image Browser"} />
       <Grid container style={{margin: 0, width: '100%',}} direction="column">
         <Grid item xs={12}>
           <Grid container alignItems="flex-start" spacing={0} direction="row">
