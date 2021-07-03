@@ -10,6 +10,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 
+import * as Config from '../../SiteConfig/Config';
+import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
+
 // Custom components/constants
 import Modal from './SearchFilterModal';
 import * as Constants from './Constants';
@@ -92,8 +95,38 @@ function ImageBrowserHeader({ loadImages }: IProps) {
     return setSearchQuery(event.target.value as string);
   };
 
+  function getData() {
+    const client = new ApolloClient({
+      uri: Config.GRAPHQL_URI,
+      cache: new InMemoryCache()
+    });
+
+    client
+    .query({
+      query: gql`
+        query Query {
+          accountInfoFromUsername(username: "Rocko") {
+            accountId
+            username
+            displayName
+            profileImage
+            bannerImage
+            bio {
+              bio
+            }
+            createdAt
+            platforms
+            isJunior
+          }
+        }
+      `})
+    .then(result => console.log(result));
+  }
+
   const handleClickOpen = async () => {
     setOpen(true);
+
+    getData();
   };
 
   const handleClose = (filterObject: FilterItemData[]) => {

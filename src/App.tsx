@@ -9,6 +9,7 @@
 import Home from './Pages/Home';
 import ImageBrowser from './Pages/ImageBrowser/ImageBrowserMain';
 import ChangeLog from './Pages/ChangeLog';
+import SignUp from './Pages/Auth/SignUp';
 import { grey, deepPurple } from '@material-ui/core/colors';
 import { useMediaQuery } from '@material-ui/core';
 
@@ -52,6 +53,7 @@ function App() {
           <Route path="/" exact component={Home} />
           <Route path="/imagebrowser" component={ImageBrowser} />
           <Route path="/changelog" component={ChangeLog} />
+          <Route path="/signup" component={SignUp} />
         </Router>
       </div>
      </ThemeProvider>

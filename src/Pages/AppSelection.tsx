@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import MatLink from '@material-ui/core/Link';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
@@ -50,15 +49,6 @@ function AppSelection() {
                         </Grid>
 
                         <Grid item xs={1} md={1} lg={1} xl={1}>
-                            {/* Empty Space */}
-                        </Grid>
-                        <Grid item xs={5} md={4} lg={3} xl={3}>
-                            <MatLink href={`https://github.com/Winston-Saarloos/rn-extratools`} target="_blank" rel="noopener" >Project Github Repo</MatLink>
-                        </Grid>
-                        <Grid item xs={3} md={3} lg={3} xl={3}>
-                            <Link to="/ChangeLog">Change Log</Link>
-                        </Grid>
-                        <Grid item xs={3} md={4} lg={5} xl={8}>
                             {/* Empty Space */}
                         </Grid>
                     </Grid>

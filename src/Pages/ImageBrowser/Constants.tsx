@@ -1,11 +1,14 @@
 // DEV MOD <SWAPS>
 const DEV_MODE: boolean = false;
 var rest_url: string = '';
+var graphQL_url: string = '';
 
 if (DEV_MODE) {
     rest_url = 'http://localhost:3001/';
+    graphQL_url = 'http://localhost:4000/';
 } else {
     rest_url = 'https://rn-rest-api.herokuapp.com/';
+    graphQL_url = 'https://lamentis-api.herokuapp.com/';
 }
 
 // Image Location
@@ -36,6 +39,9 @@ export const COMMENT_COUNT: number = 7;
 
 // REST API
 export const BASE_URL: string = rest_url;
+
+// GRAPHQL API
+export const GRAPHQL_BASE_URL: string = graphQL_url;
 
 // Filter Prefixes
 export const ACTIVITY_PREFIX: string = 'A|';

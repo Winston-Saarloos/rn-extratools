@@ -1,20 +1,35 @@
 import React from 'react';
 import { BrowserRouter } from "react-router-dom";
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+
+import Store from './Store';
 import './index.css';
 import App from './App';
-import { Auth0Provider } from "@auth0/auth0-react";
+//import { Auth0Provider } from "@auth0/auth0-react";
+import { ApolloClient, InMemoryCache, ApolloProvider} from "@apollo/client";
 import 'fontsource-roboto';
-import * as Config from './ConfigFiles/Config';
+import * as Config from './SiteConfig/Config';
+import './Pages/Auth/Firebase.ts';
+
 // import reportWebVitals from './reportWebVitals';
+
+const client = new ApolloClient({
+  uri: Config.GRAPHQL_URI,
+  cache: new InMemoryCache()
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <Auth0Provider domain={Config.AUTH0_DOMAIN} clientId={Config.AUTH0_CLIENT_ID} redirectUri={window.location.origin}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Auth0Provider>
+    {/* <Auth0Provider domain={Config.AUTH0_DOMAIN} clientId={Config.AUTH0_CLIENT_ID} redirectUri={window.location.origin}> */}
+    <Provider store={Store}>
+      <ApolloProvider client={client}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ApolloProvider>
+    </Provider>
+    {/* </Auth0Provider> */}
   </React.StrictMode>,
   document.getElementById('root')
 );
