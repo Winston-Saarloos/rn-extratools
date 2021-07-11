@@ -9,7 +9,7 @@ import App from './App';
 //import { Auth0Provider } from "@auth0/auth0-react";
 import { ApolloClient, InMemoryCache, ApolloProvider} from "@apollo/client";
 import 'fontsource-roboto';
-import * as Config from './SiteConfig/Config';
+import * as Config from './Config/SiteConfig';
 import './Pages/Auth/Firebase.ts';
 
 // import reportWebVitals from './reportWebVitals';
@@ -21,7 +21,6 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <Auth0Provider domain={Config.AUTH0_DOMAIN} clientId={Config.AUTH0_CLIENT_ID} redirectUri={window.location.origin}> */}
     <Provider store={Store}>
       <ApolloProvider client={client}>
         <BrowserRouter>
@@ -29,7 +28,6 @@ ReactDOM.render(
         </BrowserRouter>
       </ApolloProvider>
     </Provider>
-    {/* </Auth0Provider> */}
   </React.StrictMode>,
   document.getElementById('root')
 );

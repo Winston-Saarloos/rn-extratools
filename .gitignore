@@ -26,4 +26,4 @@ yarn-error.log*
 .netlify
 
 # Configuration Folders
-/src/ConfigFiles/Config.tsx
+src/Config/*

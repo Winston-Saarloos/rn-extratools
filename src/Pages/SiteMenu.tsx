@@ -1,6 +1,5 @@
 import React from 'react';
 import clsx from 'clsx';
-//import { Link } from 'react-router-dom';
 
 // Material-UI Imports
 import MatLink from '@material-ui/core/Link';
@@ -12,7 +11,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { IconButton } from '@material-ui/core';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 // Material-UI Icons
 import MenuIcon from '@material-ui/icons/Menu';
@@ -81,7 +80,7 @@ export default function SiteMenu() {
                         </ListItem>
                     </List>
                     <List>
-                        <ListItem button component={Link} to="/signup">
+                        <ListItem disabled button component={Link} to="/signin">
                             <ListItemIcon><DashboardIcon /></ListItemIcon>
                             <ListItemText primary={'Login'} />
                         </ListItem>

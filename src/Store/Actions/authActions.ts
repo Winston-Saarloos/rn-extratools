@@ -134,6 +134,3 @@ export const sendPasswordResetEmail = (email: string, successMsg: string): Thunk
         }
     }
 }
-
-// Time: 32:14
-// YouTube: https://www.youtube.com/watch?v=zPCeloCwPX8

@@ -11,7 +11,7 @@ import "firebase/auth";
 import "firebase/firestore";
 
 import { useDispatch, useSelector } from 'react-redux';
-import { signup, setError } from '../../Store/Actions/authActions';
+import { signin, setError } from '../../Store/Actions/authActions';
 import { RootState } from '../../Store/';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -21,14 +21,12 @@ const useStyles = makeStyles({
   },
 })
 
-export default function SignUp() {
+export default function SignIn() {
   const classes = useStyles();
   const history = useHistory();
 
-  const [username, setUsername] = useState<string>(''); // "First Name"
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [passwordConfirm, setPasswordConfirm] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
   const dispatch = useDispatch();
@@ -37,6 +35,7 @@ export default function SignUp() {
   useEffect(() => {
     return () => {
       if(error) {
+        console.log('USE EFFECT Error: ' + error);
         dispatch(setError(''));
       }
     }
@@ -46,35 +45,24 @@ export default function SignUp() {
     return setEmail(event.target.value as string);
   };
 
-  const changeUsername = (event: React.ChangeEvent<{ value: string }>) => {
-    return setUsername(event.target.value as string);
-  };
-
   const changePassword = (event: React.ChangeEvent<{ value: string }>) => {
     return setPassword(event.target.value as string);
   };
 
-  const changePasswordConfirm = (event: React.ChangeEvent<{ value: string }>) => {
-    return setPasswordConfirm(event.target.value as string);
-  };
-
   const handleSubmit = () => {
-    console.log("Running sign up...");
-    setLoading(true);
+    console.log("Signing in user.. ");
 
-    if (password !== passwordConfirm) {
-      setLoading(false);
-      return setError("Passwords do not match")
+    if(error) {
+      dispatch(setError(''));
     }
 
-    var firstName = username;
-
-    dispatch(signup({ email, password, firstName }, () => setLoading(false)));
+    setLoading(true);
+    dispatch(signin({ email, password }, () => setLoading(false)))
   }
 
   // redirect user if they are signed in (user != null)
   if (user) {
-    console.log("User already signed in... redirecting..");
+    console.log("User already signed in... redirecting back to home..");
     history.push("/");
   }
 
@@ -86,14 +74,11 @@ export default function SignUp() {
           <Grid item xs={10} md={8} lg={6} xl={4}>
             <Box display="flex" justifyContent="center" p={1} >
               <Card className={classes.root}>
-                <CardHeader title="RN-ExtraTools" subheader={'Sign Up'} />
+                <CardHeader title="RN-ExtraTools" subheader={'Sign In'} />
                 <CardContent>
                   <Grid container direction="row" spacing={2}>
                     <Grid item xs={12} md={12} lg={12} xl={12}>
                       {error && <p>{error}</p>}
-                    </Grid>
-                    <Grid item xs={12} md={12} lg={12} xl={12}>
-                      <TextField required id="username" label="Username" autoComplete="off" variant="standard" value={username} onChange={changeUsername} />
                     </Grid>
                     <Grid item xs={12} md={12} lg={12} xl={12}>
                       <TextField required id="email" label="Email" autoComplete="off" variant="standard" value={email} onChange={changeEmail} />
@@ -101,14 +86,14 @@ export default function SignUp() {
                     <Grid item xs={12} md={12} lg={12} xl={12}>
                       <TextField required id="password" label="Password" autoComplete="off" type="password" variant="standard" value={password} onChange={changePassword} />
                     </Grid>
-                    <Grid item xs={12} md={12} lg={12} xl={12}>
-                      <TextField required id="passwordConfirmation" label="Confirm Password" type="password" autoComplete="off" variant="standard" value={passwordConfirm} onChange={changePasswordConfirm} />
-                    </Grid>
                   </Grid>
                   <Box>
-                    Already have an account? <Link to="/signin">Sign In</Link>
+                    Don't have an account? <Link to="/signup">Sign Up</Link>
                   </Box>
-                  <Button variant="contained" disabled={loading} onClick={() => handleSubmit()} color="primary">{loading ? "Loading..." : "Sign Up"}</Button>
+                  <Box>
+                    <Link to="/forgotpassword">Forgot Password?</Link>
+                  </Box>
+                  <Button variant="contained" disabled={loading} onClick={() => handleSubmit()} color="primary">{loading ? "Loading..." : "Sign In"}</Button>
                 </CardContent>
               </Card>
             </Box>

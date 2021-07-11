@@ -1,11 +1,16 @@
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
-//import { useAuth0, User } from '@auth0/auth0-react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-// import Button from '@material-ui/core/Button';
-// import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 import SiteMenu from '../Pages/SiteMenu';
+
+// Video Imports
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../Store';
+import { signout } from '../Store/Actions/authActions';
+
 
 const useStyles = makeStyles({
   centerHorzAndVert: {
@@ -22,7 +27,13 @@ interface IProps {
 
 export default function Header({ title }: IProps) {
   const classes = useStyles();
-  //const { loginWithRedirect, logout, user, isLoading } = useAuth0<User>();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { authenticated } = useSelector((state: RootState) => state.auth);
+
+  const logoutClickHandler = () => {
+    dispatch(signout());
+  }
 
   return (
     <header>
@@ -44,12 +55,14 @@ export default function Header({ title }: IProps) {
               )} */}
             </Grid>
             <Grid item xs={2} md={1} lg={1} xl={1} className={clsx(classes.centerHorzAndVert)}>
-              {/* { !user && (
-                <Button variant="contained" onClick={() => loginWithRedirect()} disabled>Login</Button>
-              )}
-              { user && (
-                <Button variant="contained" onClick={() => logout()}>Logout</Button>
-              )} */}
+              {!authenticated ? 
+              <div>
+                {/* <Button variant="contained" onClick={() => history.push('/signup')} >Sign Up</Button> */}
+                <Button variant="contained" onClick={() => history.push('/signin')} >Login</Button>
+              </div>
+              :  
+              <Button variant="contained" onClick={logoutClickHandler} >Logout</Button>
+              }
             </Grid>
           </Grid>
         </Toolbar>
