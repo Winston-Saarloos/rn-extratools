@@ -7,7 +7,8 @@ import * as Constants from './Constants';
 import './GridView.css';
 import Modal from './ImageDetailModal';
 import ImageThumbnail from './ImageThumbnail';
-import { makeStyles, Paper, Theme } from '@material-ui/core';
+import { Paper, Theme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import ScrollToTopButton from './GridViewScrollToTop';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -15,9 +16,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         flexGrow: 1,
     },
     paper: {
-        padding: theme.spacing(2),
+        // padding: theme.spacing(2),
         textAlign: 'center',
-        color: theme.palette.text.secondary,
+        // color: theme.palette.text.secondary,
     },
 }),
 );

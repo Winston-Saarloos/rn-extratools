@@ -6,10 +6,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
 import Grid from '@material-ui/core/Grid';
-import {
-  Box, Checkbox, Chip, FormControl, FormControlLabel, FormLabel, InputLabel, makeStyles,
-  MenuItem, Paper, Radio, RadioGroup, Select, TextField, Theme, Typography
-} from '@material-ui/core';
+import { Box, Checkbox, Chip, FormControl, FormControlLabel, FormLabel, InputLabel,
+         MenuItem, Paper, Radio, RadioGroup, Select, TextField, Theme, Typography
+       } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import React, { useEffect } from 'react';
 
 // Icons
@@ -120,24 +120,24 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
     flexWrap: 'wrap',
     listStyle: 'none',
-    padding: theme.spacing(0.5),
+    // padding: theme.spacing(0.5),
     margin: 0,
   },
   chip: {
-    margin: theme.spacing(0.5),
+    // margin: theme.spacing(0.5),
   },
   paper: {
-    padding: theme.spacing(2),
+    // padding: theme.spacing(2),
     textAlign: 'center',
-    color: theme.palette.text.secondary,
+    // color: theme.palette.text.secondary,
   },
   container: {
     display: 'flex',
     flexWrap: 'wrap',
   },
   textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
+    // marginLeft: theme.spacing(1),
+    // marginRight: theme.spacing(1),
   },
 }),
 );

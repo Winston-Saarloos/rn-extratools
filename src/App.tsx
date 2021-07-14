@@ -1,13 +1,11 @@
 // Components
- import { BrowserRouter, Switch, Route } from 'react-router-dom';
- import { ThemeProvider } from "@material-ui/core/styles";
- import CssBaseline from '@material-ui/core/CssBaseline';
- import {createTheme} from '@material-ui/core/styles';
- import CircularProgress from '@material-ui/core/CircularProgress';
- import './App.css';
- import { useEffect } from 'react';
- import { useDispatch, useSelector } from 'react-redux';
- 
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import CssBaseline from '@material-ui/core/CssBaseline';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import './App.css';
+import { useMemo, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Pages
 import Home from './Pages/Home';
@@ -15,8 +13,8 @@ import ImageBrowser from './Pages/ImageBrowser/ImageBrowserMain';
 import ChangeLog from './Pages/ChangeLog';
 import SignUp from './Pages/Auth/SignUp';
 import SignIn from './Pages/Auth/SignIn';
-import { grey, deepPurple } from '@material-ui/core/colors';
-//import { useMediaQuery } from '@material-ui/core';
+import { deepPurple } from '@material-ui/core/colors';
+import { useMediaQuery } from '@material-ui/core';
 import ForgotPassword from './Pages/Auth/ForgotPassword';
 import ManageUsers from './Pages/League/Private/ManageUsers';
 
@@ -24,35 +22,30 @@ import firebase from './Pages/Auth/Firebase';
 import { getUserById, setLoading, setNeedVerification } from './Store/Actions/authActions';
 import { RootState } from './Store';
 
-declare module "@material-ui/core/styles/createPalette" {
-  interface Palette {
-    type: string;
-  }
-  interface PaletteOptions {
-    type: string;
-  }
-}
-
 // Styling
-const theme = createTheme({
-  palette: {
-    type: 'dark',
-    primary: deepPurple,
-    secondary: grey,
-}});
+// const theme = createTheme({
+//   palette: {
+//     type: 'dark',
+//     primary: deepPurple,
+//     secondary: grey,
+// }});
 
 function App() { 
-  //const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
-  // const theme = React.useMemo(
-  //   () =>
-  //     createTheme({
-  //       palette: {
-  //         type: prefersDarkMode ? 'dark' : 'light'
-  //       },
-  //     }),
-  //   [prefersDarkMode],
-  // );
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? 'dark' : 'light',
+          primary: deepPurple
+        },
+      }),
+    [prefersDarkMode],
+  );
+
+  console.log("User prefers dark: " + prefersDarkMode);
+  console.log(theme);
 
   const dispatch = useDispatch();
   const { loading } = useSelector((state: RootState) => state.auth);

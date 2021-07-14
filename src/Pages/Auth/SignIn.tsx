@@ -1,4 +1,3 @@
-import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -15,14 +14,7 @@ import { signin, setError } from '../../Store/Actions/authActions';
 import { RootState } from '../../Store/';
 import { Link, useHistory } from 'react-router-dom';
 
-const useStyles = makeStyles({
-  root: {
-    maxWidth: '100%',
-  },
-})
-
 export default function SignIn() {
-  const classes = useStyles();
   const history = useHistory();
 
   const [email, setEmail] = useState<string>('');
@@ -73,7 +65,7 @@ export default function SignIn() {
           </Grid>
           <Grid item xs={10} md={8} lg={6} xl={4}>
             <Box display="flex" justifyContent="center" p={1} >
-              <Card className={classes.root}>
+              <Card>
                 <CardHeader title="RN-ExtraTools" subheader={'Sign In'} />
                 <CardContent>
                   <Grid container direction="row" spacing={2}>

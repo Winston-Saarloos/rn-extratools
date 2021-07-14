@@ -21,6 +21,8 @@ export default function ManageUsers() {
         }
     }, [success, dispatch]);
 
+    console.log(user);
+
     // Main Content Spacing
     const XS_MAIN_SPACING = 10;
     const MD_MAIN_SPACING = 10;

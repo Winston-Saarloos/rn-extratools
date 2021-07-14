@@ -1,6 +1,6 @@
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
 import SiteMenu from '../Pages/SiteMenu';
