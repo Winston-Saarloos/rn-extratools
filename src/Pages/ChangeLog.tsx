@@ -26,6 +26,40 @@ function ChangeLog() {
                 </Grid>
                 <Grid item xs={10} md={8} lg={8} xl={6}>
                     <Grid container direction="column" spacing={2}>
+                    <Grid item xs={12} md={12} lg={12} xl={12}>
+                            <Paper elevation={2}>
+                                <Grid container direction="row" spacing={0} >
+                                    <Grid item xs={XS_EMPTY_SPACING} md={MD_EMPTY_SPACING} lg={LG_EMPTY_SPACING} xl={XL_EMPTY_SPACING}>
+                                        {/* Empty Space */}
+                                    </Grid>
+                                    <Grid item xs={XS_MAIN_SPACING} md={MD_MAIN_SPACING} lg={LG_MAIN_SPACING} xl={XL_MAIN_SPACING}>
+                                        <Typography variant="h5">Update - 7/28/2021</Typography>
+                                    </Grid>
+                                    <Grid item xs={XS_EMPTY_SPACING} md={MD_EMPTY_SPACING} lg={LG_EMPTY_SPACING} xl={XL_EMPTY_SPACING}>
+                                        {/* Empty Space */}
+                                    </Grid>
+
+                                    <Grid item xs={XS_EMPTY_SPACING} md={MD_EMPTY_SPACING} lg={LG_EMPTY_SPACING} xl={XL_EMPTY_SPACING}>
+                                        {/* Empty Space */}
+                                    </Grid>
+                                    <Grid item xs={XS_MAIN_SPACING} md={MD_MAIN_SPACING} lg={LG_MAIN_SPACING} xl={XL_MAIN_SPACING}>
+                                        General Site:
+                                        <ul>
+                                            <li>Added dark mode.  On Windows go to settings and choose "Dark" in the "Choose Your Color" drop down.  This will then show the site in dark mode. </li>
+                                            <li>Background work on adding basic user authentication.  Pages created: Sign In, Sign Up, and Forgot Password.</li>
+                                        </ul>
+                                        Image Browser (v2.2.9):
+                                        <ul>
+                                            <li>Adjusted UI elements in header to align better</li>
+                                        </ul>
+                                    </Grid>
+                                    <Grid item xs={XS_EMPTY_SPACING} md={MD_EMPTY_SPACING} lg={LG_EMPTY_SPACING} xl={XL_EMPTY_SPACING}>
+                                        {/* Empty Space */}
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        </Grid>
+
                         <Grid item xs={12} md={12} lg={12} xl={12}>
                             <Paper elevation={2}>
                                 <Grid container direction="row" spacing={0} >

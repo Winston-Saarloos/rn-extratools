@@ -14,6 +14,7 @@ import ChangeLog from './Pages/ChangeLog';
 import SignUp from './Pages/Auth/SignUp';
 import SignIn from './Pages/Auth/SignIn';
 import { deepPurple } from '@material-ui/core/colors';
+import { grey } from '@material-ui/core/colors';
 import { useMediaQuery } from '@material-ui/core';
 import ForgotPassword from './Pages/Auth/ForgotPassword';
 import ManageUsers from './Pages/League/Private/ManageUsers';
@@ -38,8 +39,14 @@ function App() {
       createTheme({
         palette: {
           mode: prefersDarkMode ? 'dark' : 'light',
-          primary: deepPurple
+          primary: {
+            main: deepPurple[500],
+          },
+          secondary: {
+            main: grey[500],
+          },
         },
+        spacing: [0, 4, 8, 16, 32, 64],
       }),
     [prefersDarkMode],
   );
@@ -89,10 +96,10 @@ function App() {
             <Route path="/" component={Home} exact />
             <Route path="/imagebrowser" component={ImageBrowser} exact />
             <Route path="/changelog" component={ChangeLog} exact />
-            <Route path="/signup" component={SignUp} exact />
+            {/* <Route path="/signup" component={SignUp} exact />
             <Route path="/signin" component={SignIn} exact />
             <Route path="/forgotpassword" component={ForgotPassword} exact />
-            <Route path="/manageusers" component={ManageUsers} exact />
+            <Route path="/manageusers" component={ManageUsers} exact /> */}
           </Switch>
         </BrowserRouter>
       </div>

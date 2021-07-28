@@ -43,6 +43,11 @@ const useStyles = makeStyles(() => ({
     minWidth: 200,
     width: "100%",
   },
+  itemContainer: {
+    height: "100%",
+    display: "flex",
+    alignItems: "center"
+  }
 }));
 
 interface FilterItemData {
@@ -195,7 +200,7 @@ function ImageBrowserHeader({ loadImages }: IProps) {
       <Grid container spacing={0} direction="row">
         <Grid item xs={12}></Grid>
         <Grid item xs={12} md={6} lg={2} xl={2} >
-          <Box display="flex" justifyContent="center" p={1} >
+          <Box display="flex" justifyContent="center" p={1} className={classes.itemContainer} >
             <FormControl variant="outlined" className={classes.imageLocation}>
               <InputLabel id="lblImageLocation">Image Location</InputLabel>
               <Select labelId="lblImageLocation" id="cboFeedType" label="Image Location" value={imageLocation} onChange={changeImageLocation} >
@@ -208,7 +213,7 @@ function ImageBrowserHeader({ loadImages }: IProps) {
           </Box>
         </Grid>
         <Grid item xs={12} md={6} lg={3} xl={2} >
-          <Box display="flex" justifyContent="center" p={1} >
+          <Box display="flex" justifyContent="center" p={1} className={classes.itemContainer} >
             <FormControl variant="outlined" className={classes.displayOrder}>
               <InputLabel id="lblDisplayOrder">Display Order</InputLabel>
               <Select labelId="lblDisplayOrder" id="cboDisplayOrder" label="Display Order" value={imageDisplayOrder} onChange={changeImageDisplayOrder} >
@@ -223,12 +228,12 @@ function ImageBrowserHeader({ loadImages }: IProps) {
           </Box>
         </Grid>
         <Grid item xs={12} md={6} lg={3} xl={3} >
-          <Box display="flex" justifyContent="center" p={1} >
+          <Box display="flex" justifyContent="center" p={1} className={classes.itemContainer} >
             {searchInput}
           </Box>
         </Grid>
         <Grid item xs={10} md={5} lg={3} xl={4} >
-          <Box display="flex" justifyContent="center" p={2}>
+          <Box display="flex" justifyContent="center" p={2} className={classes.itemContainer}>
             <Button id="btnLoadImages" variant="contained" onClick={() => loadImages(imageLocation, imageDisplayOrder, searchQuery, filterString)} className={classes.loadImagesButton} size="large" color="primary" startIcon={<LoadIcon />}>Load Images</Button>
           </Box>
         </Grid>

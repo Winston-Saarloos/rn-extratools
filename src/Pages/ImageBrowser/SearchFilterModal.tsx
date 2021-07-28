@@ -129,7 +129,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   paper: {
     // padding: theme.spacing(2),
     textAlign: 'center',
-    // color: theme.palette.text.secondary,
+    //color: theme.palette.text.secondary,
   },
   container: {
     display: 'flex',
@@ -137,7 +137,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   textField: {
     // marginLeft: theme.spacing(1),
-    // marginRight: theme.spacing(1),
   },
 }),
 );

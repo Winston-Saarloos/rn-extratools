@@ -58,7 +58,7 @@ export default function Header({ title }: IProps) {
               {!authenticated ? 
               <div>
                 {/* <Button variant="contained" onClick={() => history.push('/signup')} >Sign Up</Button> */}
-                <Button variant="contained" onClick={() => history.push('/signin')} >Login</Button>
+                <Button disabled variant="contained" onClick={() => history.push('/signin')} >Login</Button>
               </div>
               :  
               <Button variant="contained" onClick={logoutClickHandler} >Logout</Button>

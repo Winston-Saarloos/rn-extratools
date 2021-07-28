@@ -68,7 +68,7 @@ function AppSelection() {
                             {/* Empty Space */}
                         </Grid>
                         <Grid item xs={XS_MAIN_SPACING} md={MD_MAIN_SPACING} lg={LG_MAIN_SPACING} xl={XL_MAIN_SPACING}>
-                            <Typography variant="h4">Image Browser v2.2.8</Typography>
+                            <Typography variant="h4">Image Browser v2.2.9</Typography>
                         </Grid>
                         <Grid item xs={XS_EMPTY_SPACING} md={MD_EMPTY_SPACING} lg={LG_EMPTY_SPACING} xl={XL_EMPTY_SPACING}>
                             {/* Empty Space */}
