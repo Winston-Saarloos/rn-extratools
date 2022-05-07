@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
 // Custom Components/CSS/Constants
-import * as Constants from './Constants';
+import * as Constants from '../Constants';
 import './GridView.css';
 import Modal from './ImageDetailModal';
 import ImageThumbnail from './ImageThumbnail';

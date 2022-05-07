@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 // Custom Component/Constants
 import GridView from './GridView';
 import ImageBrowserHeader from './ImageBrowserHeader';
-import * as Constants from './Constants';
+import * as Constants from '../Constants';
 
 // Type structure for imageRequestParameters
 type imageRequestParameters = {
@@ -22,7 +22,7 @@ type imageRequestParameters = {
 function ImageBrowserMain() {
   const [imageRequestParams, setImageRequestParams] = React.useState<imageRequestParameters>();
 
-  async function LoadImages(imageLocation: number, displayOrder: number, searchQuery: string, filterString: string) {
+  function LoadImages(imageLocation: number, displayOrder: number, searchQuery: string, filterString: string) {
     var takeAmount = 100000;
     var skipAmount = 0;
     var szUrl = `${Constants.BASE_URL}images`;

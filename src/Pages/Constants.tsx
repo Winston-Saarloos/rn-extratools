@@ -4,7 +4,7 @@ var rest_url: string = '';
 var graphQL_url: string = '';
 
 if (DEV_MODE) {
-    rest_url = 'http://localhost:3001/';
+    rest_url = 'http://localhost:3000/';
     graphQL_url = 'http://localhost:4000/';
 } else {
     rest_url = 'https://rn-rest-api.herokuapp.com/';

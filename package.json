@@ -7,6 +7,7 @@
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@material-ui/core": "^5.0.0-beta.0",
+    "@material-ui/data-grid": "^4.0.0-alpha.35",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@material-ui/styles": "^4.11.4",
@@ -37,6 +38,7 @@
     "redux": "^4.1.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
+    "use-async-effect": "^2.2.3",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

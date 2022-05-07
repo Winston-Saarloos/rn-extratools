@@ -25,7 +25,7 @@ import ChatIcon from '@material-ui/icons/Chat';
 // Non-Material Imports
 import axios from 'axios';
 import { DateTime } from "luxon";
-import * as Constants from './Constants';
+import * as Constants from '../Constants';
 
 // Component Props
 type ModalProps = {

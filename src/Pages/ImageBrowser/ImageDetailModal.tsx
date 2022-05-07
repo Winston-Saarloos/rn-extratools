@@ -15,7 +15,7 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { IconButton } from '@material-ui/core';
-import * as Constants from './Constants';
+import * as Constants from '../Constants';
 
 //Types
 type ImageItem = {

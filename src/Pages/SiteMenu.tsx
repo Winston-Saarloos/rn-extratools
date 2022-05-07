@@ -20,6 +20,8 @@ import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import NotesIcon from '@material-ui/icons/Notes';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import CloudIcon from '@material-ui/icons/Cloud';
 
 const useStyles = makeStyles({
     list: {
@@ -79,8 +81,20 @@ export default function SiteMenu() {
                             <ListItemText primary={'Image Browser'} />
                         </ListItem>
                     </List>
+                    {/* <List>
+                        <ListItem button component={Link} to="/status">
+                            <ListItemIcon><CloudIcon /></ListItemIcon>
+                            <ListItemText primary={'Server Status'} />
+                        </ListItem>
+                    </List> */}
+                    {/* <List>
+                        <ListItem button component={Link} to="/roomroles">
+                            <ListItemIcon><SupervisorAccountIcon /></ListItemIcon>
+                            <ListItemText primary={'Room Roles'} />
+                        </ListItem>
+                    </List> */}
                     <List>
-                        <ListItem disabled button component={Link} to="/signin">
+                        <ListItem button component={Link} to="/signin">
                             <ListItemIcon><DashboardIcon /></ListItemIcon>
                             <ListItemText primary={'Login'} />
                         </ListItem>

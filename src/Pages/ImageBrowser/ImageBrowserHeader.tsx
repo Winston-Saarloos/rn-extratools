@@ -15,7 +15,7 @@ import Grid from '@material-ui/core/Grid';
 
 // Custom components/constants
 import Modal from './SearchFilterModal';
-import * as Constants from './Constants';
+import * as Constants from '../Constants';
 
 // Styling
 import FilterListIcon from '@material-ui/icons/FilterList';
