@@ -16,7 +16,6 @@ How to deploy to production (because I keep forgetting):
 ## Technology Stack
  - ReactJS
  -- https://reactjs.org/
- -- https://redux.js.org/
  - React Router
  -- https://reactrouter.com/web/guides/quick-start
  - Material UI
