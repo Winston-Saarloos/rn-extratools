@@ -34,7 +34,7 @@ It allowed players (especially for users that had been around for 5 years) to qu
 ### React Version — Main View
 
 <p align="center">
-  <img src="./assets/React-Image-Browser.png" alt="React Image Browser Main View" width="600"/>
+  <img src="./assets/React-Image--Browser.png" alt="React Image Browser Main View" width="600"/>
 </p>
 
 ### React Version — Filtering View
