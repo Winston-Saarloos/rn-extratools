@@ -1,10 +1,24 @@
-----------------------------------------------------------
-**Notice: This repository is no longer maintained.** 
-----------------------------------------------------------
-Rec Room's APIs and request limits have undergone changes that make it nearly impossible for this type of tool to exist anymore. Thank you all for using it while it was active!
+⚠️ Notice: This repository is no longer maintained ⚠️
+
+This project was **my first React.js app,** built and hosted over four years ago for Rec Room players to use. At the time, it served real users and was an exciting milestone in my development journey.
+
+While I’m still proud of what I accomplished back then, the code does not reflect the standards I follow today. Additionally, Rec Room’s APIs and request limits have changed in ways that would make this tool difficult to recreate.
+
+Thank you to everyone who used it while it was live!
+
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
 
 # Overview
-This was created so that I can port over the RR-Image-Browser from being built with Electron to instead be a hosted ReactJS app.  This allows anyone to access it and there will be no need for software installation.
+This was created so that I can port over the **RR-Image-Browser** from being built with Electron to instead be a hosted ReactJS app.  This allows anyone to access it and there will be no need for software installation. 
 
 Production URL: https://rn-extratools.com/
 
